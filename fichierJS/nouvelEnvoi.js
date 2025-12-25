@@ -124,11 +124,11 @@ function rechercherAdresse() {
         return;
     }
 
-    // Appel à l'API (Gratuit et sans clé)
+
     fetch(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(texte)}&limit=5`)
         .then(response => response.json())
         .then(data => {
-            listeAdresses.innerHTML = ""; // On vide la liste précédente
+            listeAdresses.innerHTML = ""; 
             
             if (data.features.length > 0) {
                 listeAdresses.style.display = 'block';

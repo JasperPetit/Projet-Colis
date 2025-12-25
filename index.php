@@ -17,6 +17,7 @@
     $service = new ExpeditionService($db);
     $dernieres_commandes = $service->recupererResumeDernieresCommandes();
 
+    
 ?>
 
 
@@ -39,13 +40,10 @@
 
 
 
-
-            <div class="profil-utilisateur" style="display: flex; align-items: center; gap: 15px;">
-                <span style="font-weight: 600; color: #1e3a5f;"><?php echo htmlspecialchars($nom_complet); ?></span> 
-                
-                <a href="logout.php" class="bouton-profil" title="Se déconnecter">
-                    <i class="fa-solid fa-power-off"></i>
-                </a>
+            <div class="profil-utilisateur">
+                <button class="bouton-profil">
+                    <i class="fa-solid fa-user-tie icone"></i> <?php echo $nom_complet; ?>
+                </button>     
             </div>
 
 
@@ -114,7 +112,7 @@
         <table class="tableau-activite">
             <?php foreach ($dernieres_commandes as $commande) : ?>
             <?php 
-                $est_confirme = ($commande['ConfirmerOuiOuNon'] == 1);
+                $est_confirme = ($commande['statut'] == "livré");
                 $classe_badge = $est_confirme ? 'badge-livre' : 'badge-encours';
                 $texte_badge = $est_confirme ? 'Confirmé' : 'En attente';
             ?>

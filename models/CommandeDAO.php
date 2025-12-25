@@ -1,4 +1,7 @@
 <?php
+require_once 'commande.php';
+
+
 
 class CommandeDAO {
     private $connexion_bdd;
@@ -74,23 +77,29 @@ class CommandeDAO {
     }
 
 
-    public function recupererLesDeuxDernieresCommandes() {
+    public function recupererLesTroisDernieresCommandes() {
 
-        $requete_sql = "SELECT NumeroBonDeCommande, AdresseArivee, ConfirmerOuiOuNon, nbColis 
+            $requete_sql = "SELECT NumeroBonDeCommande, AdresseArivee, statut, nbColis 
                         FROM Commande 
                         ORDER BY NumeroBonDeCommande ASC 
-                        LIMIT 2";
+                        LIMIT 3";
+            $preparation = $this->connexion_bdd->prepare($requete_sql);
+            $resultat = $preparation->execute();
+            $liste_commandes = [];
+            $compteur = 0;
 
-        $preparation = $this->connexion_bdd->prepare($requete_sql);
-        $resultat = $preparation->execute();
-
-        $liste_commandes = [];
-        while ($ligne = $resultat->fetchArray(SQLITE3_ASSOC)) {
-            $liste_commandes[] = $ligne;
+            while ($ligne = $resultat->fetchArray(SQLITE3_ASSOC)) {
+                $liste_commandes[$compteur] = $ligne;
+                $compteur = $compteur + 1; 
+            }
+            return $liste_commandes;
         }
 
-        return $liste_commandes;
-    }
+
+
+
+
+
 
     public function recupNbDeColis() {
 
@@ -104,5 +113,28 @@ class CommandeDAO {
         } else {
             return 0;
         }
+    }
+
+    public function trouverCommandesParCritere($recherche) {
+
+        $requete_sql = "SELECT c.NumeroBonDeCommande, c.AdresseArivee, c.Date_, 
+                       col.Poids, col.Taille
+                FROM Commande c
+                LEFT JOIN Colis col ON c.NumeroBonDeCommande = col.NumeroBonDeCommande
+                WHERE c.AdresseArivee LIKE :texte 
+                   OR c.NumeroBonDeCommande = :num
+                ORDER BY c.Date_ DESC";
+
+        $preparation = $this->connexion_bdd->prepare($requete_sql);
+        $preparation->bindValue(':texte', '%' . $recherche . '%', SQLITE3_TEXT);
+        $preparation->bindValue(':num', $recherche, SQLITE3_TEXT);
+        $resultat = $preparation->execute();
+
+        $liste = [];
+        while ($ligne = $resultat->fetchArray(SQLITE3_ASSOC)) {
+            $liste[] = $ligne;
+        }
+        
+        return $liste;
     }
 }

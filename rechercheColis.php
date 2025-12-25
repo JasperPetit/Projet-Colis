@@ -1,15 +1,18 @@
 <?php
 require_once 'config.php'; 
 
-// 1. Récupération
-$texte_saisi = isset($_GET['champ_recherche']) ? $_GET['champ_recherche'] : null;
-$commande_trouvee = null;
+$texte_saisi = null;
+$commande_trouvee = null; 
 
-// 2. Traitement SQL
-if ($texte_saisi !== null && !empty($texte_saisi) && $db instanceof SQLite3) {
-    $requete = $db->prepare("SELECT * FROM Commande WHERE NumeroBonDeCommande = :id");
-    $requete->bindValue(':id', $texte_saisi, SQLITE3_INTEGER);
-    $resultat_brut = $requete->execute();
+if (isset($_GET['champ_recherche'])) {
+    $texte_saisi = $_GET['champ_recherche'];
+}
+
+if (!empty($texte_saisi)) {
+    $sql = "SELECT * FROM Commande WHERE NumeroBonDeCommande = :id";
+    $commande_prete = $db->prepare($sql);
+    $commande_prete->bindValue(':id', $texte_saisi);
+    $resultat_brut = $commande_prete->execute();
     $commande_trouvee = $resultat_brut->fetchArray(SQLITE3_ASSOC);
 }
 ?>
@@ -46,12 +49,25 @@ if ($texte_saisi !== null && !empty($texte_saisi) && $db instanceof SQLite3) {
                 <tr>
                     <td class="label-detail">Statut</td>
                     <td class="valeur-detail">
-                        <?php 
-                            $est_confirme = ($commande_trouvee['ConfirmerOuiOuNon'] == 1); 
-                            $classe = $est_confirme ? 'badge-livre' : 'badge-attente';
-                            $texte = $est_confirme ? 'Confirmé' : 'En attente';
-                        ?>
-                        <span class="badge <?php echo $classe; ?>"><?php echo $texte; ?></span>
+                    <?php 
+                        $statut = trim($commande_trouvee['statut'] ?? '');
+
+                        if ($statut == 'livré') {
+                            $classe_badge = 'badge-livre';
+                            $texte_badge = 'Livré';
+                        } elseif ($statut == 'retard') {
+                            $classe_badge = 'badge-retard';
+                            $texte_badge = 'En retard';
+                        } else {
+                            $classe_badge = 'badge-encours';
+                            $texte_badge = 'En cours';
+                        }
+                    ?>
+
+                    <span class="<?php echo $classe_badge; ?>">
+                        <?php echo $texte_badge; ?>
+                    </span>
+
                     </td>
                 </tr>
             </table>
@@ -60,8 +76,9 @@ if ($texte_saisi !== null && !empty($texte_saisi) && $db instanceof SQLite3) {
             
             <div style="position: relative;">
                 <a href="?" class="lien-fermer" style="position: absolute; right: 0; top: -10px;"><i class="fa-solid fa-xmark"></i></a>
-                <div class="message-erreur">
-                    <i class="fa-solid fa-circle-exclamation"></i> Commande introuvable
+                <div class="message-erreur ">
+                    <i class="fa-solid fa-circle-exclamation"></i> 
+                        Commande introuvable
                 </div>
             </div>
 

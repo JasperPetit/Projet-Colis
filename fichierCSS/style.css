@@ -16,6 +16,25 @@ body {
 }
 
 
+ .bouton-profil {
+background-color: var(--orange-principal);
+color: white;
+border: none;
+padding: 8px 16px;
+border-radius: 6px;
+cursor: pointer;
+font-weight: 600;
+background: #1e3a5f;
+text-decoration: none;
+}
+
+
+.profil-utilisateur span{
+margin-right: 15px;
+color: #64748b;
+} 
+
+
 .barre-laterale {
     width: 260px;
     background-color: var(--bleu-fonce);
@@ -212,125 +231,10 @@ body {
 
 .badge-encours { background-color: #dbeafe; color: #1e40af; }
 .badge-livre { background-color: #dcfce7; color: #166534; }
-.badge-attente { background-color: #fef3c7; color: #92400e; }
+.badge-retard { background-color: #fef3c7; color: #dc2626; }
 
 
 
-
-
-
-
-
-
-/*FICHIER NOUVELENVOIE.PHP*/
-
-/* Styles spécifiques pour Nouvel Envoi */
-.grille-nouvel-envoi {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 30px;
-    padding: 30px;
-}
-
-.bloc-blanc {
-    background: var(--blanc);
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    margin-bottom: 25px;
-}
-
-.titre-bloc {
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1.1rem;
-    color: var(--bleu-fonce);
-    border-bottom: 1px solid #f1f5f9;
-    padding-bottom: 10px;
-}
-
-.ligne-form {
-    display: flex;
-    gap: 20px;
-}
-
-.groupe-input {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.groupe-input label {
-    font-size: 0.85rem;
-    color: #64748b;
-    margin-bottom: 5px;
-    font-weight: 600;
-}
-
-.groupe-input input, .input-style {
-    padding: 10px;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    background-color: #f8fafc;
-}
-
-/* Boutons Récap */
-.ligne-recap {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    font-size: 0.95rem;
-}
-
-.bouton-calcul, .bouton-valider, .bouton-imprimer {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    margin-bottom: 10px;
-}
-
-.bouton-calcul { background: #f1f5f9; color: var(--bleu-fonce); }
-.bouton-valider { background: var(--bleu-fonce); color: white; }
-.bouton-imprimer { background: var(--orange-principal); color: white; }
-
-.bouton-profil {
-    background-color: var(--orange-principal);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    background: #1e3a5f; 
-    text-decoration: none;
-
-}
-
-.profil-utilisateur span{
-    margin-right: 15px; 
-    color: #64748b;
-}
-
-#liste-adresses {
-    position: absolute; 
-    top: 100%;            
-    left: 0; 
-    right: 0; 
-    background: white; 
-    border: 1px solid #ddd; 
-    border-radius: 0 0 8px 8px; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
-    z-index: 9999;      
-    list-style: none; 
-    padding: 0; 
-    margin: 0; 
-    display: none; 
-    max-height: 200px; 
-    overflow-y: auto;
-}
 
 
 
@@ -509,4 +413,174 @@ body {
 /* Utile pour cacher le bouton submit */
 .bouton-cache {
     display: none;
+}
+
+
+
+/* CSS NOUVEL ENVOI */
+
+/* 1. Mise en page du formulaire de recherche (Flexbox) */
+.form-recherche-flex {
+    display: flex;
+    align-items: flex-end; /* Aligne le bouton sur la ligne du bas du champ */
+    gap: 15px; /* Espace entre le champ et le bouton */
+}
+
+/* Le champ de saisie prend toute la place disponible */
+.form-recherche-flex .groupe-input {
+    flex: 1;
+    margin-bottom: 0; /* On annule la marge du bas définie ailleurs */
+}
+
+
+.table-resultats {
+    width: 100%;
+    border-collapse: separate; /* Permet les bordures arrondies */
+    border-spacing: 0;
+    margin-top: 10px;
+}
+
+.table-resultats th {
+    text-align: left;
+    padding: 15px;
+    background-color: #f8fafc;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.table-resultats td {
+    padding: 15px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+}
+
+.table-resultats tr:last-child td {
+    border-bottom: none;
+}
+
+/* 3. Badges et Icônes */
+.badge-poids {
+    background-color: #e0f2fe; /* Bleu très clair */
+    color: #0284c7; /* Bleu vif */
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.info-taille {
+    color: #94a3b8;
+    font-size: 0.90rem;
+    margin-left: 8px;
+}
+
+/* 4. Bouton Imprimer (Lien stylisé) */
+.btn-imprimer {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--bleu-fonce); /* Utilise ta variable, sinon #1e3a5f */
+    color: white !important; /* Force le blanc */
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+/* 5. Message d'erreur */
+.message-erreur {
+    background-color: #fef2f2;
+    color: #ef4444;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #fee2e2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 1. Met le champ et le bouton sur la même ligne */
+.form-recherche-flex {
+    display: flex;           /* Active le mode flexible */
+    align-items: flex-end;   /* Aligne le bouton sur le bas du champ texte */
+    gap: 15px;               /* Espace entre le champ et le bouton */
+    width: 100%;             /* Prend toute la largeur */
+}
+
+
+
+
+
+
+
+
+
+/* --- STYLE DE LA BARRE DE RECHERCHE CORRIGÉ --- */
+
+/* 1. Le conteneur global (Flexbox) */
+.form-recherche-wrapper {
+    display: flex;
+    align-items: flex-end; /* Aligne le bas du bouton avec le bas du champ */
+    gap: 15px;             /* Espace entre le champ et le bouton */
+    width: 100%;
+    position: relative;    /* Sécurité pour l'affichage */
+}
+
+/* 2. Le bloc qui contient l'input (Doit pouvoir rétrécir) */
+.form-recherche-wrapper .input-container {
+    flex: 1;               /* Prend toute la place disponible */
+    min-width: 0;          /* TRES IMPORTANT : Empêche le champ de déborder */
+    margin-bottom: 0;      
+}
+
+/* 3. Le champ de saisie (L'input lui-même) */
+.form-recherche-wrapper input {
+    width: 99.9%;           /* Remplit son conteneur */
+    box-sizing: border-box; /* CRUCIAL : Le padding est inclus dans la largeur */
+    height: 42px;          /* Hauteur fixe pour matcher le bouton */
+    padding: 0 15px;
+    
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    color: #334155;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+/* Effet au clic dans le champ */
+.form-recherche-wrapper input:focus {
+    background-color: white;
+    border-color: var(--bleu-fonce, #1e3a5f);
+    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+}
+
+/* 4. Le bouton Orange */
+.btn-recherche-orange {
+    flex-shrink: 0;        /* CRUCIAL : Interdit au bouton de se faire écraser ou passer dessus */
+    width: auto;           
+    height: 42px;          
+    margin-bottom: 0;      
+    padding: 0 25px;       
+    
+    background-color: #f59e0b; 
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;   /* Empêche le texte "Rechercher" de passer à la ligne */
+}
+
+.btn-recherche-orange:hover {
+    background-color: #d97706;
 }
