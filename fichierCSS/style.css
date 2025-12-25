@@ -203,13 +203,23 @@ color: #64748b;
     cursor: pointer;
 }
 
-/* Tableau */
 .section-tableau {
-    margin: 0 30px 30px 30px;
-    background: var(--blanc);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+    max-height: 70vh; 
+    
+
+    overflow-y: auto; 
+    
+
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background: white;
+}
+
+
+.tableau-suivi {
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .tableau-activite {
@@ -584,3 +594,5 @@ color: #64748b;
 .btn-recherche-orange:hover {
     background-color: #d97706;
 }
+
+

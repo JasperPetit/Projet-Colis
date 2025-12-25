@@ -2,9 +2,6 @@
     require_once 'config.php'; 
     require_once 'services/ExpeditionService.php';
 
-
-
-
     $mois = [
         1 => 'janvier', 2 => 'février', 3 => 'mars', 4 => 'avril', 
         5 => 'mai', 6 => 'juin', 7 => 'juillet', 8 => 'août', 
@@ -12,10 +9,16 @@
     ];
     $date = date('d') . ' ' . $mois[date('n')] . ' ' . date('Y') . "\n";
 
-
-
     $service = new ExpeditionService($db);
     $dernieres_commandes = $service->recupererResumeDernieresCommandes();
+    $nbColisEnretard = $service->nbColisRetard();
+    $nbColisLivré = $service->nbColisLivré();
+    $nbColisEnTransit = $service->nbColisEnTransit();
+
+    $total = $nbColisEnretard + $nbColisLivré + $nbColisEnTransit;
+
+
+
 
     
 ?>
@@ -59,29 +62,29 @@
         <section class="section-stats">
             <div class="carte-stat">
                 <div>
-                    <div style="color: #64748b;">Colis en attente</div>
-                    <div class="chiffre" style="color: #f59e0b;">24</div>
+                    <div style="color: #64748b;">Colis en retard</div>
+                    <div class="chiffre" style="color: #f59e0b;"><?php echo $nbColisEnretard; ?></div>
                 </div>
                 <i class="fa-regular fa-clock" style="color: #f59e0b;"></i>
             </div>
             <div class="carte-stat">
                 <div>
-                    <div style="color: #64748b;">En cours de livraison</div>
-                    <div class="chiffre" style="color: #3b82f6;">17</div>
+                    <div style="color: #64748b;">Colis en transit</div>
+                    <div class="chiffre" style="color: #3b82f6;"><?php echo $nbColisEnTransit ?></div>
                 </div>
                 <i class="fa-solid fa-truck" style="color: #3b82f6;"></i>
             </div>
             <div class="carte-stat">
                 <div>
-                    <div style="color: #64748b;">Livrés aujourd'hui</div>
-                    <div class="chiffre" style="color: #10b981;">43</div>
+                    <div style="color: #64748b;">Colis livrés</div>
+                    <div class="chiffre" style="color: #10b981;"><?php echo $nbColisLivré; ?></div>
                 </div>
                 <i class="fa-regular fa-circle-check" style="color: #10b981;"></i>
             </div>
             <div class="carte-stat">
                 <div>
-                    <div style="color: #64748b;">Total cette semaine</div>
-                    <div class="chiffre">156</div>
+                    <div style="color: #64748b;">Total</div>
+                    <div class="chiffre"><?php echo $total ?></div>
                 </div>
                 <i class="fa-solid fa-boxes-stacked" style="color: #94a3b8;"></i>
             </div>
@@ -111,26 +114,35 @@
 
         <table class="tableau-activite">
             <?php foreach ($dernieres_commandes as $commande) : ?>
-            <?php 
-                $est_confirme = ($commande['statut'] == "livré");
-                $classe_badge = $est_confirme ? 'badge-livre' : 'badge-encours';
-                $texte_badge = $est_confirme ? 'Confirmé' : 'En attente';
-            ?>
-            <tr>
-                <td width="50"><i class="fa fa-box" style="color: #cbd5e1;"></i></td>
-                <td>
-                    <strong><?php echo htmlspecialchars($commande['NumeroBonDeCommande']); ?></strong><br>
-                    <small><?php echo htmlspecialchars($commande['AdresseArivee']); ?></small>
-                </td>
-                <td style="text-align: right; color: #94a3b8;">
-                    <?php echo htmlspecialchars($commande['nbColis']); ?> colis
-                </td>
-                <td style="text-align: right;">
-                    <span class="badge <?php echo $classe_badge; ?>">
-                        <?php echo $texte_badge; ?>
-                    </span>
-                </td>
-            </tr>
+                <?php 
+                        $statut = trim($commande['statut'] ?? '');
+
+                        if ($statut == 'livré') {
+                            $classe_badge = 'badge-livre';
+                            $texte_badge = 'Livré';
+                        } elseif ($statut == 'retard') {
+                            $classe_badge = 'badge-retard';
+                            $texte_badge = 'En retard';
+                        } else {
+                            $classe_badge = 'badge-encours';
+                            $texte_badge = 'En cours';
+                        }
+                ?>
+                <tr>
+                    <td width="50"><i class="fa fa-box" style="color: #cbd5e1;"></i></td>
+                    <td>
+                        <strong><?php echo htmlspecialchars($commande['NumeroBonDeCommande']); ?></strong><br>
+                        <small><?php echo htmlspecialchars($commande['AdresseArivee']); ?></small>
+                    </td>
+                    <td style="text-align: right; color: #94a3b8;">
+                        <?php echo htmlspecialchars($commande['nbColis']); ?> colis
+                    </td>
+                    <td style="text-align: right;">
+                        <span class="badge <?php echo $classe_badge; ?>">
+                            <?php echo $texte_badge; ?>
+                        </span>
+                    </td>
+                </tr>
             <?php endforeach; ?>
 
 

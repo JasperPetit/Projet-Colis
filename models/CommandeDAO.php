@@ -137,4 +137,50 @@ class CommandeDAO {
         
         return $liste;
     }
+
+    public function recupererToutesLesCommandes() {
+        
+        $requete_sql = "SELECT c.NumeroBonDeCommande, c.AdresseArivee, c.Date_, c.nbColis, c.statut,
+                       col.Poids,
+                       u.Prenom, u.nom
+                FROM Commande c
+                LEFT JOIN Colis col ON c.NumeroBonDeCommande = col.NumeroBonDeCommande
+                LEFT JOIN devis d ON c.idDevis = d.idDevis
+                LEFT JOIN Utilisateur u ON d.identifiantCAS = u.identifiantCAS
+                ORDER BY c.Date_ DESC";
+
+        $resultat = $this->connexion_bdd->query($requete_sql);
+        
+        $liste = [];
+        while ($ligne = $resultat->fetchArray(SQLITE3_ASSOC)) {
+            $liste[] = $ligne;
+        }
+        
+        return $liste;
+    }
+
+
+    public function recupererColisEnRetard(){
+        $requete_sql = "SELECT COUNT(*) FROM commande WHERE statut='retard'";
+
+        $resultat= $this->connexion_bdd->querySingle($requete_sql);
+        return $resultat;
+    }
+
+    public function recupererColisLivré(){
+        $requete_sql = "SELECT COUNT(*) FROM commande WHERE statut='livré'";
+
+        $resultat= $this->connexion_bdd->querySingle($requete_sql);
+        return $resultat;
+    }
+
+    public function recupererColisEnTransit(){
+        $requete_sql = "SELECT COUNT(*) FROM commande WHERE statut='en_cours'";
+
+        $resultat= $this->connexion_bdd->querySingle($requete_sql);
+        return $resultat;
+    }
+
+
+
 }

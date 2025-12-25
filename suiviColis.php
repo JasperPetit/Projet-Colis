@@ -2,10 +2,15 @@
     require_once 'config.php'; 
     require_once 'services/ExpeditionService.php';
 
-
     $service_postal = new ExpeditionService($db);
-
+    
     $nombre_total_colis = $service_postal->recupNbDeColis();
+    $liste_commandes = $service_postal->recupererHistoriqueComplet();
+
+
+    $liste_commandes = $service_postal->recupererHistoriqueComplet();
+    
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -22,10 +27,9 @@
     <main class="contenu-principal">
         <header class="barre-haute">
             <?php include 'rechercheColis.php'; ?>
-
             <div class="profil-utilisateur">
                 <button class="bouton-profil">
-                    <i class="fa-solid fa-user-tie icone"></i> <?php echo $nom_complet; ?>
+                    <i class="fa-solid fa-user-tie icone"></i> <?php echo isset($nom_complet) ? $nom_complet : 'Utilisateur'; ?>
                 </button>     
             </div>
         </header>
@@ -37,8 +41,9 @@
 
         <section class="section-filtres">
             <div class="barre-filtres">
-                <button class="filtre-item actif">Tous <span class="badge-count"><?php echo $nombre_total_colis; ?></span></button> 
-
+                <span class="filtre-item actif">Tous    
+                    <span class="badge-count"><?php echo $nombre_total_colis; ?></span>
+                </span> 
             </div>
         </section>
 
@@ -47,57 +52,61 @@
                 <thead>
                     <tr>
                         <th>Numéro</th>
-                        <th>Destinataire</th>
+                        <th>Client</th>
                         <th>Destination</th>
-                        <th>Type</th>
+                        <th>Date</th>
                         <th>Poids</th>
-                        <th>nombre de colis</th>
+                        <th>Colis</th>
                         <th>Statut</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
+                  
                 <tbody>
-                    <tr>
-                        <td><i class="fa fa-box icone-table"></i> CP2024-11-001</td>
-                        <td>Jean Martin</td>
-                        <td><i class="fa fa-location-dot"></i> Paris 13e</td>
-                        <td>Standard</td>
-                        <td>1.2 kg</td>
-                        <td>1</td>
-                        <td><span class="badge badge-livre">Livré</span></td>
-                        <td><a href="#" class="lien-details">Détails</a></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-box icone-table"></i> CP2024-11-002</td>
-                        <td>Sophie Laurent</td>
-                        <td><i class="fa fa-location-dot"></i> Villetaneuse</td>
-                        <td>Express</td>
-                        <td>3.5 kg</td>
-                        <td>2</td>
-                        <td><span class="badge badge-encours">En cours</span></td>
-                        <td><a href="#" class="lien-details">Détails</a></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-box icone-table"></i> CP2024-11-003</td>
-                        <td>Pierre Dubois</td>
-                        <td><i class="fa fa-location-dot"></i> Saint-Denis</td>
-                        <td>Standard</td>
-                        <td>0.8 kg</td>
-                        <td>1</td>
-                        <td><span class="badge badge-livre">Livré</span></td>
-                        <td><a href="#" class="lien-details">Détails</a></td>
-                    </tr>
-                    <tr>
-                        <td><i class="fa fa-box icone-table"></i> CP2024-11-004</td>
-                        <td>Marie Chen</td>
-                        <td><i class="fa fa-location-dot"></i> Bobigny</td>
-                        <td>Standard</td>
-                        <td>2.1 kg</td>
-                        <td>3</td>
-                        <td><span class="badge badge-encours">En cours</span></td>
-                        <td><a href="#" class="lien-details">Détails</a></td>
-                    </tr>
+                    <?php foreach ($liste_commandes as $colis): ?>
+                        <?php 
+                            // 1. Récupération BRUTE (Sans gestion d'erreur)
+                            $prenom = $colis['Prenom'];
+                            $nom = $colis['nom'];
+                            $statut = $colis['statut'];
+                            $poids = $colis['Poids'];
+
+                            // 2. Choix de la couleur (nécessaire pour le badge CSS)
+                            if ($statut == 'livré' ) {
+                                $classe_badge = 'badge-livre';
+                                $statut_texte="Livré";
+                            } elseif ($statut == 'retard') {
+                                $classe_badge = 'badge-retard';
+                                $statut_texte="En retard";
+
+                            } else {
+                                $classe_badge = 'badge-encours';
+                                $statut_texte="En cours";
+                            }
+                        ?>
+                        <tr>
+                            <td>
+                                <i class="fa fa-box icone-table" style="color: #cbd5e1;"></i> 
+                                <strong><?php echo $colis['NumeroBonDeCommande']; ?></strong>
+                            </td>
+                            <td>
+                                <span style="font-weight: 600; color: #1e293b;"><?php echo $prenom . ' ' . $nom; ?></span>
+                            </td>
+                            <td>
+                                <i class="fa fa-location-dot"></i> 
+                                <?php echo $colis['AdresseArivee']; ?>
+                            </td>
+                            <td><?php echo $colis['Date_']; ?></td>
+                            <td><?php echo $poids; ?> kg</td>
+                            <td style="text-align: center;"><?php echo $colis['nbColis']; ?></td>
+                            <td>
+                                <span class="badge <?php echo $classe_badge; ?>">
+                                    <?php echo $statut_texte; ?>
+                                </span>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
+                
             </table>
         </section>
     </main>

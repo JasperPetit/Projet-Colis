@@ -22,7 +22,23 @@ class ExpeditionService {
     public function rechercherEtiquettes($terme) {
 
     return $this->commandeDAO->trouverCommandesParCritere($terme);
-}
+    }
+
+    public function recupererHistoriqueComplet() {
+        return $this->commandeDAO->recupererToutesLesCommandes();
+    }
+
+    public function nbColisRetard(){
+        return $this->commandeDAO->recupererColisEnRetard();
+    }
+
+    public function nbColisLivré(){
+        return $this->commandeDAO->recupererColisLivré();
+    }
+
+    public function nbColisEnTransit(){
+        return $this->commandeDAO->recupererColisEnTransit();
+    }
 
     
 }

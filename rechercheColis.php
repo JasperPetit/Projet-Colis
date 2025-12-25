@@ -50,7 +50,7 @@ if (!empty($texte_saisi)) {
                     <td class="label-detail">Statut</td>
                     <td class="valeur-detail">
                     <?php 
-                        $statut = trim($commande_trouvee['statut'] ?? '');
+                        $statut = $commande_trouvee['statut'] ?? '';
 
                         if ($statut == 'livré') {
                             $classe_badge = 'badge-livre';
