@@ -1,0 +1,512 @@
+/* Couleurs principales */
+:root {
+    --bleu-fonce: #1e3a5f;
+    --bleu-secondaire: #2c4c70;
+    --orange-principal: #f59e0b;
+    --gris-fond: #f8fafc;
+    --blanc: #ffffff;
+}
+
+body {
+    background-color: var(--gris-fond);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    height: 100vh;
+}
+
+
+.barre-laterale {
+    width: 260px;
+    background-color: var(--bleu-fonce);
+    color: #cbd5e1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.logo-conteneur {
+    padding: 20px;
+    text-align: center; 
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.logo-universite {
+    max-width: 80%;    /* Empêche le logo de déborder */
+    height: auto;     
+    display: block;    
+    margin: 0 auto 10px auto; /* Centre horizontalement et ajoute de l'espace en bas */
+    filter: brightness(0) invert(1); /* Optionnel : rend le logo blanc si votre logo original est noir */
+}
+
+.sous-titre {
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+
+
+
+.navigation {
+    padding: 20px 15px;
+    flex-grow: 1;
+}
+
+
+.icone {
+    margin-right: 10px; /* Augmente l'espace entre l'icône et le texte */
+    width: 20px;        /* Fixe la largeur pour que les textes soient bien alignés verticalement */
+    text-align: center; /* Centre l'icône dans son petit espace */
+    font-size: 1.1rem;  /* Optionnel : ajuste légèrement la taille de l'icône */
+}
+
+/* Assurez-vous aussi que le lien-navigation utilise Flexbox pour l'alignement */
+.lien-navigation {
+    display: flex;
+    align-items: center; /* Aligne verticalement l'icône et le texte au milieu */
+    padding: 12px 15px;
+    color: #cbd5e1;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    transition: 0.3s;
+}
+
+.lien-nav {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    transition: 0.3s;
+}
+
+.lien-nav:hover {
+    background-color: #334155;
+}
+
+.lien-actif {
+    background-color: var(--orange-principal);
+    color: white;
+}
+
+/* Contenu Principal */
+.contenu-principal {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.barre-haute {
+    background-color: var(--blanc);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.zone-recherche input {
+    background-color: #f1f5f9;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    width: 300px;
+}
+
+.bouton-agent {
+    background-color: var(--orange-principal);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Grille de statistiques */
+.section-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 30px;
+}
+
+.carte-stat {
+    background: var(--blanc);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+}
+
+.chiffre {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Boutons d'action */
+.zone-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 0 30px 30px 30px;
+}
+
+.bouton-action-bleu {
+    background-color: var(--bleu-secondaire);
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    border: none;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.bouton-action-orange {
+    background-color: var(--orange-principal);
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    border: none;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Tableau */
+.section-tableau {
+    margin: 0 30px 30px 30px;
+    background: var(--blanc);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.tableau-activite {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableau-activite td {
+    padding: 15px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.badge-encours { background-color: #dbeafe; color: #1e40af; }
+.badge-livre { background-color: #dcfce7; color: #166534; }
+.badge-attente { background-color: #fef3c7; color: #92400e; }
+
+
+
+
+
+
+
+
+
+/*FICHIER NOUVELENVOIE.PHP*/
+
+/* Styles spécifiques pour Nouvel Envoi */
+.grille-nouvel-envoi {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    padding: 30px;
+}
+
+.bloc-blanc {
+    background: var(--blanc);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+}
+
+.titre-bloc {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    color: var(--bleu-fonce);
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 10px;
+}
+
+.ligne-form {
+    display: flex;
+    gap: 20px;
+}
+
+.groupe-input {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.groupe-input label {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.groupe-input input, .input-style {
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background-color: #f8fafc;
+}
+
+/* Boutons Récap */
+.ligne-recap {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+}
+
+.bouton-calcul, .bouton-valider, .bouton-imprimer {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.bouton-calcul { background: #f1f5f9; color: var(--bleu-fonce); }
+.bouton-valider { background: var(--bleu-fonce); color: white; }
+.bouton-imprimer { background: var(--orange-principal); color: white; }
+
+.bouton-profil {
+    background-color: var(--orange-principal);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    background: #1e3a5f; 
+    text-decoration: none;
+
+}
+
+.profil-utilisateur span{
+    margin-right: 15px; 
+    color: #64748b;
+}
+
+#liste-adresses {
+    position: absolute; 
+    top: 100%;            
+    left: 0; 
+    right: 0; 
+    background: white; 
+    border: 1px solid #ddd; 
+    border-radius: 0 0 8px 8px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+    z-index: 9999;      
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+    display: none; 
+    max-height: 200px; 
+    overflow-y: auto;
+}
+
+
+
+/* CSS POUR LA PAGE SUIVI DE COLIS */
+
+.section-filtres {
+    padding: 20px 30px;
+}
+
+.barre-filtres {
+    background: var(--blanc);
+    display: flex;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    gap: 10px;
+}
+
+.filtre-item {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #64748b;
+    font-weight: 600;
+    transition: 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.filtre-item:hover {
+    background-color: #f1f5f9;
+}
+
+.filtre-item.actif {
+    background-color: var(--bleu-fonce);
+    color: white;
+}
+
+.badge-count {
+    background: rgba(100, 116, 139, 0.2);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+}
+
+.filtre-item.actif .badge-count {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Tableau de suivi */
+.tableau-suivi {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableau-suivi th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    padding: 15px;
+    text-align: left;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.tableau-suivi td {
+    padding: 15px;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.95rem;
+    color: #334155;
+}
+
+.icone-table {
+    color: #94a3b8;
+    margin-right: 8px;
+}
+
+.fa-location-dot {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-right: 5px;
+}
+
+.lien-details {
+    color: var(--bleu-secondaire);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.lien-details:hover {
+    text-decoration: underline;
+}
+
+
+
+/* --- STYLE POUR LA RECHERCHE FLOTTANTE --- */
+
+/* Le conteneur du résultat (la carte flottante) */
+.resultat-flottant {
+    position: absolute;
+    top: 80px;
+    right: 30px;
+    width: 350px;
+    background: var(--blanc);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    padding: 20px;
+    z-index: 1000;
+    border: 1px solid #e2e8f0;
+}
+
+/* L'entête avec le titre et la croix */
+.entete-resultat {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 10px;
+}
+
+.entete-resultat h4 {
+    margin: 0;
+    color: var(--bleu-fonce);
+    font-size: 1.1rem;
+}
+
+/* La petite croix pour fermer */
+.lien-fermer {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+
+.lien-fermer:hover {
+    color: var(--orange-principal);
+}
+
+/* Le tableau des détails */
+.tableau-details {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableau-details td {
+    padding: 10px 0;
+    font-size: 0.95rem;
+}
+
+.label-detail {
+    color: #64748b;
+}
+
+.valeur-detail {
+    text-align: right;
+    font-weight: bold;
+    color: var(--bleu-secondaire);
+}
+
+/* Message d'erreur */
+.message-erreur {
+    color: #ef4444;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    background-color: #fef2f2;
+    border-radius: 8px;
+}
+
+/* Utile pour cacher le bouton submit */
+.bouton-cache {
+    display: none;
+}

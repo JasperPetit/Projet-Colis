@@ -1,0 +1,108 @@
+<?php
+
+class CommandeDAO {
+    private $connexion_bdd;
+
+    public function __construct($base_de_donnees) {
+        $this->connexion_bdd = $base_de_donnees;
+    }
+
+    public function recupererNumeroBonParIdentifiantCas($identifiant_cas) {
+
+        $requete_sql = "SELECT Commande.NumeroBonDeCommande 
+                        FROM Commande 
+                        INNER JOIN devis ON Commande.idDevis = devis.idDevis 
+                        INNER JOIN Utilisateur ON devis.identifiantCAS = Utilisateur.identifiantCAS 
+                        WHERE Utilisateur.identifiantCAS = :cas";
+
+        $preparation = $this->connexion_bdd->prepare($requete_sql);
+
+        $preparation->bindValue(':cas', $identifiant_cas, SQLITE3_INTEGER);
+
+
+        $resultat = $preparation->execute();
+        $ligne = $resultat->fetchArray(SQLITE3_ASSOC);
+
+
+        if ($ligne) {
+            return $ligne['NumeroBonDeCommande'];
+        } else {
+            return null;
+        }
+    }
+
+
+    public function recupererToutesLesCommandesParUtilisateur($identifiant_cas) {
+
+        $requete_sql = "SELECT Commande.*, devis.prix 
+                        FROM Commande 
+                        INNER JOIN devis ON Commande.idDevis = devis.idDevis 
+                        WHERE devis.identifiantCAS = :cas";
+
+        $preparation = $this->connexion_bdd->prepare($requete_sql);
+        $preparation->bindValue(':cas', $identifiant_cas, SQLITE3_INTEGER);
+        
+        $resultat = $preparation->execute();
+
+        $liste_commandes = [];
+
+  
+        while ($commande_trouvee = $resultat->fetchArray(SQLITE3_ASSOC)) {
+            $liste_commandes[] = $commande_trouvee;
+        }
+
+        return $liste_commandes;
+    }
+
+
+    public function recupereToutesLesInfosParCommandes($NumeroBonDeCommande) {
+
+        $requete_sql = "SELECT cmd.NumeroBonDeCommande, cmd.AdresseArivee, cmd.nbColis, 
+                               c.Poids, c.DateAriveeReel, c.DateAriveePrevu
+                        FROM Colis c 
+                        INNER JOIN Commande cmd ON c.NumeroBonDeCommande = cmd.NumeroBonDeCommande 
+                        WHERE cmd.NumeroBonDeCommande = :numBon";
+
+        $preparation = $this->connexion_bdd->prepare($requete_sql);
+        $preparation->bindValue(':numBon', $NumeroBonDeCommande, SQLITE3_INTEGER);
+        $resultat = $preparation->execute();
+        $liste_details = [];
+        while ($ligne = $resultat->fetchArray(SQLITE3_ASSOC)) {
+            $liste_details[] = $ligne;
+        }
+        return $liste_details;
+    }
+
+
+    public function recupererLesDeuxDernieresCommandes() {
+
+        $requete_sql = "SELECT NumeroBonDeCommande, AdresseArivee, ConfirmerOuiOuNon, nbColis 
+                        FROM Commande 
+                        ORDER BY NumeroBonDeCommande ASC 
+                        LIMIT 2";
+
+        $preparation = $this->connexion_bdd->prepare($requete_sql);
+        $resultat = $preparation->execute();
+
+        $liste_commandes = [];
+        while ($ligne = $resultat->fetchArray(SQLITE3_ASSOC)) {
+            $liste_commandes[] = $ligne;
+        }
+
+        return $liste_commandes;
+    }
+
+    public function recupNbDeColis() {
+
+        $requete_sql = "SELECT COUNT(*) FROM Commande";
+
+
+        $resultat = $this->connexion_bdd->querySingle($requete_sql);
+
+        if ($resultat !== false && $resultat !== null) {
+            return $resultat;
+        } else {
+            return 0;
+        }
+    }
+}
