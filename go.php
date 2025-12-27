@@ -1,47 +1,38 @@
-<?php
-// 1. On démarre la session PHP pour garder les infos en mémoire
-session_start();
-
-// 2. On récupère les informations envoyées par Apache
-// $_SERVER['REMOTE_USER'] contient le login (ex: jdupont)
-$login = $_SERVER['REMOTE_USER'] ?? null;
-
-// $_SERVER['HTTP_CAS_DISPLAYNAME'] contient le nom complet (ex: Jean Dupont)
-$nomComplet = $_SERVER['HTTP_CAS_DISPLAYNAME'] ?? 'Invité';
-?>
+<?php require_once 'db.php';?>
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ma Page Protégée</title>
-    <style>
-        body { font-family: sans-serif; margin: 40px; line-height: 1.6; }
-        .card { border: 1px solid #ccc; padding: 20px; border-radius: 8px; background: #f9f9f9; }
-        .highlight { color: #0056b3; font-weight: bold; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
 
-    <div class="card">
-        <h1>Espace Privé de l'Université</h1>
+<h1>Bienvuenue sur la page demandeur</h1>
 
-        <?php if ($login): ?>
-            <p>Félicitations, vous êtes connecté !</p>
-            <ul>
-                <li>Votre identifiant (UID) : <span class="highlight"><?php echo $login; ?></span></li>
-                <li>Votre identité : <span class="highlight"><?php echo $nomComplet; ?></span></li>
-            </ul>
-            
-            <hr>
-            <p>Cette page n'est visible <strong>que</strong> par les membres de l'université.</p>
-            
-            <p><a href="https://cas.univ-votre-etab.fr/cas/logout">Se déconnecter du CAS</a></p>
-            
-        <?php else: ?>
-            <p>Si vous voyez ce message, c'est que la protection Apache est mal configurée.</p>
-        <?php endif; ?>
-    </div>
+<h2>Ajouter un colis</h2>
+
+<form action="infos.php" method="POST">
+    <label for="NCommande">Numero de la commade : </label>    
+    <input type="text" name="NCommande" placeholder="12345">
+    
+    <label for="Taille">Taille du colis: </label>    
+    <input type="text" name="Taille" placeholder="20">
+    
+    <label for="Poids">Poids du colis : </label>    
+    <input type="text" name="Poids" placeholder="15">
+
+    <label for="dateArr">Date d'arrivée prévu du colis : </label>    
+    <input type="date" name="dateArr">
+
+    <button type="submit" >Envoyer</button>
+
+</form>
+
+
+
+
 
 </body>
 </html>
