@@ -1,0 +1,132 @@
+/* Page de connexion - Style avec les couleurs du site */
+
+body.page-login {
+    background: linear-gradient(135deg, var(--bleu-fonce) 0%, var(--bleu-secondaire) 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.conteneur-connexion {
+    background: var(--blanc);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 420px;
+    overflow: hidden;
+}
+
+.entete-connexion {
+    background: linear-gradient(135deg, var(--bleu-fonce) 0%, var(--bleu-secondaire) 100%);
+    color: white;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+.entete-connexion img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+    background: white;
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.entete-connexion h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.entete-connexion p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.corps-connexion {
+    padding: 40px 30px;
+}
+
+.message-erreur {
+    background: #fef2f2;
+    color: #ef4444;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #fee2e2;
+}
+
+.groupe-input {
+    margin-bottom: 20px;
+}
+
+.groupe-input label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.conteneur-input {
+    position: relative;
+}
+
+.conteneur-input i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+
+.groupe-input input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s;
+    box-sizing: border-box;
+}
+
+.groupe-input input:focus {
+    outline: none;
+    border-color: var(--bleu-fonce);
+    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+}
+
+.bouton-connexion {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--bleu-fonce) 0%, var(--bleu-secondaire) 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.bouton-connexion:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(30, 58, 95, 0.3);
+}
+
+.bouton-connexion:active {
+    transform: translateY(0);
+}
+
+.pied-connexion {
+    text-align: center;
+    padding: 20px;
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 13px;
+}

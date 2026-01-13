@@ -596,3 +596,41 @@ color: #64748b;
 }
 
 
+
+
+
+/* --- BOUTON DE DÉCONNEXION EN HAUT À DROITE --- */
+
+.profil-utilisateur {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.bouton-logout {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.bouton-logout:hover {
+    background-color: #dc2626;
+    transform: translateY(-1px);
+}
+
+.bouton-logout:active {
+    transform: translateY(0);
+}
+
+.bouton-logout i {
+    font-size: 0.9rem;
+}

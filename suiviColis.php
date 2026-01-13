@@ -1,4 +1,5 @@
 <?php 
+    require_once 'auth.php';
     require_once 'config.php'; 
     require_once 'services/ExpeditionService.php';
 
@@ -29,8 +30,11 @@
             <?php include 'rechercheColis.php'; ?>
             <div class="profil-utilisateur">
                 <button class="bouton-profil">
-                    <i class="fa-solid fa-user-tie icone"></i> <?php echo isset($nom_complet) ? $nom_complet : 'Utilisateur'; ?>
-                </button>     
+                    <i class="fa-solid fa-user-tie icone"></i> <?php echo $nom_complet; ?>
+                </button>
+                <a href="logout.php" class="bouton-logout">
+                    <i class="fa fa-sign-out-alt"></i> Déconnexion
+                </a>     
             </div>
         </header>
 
@@ -64,13 +68,13 @@
                 <tbody>
                     <?php foreach ($liste_commandes as $colis): ?>
                         <?php 
-                            // 1. Récupération BRUTE (Sans gestion d'erreur)
+                            
                             $prenom = $colis['Prenom'];
                             $nom = $colis['nom'];
                             $statut = $colis['statut'];
                             $poids = $colis['Poids'];
 
-                            // 2. Choix de la couleur (nécessaire pour le badge CSS)
+                      
                             if ($statut == 'livré' ) {
                                 $classe_badge = 'badge-livre';
                                 $statut_texte="Livré";

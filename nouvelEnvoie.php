@@ -1,4 +1,5 @@
 <?php 
+require_once 'auth.php';
 require_once 'config.php';
 require_once 'services/ExpeditionService.php';
 
@@ -42,10 +43,14 @@ if (isset($_GET['recherche']) && !empty($_GET['recherche'])) {
     <main class="contenu-principal">
         <header class="barre-haute">
             <?php include 'rechercheColis.php'; ?>
+            
             <div class="profil-utilisateur">
                 <button class="bouton-profil">
-                    <i class="fa-solid fa-user-tie icone"></i> <?php echo $nom_affiche; ?>
-                </button>     
+                    <i class="fa-solid fa-user-tie icone"></i> <?php echo $nom_complet; ?>
+                </button>
+                <a href="logout.php" class="bouton-logout">
+                    <i class="fa fa-sign-out-alt"></i> Déconnexion
+                </a>     
             </div>
         </header>
 

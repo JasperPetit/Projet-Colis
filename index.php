@@ -1,4 +1,5 @@
 <?php 
+    require_once 'auth.php';
     require_once 'config.php'; 
     require_once 'services/ExpeditionService.php';
 
@@ -43,10 +44,13 @@
 
 
 
-            <div class="profil-utilisateur">
+           <div class="profil-utilisateur">
                 <button class="bouton-profil">
                     <i class="fa-solid fa-user-tie icone"></i> <?php echo $nom_complet; ?>
-                </button>     
+                </button>
+                <a href="logout.php" class="bouton-logout">
+                    <i class="fa fa-sign-out-alt"></i> Déconnexion
+                </a>     
             </div>
 
 
@@ -91,13 +95,20 @@
         </section>
 
         <section class="zone-actions">
-            <button class="bouton-action-bleu">
-                <i class="fa fa-expand fa-2x" style="margin-right: 20px;"></i>
+
+
+
+            <a href="suiviColis.php" class="bouton-action-bleu" style="text-decoration: none;">
+                <i class="fa fa-box mr-2 icone" style="margin-right: 20px;"></i>
                 <div>
-                    <strong>Scanner un colis</strong><br>
-                    <small>Scannez le code-barres d'un colis</small>
+                    <strong>Suivi des colis</strong><br>
+                    <small>Suivez tous les colis</small>
                 </div>
-            </button>
+            </a>
+
+
+
+
             <a href="nouvelEnvoie.php" class="bouton-action-orange" style="text-decoration: none;">
                 <i class="fa fa-paper-plane fa-2x" style="margin-right: 20px;"> </i>
                 <div>
@@ -105,6 +116,9 @@
                     <small>Créer un nouveau bon d'expédition</small>
                 </div>
             </a>
+
+
+
         </section>
 
         <section class="section-tableau">
