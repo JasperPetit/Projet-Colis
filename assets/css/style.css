@@ -339,6 +339,35 @@ h1 {
     color: #9A3412 !important;
 }
 
+.statue-devis {
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    display: inline-block;
+    background: #E2E8F0; /* Gris par défaut */
+    color: #475569;
+}
+
+
+.statue-devis.statut-refuse {
+    background: #FEE2E2 !important;
+    color: #991B1B !important;
+}
+
+
+.statue-devis.statut-accepte {
+    background: #DCFCE7 !important;
+    color: #166534 !important;
+}
+
+.statue-devis.statut-non-signe {
+    background: #FEF3C7 !important; /* Fond jaune clair */
+    color: #92400E !important;      /* Texte orange foncé */
+}
 /* --- GRID FOURNISSEURS --- */
 .fournisseurs-grid {
     display: grid;
@@ -419,8 +448,13 @@ form input, form select, form textarea {
     backdrop-filter: blur(4px);
 }
 
+
+
 .contenu-modale {
     border: none !important;
     border-radius: 16px !important;
     padding: 40px !important;
 }
+
+
+
