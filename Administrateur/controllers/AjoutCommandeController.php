@@ -1,27 +1,37 @@
 <?php
     $erreur = null;
 
-    // Si le formulaire a été envoyé (méthode POST) on traite les données 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $NumeroBonDeCommande = $_POST['NumeroBonDeCommande'] ?? '';
-        $Date = $_POST['Date_'] ?? '';
+        $idDevis = $_POST['idDevis'] ?? '';
+        $AdresseDepart = $_POST['AdresseDepart'] ?? '';
         $nbColis = $_POST['nbColis'] ?? '';
         $AdresseArivee = $_POST['AdresseArivee'] ?? '';
+        $dateArrivee = $_POST['DateArrivee'] ?? ''; // La date saisie dans la vue
 
-        if (!empty($NumeroBonDeCommande) && !empty($Date) && !empty($AdresseArivee)) {
+        if (!empty($NumeroBonDeCommande) && !empty($idDevis) && !empty($dateArrivee)) {
             try {
-                ajouterCommande($db, $NumeroBonDeCommande, $AdresseArivee, $Date, $nbColis);
-                
-                // Redirection vers la liste des commandes
-                header("Location: pageMesCommandes.php");
-                exit();
+                // Récupération de la date du devis (pour le modèle)
+                $dateDepart = getDateDepart($db, $idDevis);
+
+                if ($dateDepart) {
+                    // Appel à la fonction avec les deux dates
+                    ajouterCommande($db, $NumeroBonDeCommande, $AdresseDepart, $AdresseArivee, $dateDepart, $nbColis, $idDevis, $dateArrivee);
+
+                    header("Location: pageMesCommandes.php");
+                    exit();
+                }
             } catch (Exception $e) {
-                $erreur = "Erreur SQL : " . $e->getMessage();
+                // Gestion de l'erreur UNIQUE constraint failed
+                if (strpos($e->getMessage(), 'UNIQUE constraint failed') !== false) {
+                    $erreur = "Le numéro de commande n°$NumeroBonDeCommande existe déjà.";
+                } else {
+                    $erreur = "Erreur SQL : " . $e->getMessage();
+                }
             }
-        } else {
-            $erreur = "Veuillez remplir les champs obligatoires !";
         }
     }
 
+    $listeDevis = getListeDevis($db);
     $resNomEntreprise = getListeNomsFournisseurs($db);
 ?>

@@ -71,7 +71,12 @@
                     
                     <div class="commande-info">
                         <h3>Commande n°<?= htmlspecialchars($commande['NumeroBonDeCommande']) ?></h3>
-                        <p>📅 Date : <?= date("d/m/Y", strtotime($commande['Date_'])) ?></p>
+                        <p>📅 Date de départ : <?= !empty($commande['DateDepart']) ? date("d/m/Y", strtotime($commande['DateDepart'])) : 'Non définie' ?></p>                        
+
+                        <div class="itineraire">
+                            <p><i class="fas fa-map-marker-alt" style="color: #e74c3c;"></i> Arrive : <?= htmlspecialchars($commande['AdresseArivee'] ?? 'Non renseigné') ?></p>
+                        </div>
+
                         <p>
                             <i class="fas fa-box"></i> <?= $commande['nbColis'] ?> colis | 
                             <i class="fas fa-truck"></i> <?= !empty($commande['nomEntreprise']) ? htmlspecialchars($commande['nomEntreprise']) : 'Fournisseur inconnu' ?>
@@ -83,16 +88,30 @@
                         <span class="statue-colis <?= getClasseCSSStatut($commande['statut']) ?>">
                             <?= htmlspecialchars($commande['statut']) ?>
                         </span>
-                        <p>Prévu : <?= !empty($commande['DateAriveePrevu']) ? htmlspecialchars($commande['DateAriveePrevu']) : '--/--/----' ?></p>
-                        <a href="#" class="commande-détails">Voir détails</a>
+                        <p>Arrivée prévu : <?= !empty($commande['Date_']) ? htmlspecialchars(date("d/m/Y", strtotime($commande['Date_']))) : '--/--/----' ?></p>
+
+                        <a href="pageModifierCommande.php?modifier=<?= $commande['NumeroBonDeCommande'] ?>" class="commande-détails">
+                                Modifier
+                        </a>      
+
+                        <form method="POST" style="display: inline; margin: 0; padding: 0; border: none; background: none;" onsubmit="return confirmerSuppressionCommande('<?= htmlspecialchars($commande['NumeroBonDeCommande']) ?>')">
+                            <input type="hidden" name="NumeroBonDeCommande" value="<?= $commande['NumeroBonDeCommande'] ?>">    
+                            <button type="submit" name="supprimer_commande" class="bouton-supprimer">
+                                Supprimer
+                            </button>
+                        </form>
+
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
-        
     </main>
 
     <script>
+        function confirmerSuppressionCommande(NumeroBonDeCommande) {
+            return confirm("Êtes-vous sûr de vouloir supprimer le fournisseur '" + NumeroBonDeCommande + "' ?\n\nCette action est irréversible.");
+        }
+
         function filtrerCommandes() {
             const inputRecherche = document.getElementById("searchBar");
             const filtreRecherche = inputRecherche.value.toUpperCase();
@@ -104,7 +123,6 @@
             const container = document.getElementById("listeCommandes");
             const cards = Array.from(container.getElementsByClassName("commande-card"));
             
-            // Étape 1 : Filtrage
             const cardsVisibles = cards.filter(function(card) {
                 const h3 = card.getElementsByTagName("h3")[0];
                 const txtValue = h3.textContent || h3.innerText;
@@ -119,21 +137,18 @@
                 return matchRecherche && matchStatut && matchConfirmation;
             });
             
-            // Étape 2 : Tri par date
             cardsVisibles.sort(function(a, b) {
                 const dateA = new Date(a.getAttribute("data-date"));
                 const dateB = new Date(b.getAttribute("data-date"));
                 return (filtreDate === "recente") ? (dateB - dateA) : (dateA - dateB);
             });
             
-            // Étape 3 : Mise à jour de l'affichage
             cards.forEach(card => card.style.display = "none");
             cardsVisibles.forEach(card => {
                 card.style.display = "";
-                container.appendChild(card); // Réinsère dans le bon ordre de tri
+                container.appendChild(card);
             });
             
-            // Étape 4 : Compteur
             document.getElementById("compteurResultats").textContent = cardsVisibles.length + " commande(s) trouvée(s)";
         }
         
@@ -145,7 +160,6 @@
             filtrerCommandes();
         }
         
-        // Initialisation automatique au chargement
         window.onload = filtrerCommandes;
     </script>
 </body>

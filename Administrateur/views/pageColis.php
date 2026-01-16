@@ -80,7 +80,10 @@
                             <?= htmlspecialchars($colis['statut']) ?>
                         </span>
                         <p>📅 Arrivée prévue : <?= htmlspecialchars($colis['DateAriveePrevu']) ?></p>
-                        <a href="details_colis.php?id=<?= $colis['idColis'] ?>" class="commande-détails">Voir détails</a>
+
+                        <a href="pageModifierCommande.php?modifier=<?= $commande['NumeroBonDeCommande'] ?>" class="commande-détails">
+                                Modifier
+                        </a>      
                     </div>
                 </div>
             <?php endforeach; ?>

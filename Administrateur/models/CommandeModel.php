@@ -20,13 +20,34 @@
 
     // Pour la page MesCommandes
     function getListeCommandesCompletes($db) {
-        $sql = "SELECT C.*, F.nomEntreprise, co.DateAriveePrevu
+        $sql = "SELECT C.*, F.nomEntreprise, D.Date_ AS DateDepart
                 FROM Commande C 
+                INNER JOIN devis D ON C.idDevis = D.idDevis
                 LEFT JOIN Commandé_a_ CA ON C.idDevis = CA.idDevis 
                 LEFT JOIN Fournisseur F ON CA.idFournisseur = F.idFournisseur
-                LEFT JOIN Colis co USING (NumeroBonDeCommande)
-                ORDER BY C.Date_ DESC";
+                ORDER BY D.Date_ DESC"; 
+                
         return $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function deleteCommande($db, $numeroBonDeCommande) {
+        $query = $db->prepare("DELETE FROM Commande WHERE NumeroBonDeCommande = ?");
+        return $query->execute([$numeroBonDeCommande]);
+    }
+
+    function getDateDepart($db, $idDevis) {
+        $query = $db->prepare("SELECT Date_ FROM devis WHERE idDevis = ?");
+        $query->execute([$idDevis]);
+        $resDateDepart = $query->fetch(PDO::FETCH_ASSOC);
+        return $resDateDepart['Date_'];
+    }
+
+    function getClasseCSSStatut($statut) {
+        $s = strtolower($statut);
+        if ($s == 'livré') return 'statut-livre';
+        if ($s == 'en_cours') return 'statut-en-cours';
+        if ($s == 'retard') return 'statut-retard';
+        return '';
     }
 
 
@@ -37,20 +58,40 @@
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function ajouterCommande($db, $numero, $adresse, $date, $nbColis) {
-        $queryIdDevis = $db->query("SELECT MAX(idDevis) as maxId FROM Commande");
-        $resIdDevis = $queryIdDevis->fetch(PDO::FETCH_ASSOC);
-        
-        // Calcule le nouvel ID (si la table est vide, maxId sera null, donc on commence à 1)
-        $idDevis = ($resIdDevis['maxId'] ?? 0) + 1;
+    function getListeDevis($db) {
+        $query = $db->query("SELECT idDevis FROM devis");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-        // Prépare l'insertion en incluant l'idDevis calculé
-        $sql = "INSERT INTO Commande (idDevis, NumeroBonDeCommande, AdresseArivee, Date_, nbColis, statut, ConfirmerOuiOuNon) 
-                VALUES (?, ?, ?, ?, ?, 'en_cours', 0)";
+    function ajouterCommande($db, $numero, $adresseDepart, $adresseArivee, $dateDepartDossier, $nbColis, $idDevis, $dateArriveeSaisie) {
+        $sql = "INSERT INTO Commande (idDevis, AdresseDepart, NumeroBonDeCommande, AdresseArivee, Date_, nbColis, statut, ConfirmerOuiOuNon) 
+                VALUES (?, ?, ?, ?, ?, ?, 'en_cours', 0)";
+        
+        $query = $db->prepare($sql);
+        return $query->execute([$idDevis, $adresseDepart, $numero, $adresseArivee, $dateArriveeSaisie, $nbColis]);
+    }
+
+    // Pour la page ModifierCommande
+    function modifierCommande($db, $numero, $adresseDepart, $adresseArivee, $nbColis, $idDevis, $dateArriveeSaisie) {
+        // On met à jour les colonnes de la table Commande
+        $sql = "UPDATE Commande SET 
+                idDevis = ?, 
+                AdresseDepart = ?, 
+                AdresseArivee = ?, 
+                Date_ = ?, 
+                nbColis = ? 
+                WHERE NumeroBonDeCommande = ?";
         
         $query = $db->prepare($sql);
         
-        // 4. Exécuter avec toutes les valeurs dans le bon ordre
-        return $query->execute([$idDevis, $numero, $adresse, $date, $nbColis]);
+        // L'ordre des variables doit correspondre aux "?" ci-dessus
+        return $query->execute([
+            $idDevis, 
+            $adresseDepart, 
+            $adresseArivee, 
+            $dateArriveeSaisie, // Stockée dans Date_
+            $nbColis, 
+            $numero
+        ]);
     }
 ?>
