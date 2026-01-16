@@ -1,19 +1,13 @@
 <?php
 require_once 'config.php'; 
+require_once 'services/ExpeditionService.php';
 
-$texte_saisi = null;
+$service = new ExpeditionService($db);
+$texte_saisi = $_GET['champ_recherche'] ?? null;
 $commande_trouvee = null; 
 
-if (isset($_GET['champ_recherche'])) {
-    $texte_saisi = $_GET['champ_recherche'];
-}
-
-if (!empty($texte_saisi)) {
-    $sql = "SELECT * FROM Commande WHERE NumeroBonDeCommande = :id";
-    $commande_prete = $db->prepare($sql);
-    $commande_prete->bindValue(':id', $texte_saisi);
-    $resultat_brut = $commande_prete->execute();
-    $commande_trouvee = $resultat_brut->fetchArray(SQLITE3_ASSOC);
+if ($texte_saisi) {
+    $commande_trouvee = $service->chercherCommande($texte_saisi);
 }
 ?>
 
@@ -22,7 +16,7 @@ if (!empty($texte_saisi)) {
         <input type="text" 
                name="champ_recherche" 
                placeholder="Rechercher un colis par numéro..." 
-               value="<?php echo htmlspecialchars($texte_saisi ?? ''); ?>">
+               value="<?php echo ($texte_saisi ?? ''); ?>">
         
         <button type="submit" class="bouton-cache"></button>
     </form>
@@ -35,7 +29,7 @@ if (!empty($texte_saisi)) {
         <?php if ($commande_trouvee): ?>
             
             <div class="entete-resultat">
-                <h4>Commande #<?php echo htmlspecialchars($commande_trouvee['NumeroBonDeCommande']); ?></h4>
+                <h4>Commande #<?php echo $commande_trouvee['NumeroBonDeCommande']; ?></h4>
                 <a href="?" class="lien-fermer"><i class="fa-solid fa-xmark"></i></a>
             </div>
 
@@ -43,9 +37,19 @@ if (!empty($texte_saisi)) {
                 <tr>
                     <td class="label-detail">Destination</td>
                     <td class="valeur-detail">
-                        <?php echo htmlspecialchars($commande_trouvee['AdresseArivee']); ?>
+                        <?php echo $commande_trouvee['AdresseArivee']; ?>
                     </td>
                 </tr>
+
+                <tr>
+                    <td class="label-detail">Département</td>
+                    <td class="valeur-detail">
+                        <?php echo $commande_trouvee['nomDepartement']; ?>
+
+                    </td>
+
+                </tr>
+
                 <tr>
                     <td class="label-detail">Statut</td>
                     <td class="valeur-detail">
@@ -75,7 +79,7 @@ if (!empty($texte_saisi)) {
         <?php else: ?>
             
             <div style="position: relative;">
-                <a href="?" class="lien-fermer" style="position: absolute; right: 0; top: -10px;"><i class="fa-solid fa-xmark"></i></a>
+                <a class="lien-fermer" style="position: absolute; right: 0; top: -10px;"><i class="fa-solid fa-xmark"></i></a>
                 <div class="message-erreur ">
                     <i class="fa-solid fa-circle-exclamation"></i> 
                         Commande introuvable

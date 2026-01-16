@@ -40,5 +40,12 @@ class ExpeditionService {
         return $this->commandeDAO->recupererColisEnTransit();
     }
 
+
+    public function chercherCommande($numero) {
+        if (empty($numero)) 
+            return null;
+        return $this->commandeDAO->recupererParNumero($numero);
+}
+
     
 }

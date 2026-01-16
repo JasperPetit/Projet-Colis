@@ -7,11 +7,7 @@
     
     $nombre_total_colis = $service_postal->recupNbDeColis();
     $liste_commandes = $service_postal->recupererHistoriqueComplet();
-
-
-    $liste_commandes = $service_postal->recupererHistoriqueComplet();
     
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -58,6 +54,7 @@
                         <th>Numéro</th>
                         <th>Client</th>
                         <th>Destination</th>
+                        <th>Département</th>
                         <th>Date</th>
                         <th>Poids</th>
                         <th>Colis</th>
@@ -98,6 +95,10 @@
                             <td>
                                 <i class="fa fa-location-dot"></i> 
                                 <?php echo $colis['AdresseArivee']; ?>
+                            </td>
+
+                            <td>
+                                <?php echo $colis['nomDepartement']; ?>
                             </td>
                             <td><?php echo $colis['Date_']; ?></td>
                             <td><?php echo $poids; ?> kg</td>

@@ -145,11 +145,17 @@
                 <tr>
                     <td width="50"><i class="fa fa-box" style="color: #cbd5e1;"></i></td>
                     <td>
-                        <strong><?php echo htmlspecialchars($commande['NumeroBonDeCommande']); ?></strong><br>
-                        <small><?php echo htmlspecialchars($commande['AdresseArivee']); ?></small>
+                        <strong><?php echo $commande['NumeroBonDeCommande']; ?></strong><br>
+                        <small><?php echo $commande['AdresseDepartment']; ?></small>
                     </td>
+
+                    <td>
+                     <strong>Département à livrer</strong><br>
+                     <small><?php echo $commande['nomDepartement'] ; ?></small>
+                    </td>
+
                     <td style="text-align: right; color: #94a3b8;">
-                        <?php echo htmlspecialchars($commande['nbColis']); ?> colis
+                        <?php echo $commande['nbColis']; ?> colis
                     </td>
                     <td style="text-align: right;">
                         <span class="badge <?php echo $classe_badge; ?>">

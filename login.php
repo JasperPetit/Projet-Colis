@@ -55,6 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="fichierCSS/login.css">
 </head>
 <body class="page-login">
+
+
     <div class="conteneur-connexion">
         <div class="entete-connexion">
             <img src="data/logo.png" alt="Logo">

@@ -2,9 +2,7 @@
 require_once 'config.php';
 require_once 'services/ExpeditionService.php';
 
-if (!isset($_GET['id']) || empty($_GET['id'])) {
-    die("Erreur : Aucun numéro de commande fourni.");
-}
+
 
 $id = htmlspecialchars($_GET['id']);
 $colis = null;

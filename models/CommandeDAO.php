@@ -79,28 +79,22 @@ class CommandeDAO {
 
     public function recupererLesTroisDernieresCommandes() {
 
-            $requete_sql = "SELECT NumeroBonDeCommande, AdresseArivee, statut, nbColis 
-                        FROM Commande 
-                        ORDER BY NumeroBonDeCommande ASC 
-                        LIMIT 3";
-            $preparation = $this->connexion_bdd->prepare($requete_sql);
-            $resultat = $preparation->execute();
-            $liste_commandes = [];
-            $compteur = 0;
+        $requete_sql = "SELECT NumeroBonDeCommande, AdresseDepartment, statut, nbColis, nomDepartement
+        FROM Commande LEFT JOIN devis USING (idDevis) LEFT JOIN Appartient_a USING (identifiantCAS)
+        LEFT JOIN Departement USING (idDepartement) ORDER BY NumeroBonDeCommande ASC LIMIT 3";
 
-            while ($ligne = $resultat->fetchArray(SQLITE3_ASSOC)) {
-                $liste_commandes[$compteur] = $ligne;
-                $compteur = $compteur + 1; 
-            }
-            return $liste_commandes;
+        $preparation = $this->connexion_bdd->prepare($requete_sql);
+        $resultat = $preparation->execute();
+        $liste_commandes = [];
+        $compteur = 0;
+
+        while ($ligne = $resultat->fetchArray(SQLITE3_ASSOC)) {
+        $liste_commandes[] = $ligne;
+        }
+        return $liste_commandes;
         }
 
-
-
-
-
-
-
+        
     public function recupNbDeColis() {
 
         $requete_sql = "SELECT COUNT(*) FROM Commande";
@@ -139,25 +133,20 @@ class CommandeDAO {
     }
 
     public function recupererToutesLesCommandes() {
-        
-        $requete_sql = "SELECT c.NumeroBonDeCommande, c.AdresseArivee, c.Date_, c.nbColis, c.statut,
-                       col.Poids,
-                       u.Prenom, u.nom
-                FROM Commande c
-                LEFT JOIN Colis col ON c.NumeroBonDeCommande = col.NumeroBonDeCommande
-                LEFT JOIN devis d ON c.idDevis = d.idDevis
-                LEFT JOIN Utilisateur u ON d.identifiantCAS = u.identifiantCAS
-                ORDER BY c.Date_ DESC";
+    
+    $requete_sql = "SELECT c.NumeroBonDeCommande, c.AdresseArivee, c.Date_, c.nbColis, c.statut, col.Poids, u.Prenom, u.nom, dep.nomDepartement
+    FROM Commande c LEFT JOIN Colis col USING (NumeroBonDeCommande) LEFT JOIN devis d USING (idDevis) LEFT JOIN Utilisateur u USING (identifiantCAS)
+    LEFT JOIN Appartient_a a USING (identifiantCAS) LEFT JOIN Departement dep USING (idDepartement) ORDER BY c.Date_ ASC";
 
-        $resultat = $this->connexion_bdd->query($requete_sql);
-        
-        $liste = [];
-        while ($ligne = $resultat->fetchArray(SQLITE3_ASSOC)) {
-            $liste[] = $ligne;
-        }
-        
-        return $liste;
+    $resultat = $this->connexion_bdd->query($requete_sql);
+    
+    $liste = [];
+    while ($ligne = $resultat->fetchArray(SQLITE3_ASSOC)) {
+        $liste[] = $ligne;
     }
+    
+    return $liste;
+}
 
 
     public function recupererColisEnRetard(){
@@ -180,6 +169,21 @@ class CommandeDAO {
         $resultat= $this->connexion_bdd->querySingle($requete_sql);
         return $resultat;
     }
+
+
+    public function recupererParNumero($numeroBon) {
+        $sql = "SELECT c.*, dep.nomDepartement FROM Commande c LEFT JOIN devis USING (idDevis)
+        LEFT JOIN Appartient_a USING (identifiantCAS) LEFT JOIN Departement dep USING (idDepartement)
+        WHERE c.NumeroBonDeCommande = :id";
+                
+        $preparation = $this->connexion_bdd->prepare($sql);
+        
+        $preparation->bindValue(':id', $numeroBon);
+
+        $resultat = $preparation->execute();
+
+        return $resultat->fetchArray(SQLITE3_ASSOC);
+}
 
 
 
