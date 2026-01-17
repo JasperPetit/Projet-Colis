@@ -82,7 +82,7 @@
                         <p>📅 Arrivée prévue : <?= htmlspecialchars($colis['DateAriveePrevu']) ?></p>
 
                         <a href="pageModifierCommande.php?modifier=<?= $commande['NumeroBonDeCommande'] ?>" class="commande-détails">
-                                Modifier
+                            Modifier
                         </a>      
                     </div>
                 </div>

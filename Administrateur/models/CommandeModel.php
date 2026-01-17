@@ -71,6 +71,9 @@
         return $query->execute([$idDevis, $adresseDepart, $numero, $adresseArivee, $dateArriveeSaisie, $nbColis]);
     }
 
+
+
+    
     // Pour la page ModifierCommande
     function modifierCommande($db, $numero, $adresseDepart, $adresseArivee, $nbColis, $idDevis, $dateArriveeSaisie) {
         // On met à jour les colonnes de la table Commande

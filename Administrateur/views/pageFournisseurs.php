@@ -46,6 +46,11 @@
                                 Supprimer
                             </button>
                         </form>
+
+                        <a href="pageModifierFournisseur.php?modifier=<?= $fournisseur['idFournisseur'] ?>" class="commande-détails">
+                                Modifier
+                        </a>      
+    
                     </div>
                     <br>
                 </div>

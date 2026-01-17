@@ -71,7 +71,7 @@
                     
                     <div class="commande-info">
                         <h3>Commande n°<?= htmlspecialchars($commande['NumeroBonDeCommande']) ?></h3>
-                        <p>📅 Date de départ : <?= !empty($commande['DateDepart']) ? date("d/m/Y", strtotime($commande['DateDepart'])) : 'Non définie' ?></p>                        
+                        <p>📅 de livraison : <?= !empty($commande['DateDepart']) ? date("d/m/Y", strtotime($commande['DateDepart'])) : 'Non définie' ?></p>                        
 
                         <div class="itineraire">
                             <p><i class="fas fa-map-marker-alt" style="color: #e74c3c;"></i> Arrive : <?= htmlspecialchars($commande['AdresseArivee'] ?? 'Non renseigné') ?></p>
@@ -109,7 +109,7 @@
 
     <script>
         function confirmerSuppressionCommande(NumeroBonDeCommande) {
-            return confirm("Êtes-vous sûr de vouloir supprimer le fournisseur '" + NumeroBonDeCommande + "' ?\n\nCette action est irréversible.");
+            return confirm("Êtes-vous sûr de vouloir supprimer la commande '" + NumeroBonDeCommande + "' ?\n\nCette action est irréversible.");
         }
 
         function filtrerCommandes() {

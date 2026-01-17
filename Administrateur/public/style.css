@@ -367,7 +367,7 @@ h1 {
     border: 1px solid var(--border-color);
 }
 
-.bouton-contacter, .btn-nouvelle-commande, .commande-détails, button {
+.bouton-contacter, .btn-nouvelle-commande, .commande-détails, button, .bouton-modifier {
     background-color: var(--accent-orange);
     color: var(--primary-blue);
     border: none;
