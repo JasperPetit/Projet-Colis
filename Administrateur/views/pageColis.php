@@ -1,7 +1,7 @@
 <?php 
-    require_once "../config/DBconnect.php"; 
-    require_once "../models/ColisModel.php"; 
-    require_once "../controllers/ColisController.php"; 
+    require_once "../Administrateur/config/DBconnect.php"; 
+    require_once "../Administrateur/models/ColisModel.php"; 
+    require_once "../Administrateur/controllers/ColisController.php"; 
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion de colis - Suivi Colis</title>
-    <link rel="stylesheet" href="../public/style.css">
+    <link rel="stylesheet" href="../Administrateur/public/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 

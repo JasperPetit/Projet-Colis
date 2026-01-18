@@ -1,7 +1,7 @@
 <?php 
-    require_once "../config/DBconnect.php"; 
-    require_once "../models/CommandeModel.php"; 
-    require_once "../controllers/AjoutCommandeController.php"; 
+    require_once "../Administrateur/config/DBconnect.php"; 
+    require_once "../Administrateur/models/CommandeModel.php"; 
+    require_once "../Administrateur/controllers/AjoutCommandeController.php"; 
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suivi Colis - Ajouter Commande</title>
-    <link rel="stylesheet" href="../public/style.css">
+    <link rel="stylesheet" href="../Administrateur/public/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -26,8 +26,16 @@
             </div>
         <?php endif; ?>
 
-        <form action="pageAjouterCommande.php" method="POST">
-    
+        <form action="index.php?action=AjouterCommande" method="POST">
+
+            <label for="idDevis">Fournisseur :</label>
+            <select id="idDevis" name="idDevis" required>
+            <?php foreach ($idDevis as $id): ?>
+                <option value="<?= $id['idDevis'] ?>">
+                    <?= htmlspecialchars($id['idDevis']) ?>
+                </option>
+            <?php endforeach; ?>
+
             <label for="num_commande">Numéro de commande :</label>
             <input type="text" id="num_commande" name="NumeroBonDeCommande" placeholder="ex: CMD-2025-00" required>
             <br>

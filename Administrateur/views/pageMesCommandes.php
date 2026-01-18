@@ -1,7 +1,7 @@
 <?php 
-    require_once "../config/DBconnect.php"; 
-    require_once "../models/CommandeModel.php"; 
-    require_once "../controllers/CommandeController.php"; 
+    require_once "../Administrateur/config/DBconnect.php"; 
+    require_once "../Administrateur/models/CommandeModel.php"; 
+    require_once "../Administrateur/controllers/CommandeController.php"; 
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes Commandes - Suivi Colis</title>
-    <link rel="stylesheet" href="../public/style.css">
+    <link rel="stylesheet" href="../Administrateur/public/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -20,7 +20,7 @@
     <main>
         <div class="titre">
             <h1>Mes Commandes</h1>
-            <a href="pageAjouterCommande.php" class="btn-nouvelle-commande">
+            <a href="index.php?action=formulaireCommande" class="btn-nouvelle-commande">
                 <i class="fas fa-plus"></i> Nouvelle commande
             </a>
         </div>

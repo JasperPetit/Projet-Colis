@@ -1,12 +1,12 @@
 <aside class="barre-navigation">
-    <img src="../public/logo.jpeg" id="sorbonne-paris-nord">
+    <img src="../Administrateur/public/logo.jpeg" id="sorbonne-paris-nord">
     <ul>
         <?php
             $pages = ["Accueil" => "pageAccueil.php", 
-                "Mes commandes" => "pageMesCommandes.php", 
+                "Mes commandes" => "index.php?action=formulaireCommande", 
                 "Colis" => "pageColis.php", 
                 "Fournisseurs" => "pageFournisseurs.php", 
-                "Administrateur" => "pageAdmin.php"];
+                "Administrateur/" => "pageAdmin.php"];
 
             foreach ($pages as $page => $lien) {
                 echo "<li>";

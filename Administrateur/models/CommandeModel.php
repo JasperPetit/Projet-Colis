@@ -1,17 +1,26 @@
 <?php
+class CommandeModel{
+
+    private $pdo;
+
+    public function __construct($pdo)
+    {
+        $this->pdo = $pdo;
+    }
+
     // Pour la page Accueil
-    function getCommandesByStatut($db, $statut) {
+    public function getCommandesByStatut($db, $statut) {
         $query = $db->prepare("SELECT * FROM Commande WHERE statut = ?");
         $query->execute([$statut]);
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function getCommandesNonConfirmees($db) {
+    public function getCommandesNonConfirmees($db) {
         $query = $db->query("SELECT * FROM Commande WHERE ConfirmerOuiOuNon = '0'");
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function getDernierColisLivre($db) {
+    public function getDernierColisLivre($db) {
         $query = $db->query("SELECT * FROM Commande WHERE statut = 'livré' ORDER BY Date_ DESC, NumeroBonDeCommande DESC LIMIT 1");
         return $query->fetch(PDO::FETCH_ASSOC);
     }
@@ -19,7 +28,7 @@
 
 
     // Pour la page MesCommandes
-    function getListeCommandesCompletes($db) {
+    public function getListeCommandesCompletes($db) {
         $sql = "SELECT C.*, F.nomEntreprise, co.DateAriveePrevu
                 FROM Commande C 
                 LEFT JOIN Commandé_a_ CA ON C.idDevis = CA.idDevis 
@@ -32,17 +41,16 @@
 
 
     // Pour la page AjouteCommande
-    function getListeNomsFournisseurs($db) {
+    public function getListeNomsFournisseurs($db) {
         $query = $db->query("SELECT idFournisseur, nomEntreprise FROM Fournisseur");
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function ajouterCommande($db, $numero, $adresse, $date, $nbColis) {
+    public function ajouterCommande($db, $numero, $adresse, $date, $nbColis,$idDevis) {
         $queryIdDevis = $db->query("SELECT MAX(idDevis) as maxId FROM Commande");
         $resIdDevis = $queryIdDevis->fetch(PDO::FETCH_ASSOC);
         
-        // Calcule le nouvel ID (si la table est vide, maxId sera null, donc on commence à 1)
-        $idDevis = ($resIdDevis['maxId'] ?? 0) + 1;
+
 
         // Prépare l'insertion en incluant l'idDevis calculé
         $sql = "INSERT INTO Commande (idDevis, NumeroBonDeCommande, AdresseArivee, Date_, nbColis, statut, ConfirmerOuiOuNon) 
@@ -51,6 +59,7 @@
         $query = $db->prepare($sql);
         
         // 4. Exécuter avec toutes les valeurs dans le bon ordre
-        return $query->execute([$idDevis, $numero, $adresse, $date, $nbColis]);
+        return $query->execute([$idDevis, $numero, $adresse, $date, $nbColis,]);
     }
+}
 ?>
