@@ -1,47 +1,10 @@
-<?php
-// views/service_financier.php
-
-// On gère les actions (Valider/Refuser) directement ici
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id_devis'])) {
-    $idDevis = $_POST['id_devis'];
-    // 1 = Validé, 2 = Refusé
-    $statut = ($_POST['action'] === 'valider') ? 1 : 2;
-    try {
-        // CORRECTION : On utilise le vrai nom de la colonne 'SignatureOuiOuNon'
-        $stmt = $db->prepare("UPDATE devis SET SignatureOuiOuNon = ? WHERE idDevis = ?");
-        $stmt->execute([$statut, $idDevis]);
-        echo "<div class='alert success'>Action effectuée avec succès !</div>";
-    } catch (Exception $e) {
-        echo "<div class='alert error'>Erreur : " . $e->getMessage() . "</div>";
-    }
-}
-
-// Calcul des Budgets
-$sqlBudgets = "
-    SELECT d.idDepartement, d.nomDepartement, d.BudgetDepartement,
-        (SELECT IFNULL(SUM(dv.prix), 0) FROM devis dv
-         JOIN Utilisateur u ON dv.identifiantCAS = u.identifiantCAS
-         JOIN Appartient_a aa ON u.identifiantCAS = aa.identifiantCAS
-         WHERE aa.idDepartement = d.idDepartement AND dv.SignatureOuiOuNon = 1) as BudgetDepense
-    FROM Departement d";
-$resBudgets = $db->query($sqlBudgets)->fetchAll(PDO::FETCH_ASSOC);
-
-// Récupération des commandes à valider (SignatureOuiOuNon = 0 ou NULL selon ta logique, ici on suppose 0)
-$sqlValid = "
-    SELECT dv.*, f.nomEntreprise, u.nom, d.nomDepartement 
-    FROM devis dv
-    LEFT JOIN Commandé_a_ ca ON dv.idDevis = ca.idDevis
-    LEFT JOIN Fournisseur f ON ca.idFournisseur = f.idFournisseur
-    LEFT JOIN Utilisateur u ON dv.identifiantCAS = u.identifiantCAS
-    LEFT JOIN Appartient_a aa ON u.identifiantCAS = aa.identifiantCAS
-    LEFT JOIN Departement d ON aa.idDepartement = d.idDepartement
-    WHERE dv.SignatureOuiOuNon = 0 OR dv.SignatureOuiOuNon IS NULL";
-$commandes_a_valider = $db->query($sqlValid)->fetchAll(PDO::FETCH_ASSOC);
-?>
-
 <div class="titre">
     <h1>Service Financier</h1>
 </div>
+
+<?php if (isset($_GET['success'])): ?>
+    <div class='alert success'>Action effectuée avec succès !</div>
+<?php endif; ?>
 
 <div class="dashboard-finance">
     <h2>État des Budgets</h2>
@@ -70,7 +33,7 @@ $commandes_a_valider = $db->query($sqlValid)->fetchAll(PDO::FETCH_ASSOC);
                     <p>👤 Demandeur : <?= htmlspecialchars($cmd['nom']) ?> (<?= htmlspecialchars($cmd['nomDepartement'] ?? 'Sans département') ?>)</p>
                     <p>💰 Montant : <strong><?= number_format($cmd['prix'], 2, ',', ' ') ?> €</strong></p>
                 </div>
-                <form method="POST" class="actions-validation" action="index.php?page=finance">
+                <form method="POST" class="actions-validation" action="index.php?action=validerDevis">
                     <input type="hidden" name="id_devis" value="<?= $cmd['idDevis'] ?>">
                     <button type="submit" name="action" value="refuser" class="btn-refuser" style="background-color: #dc3545; color: white;">Refuser</button>
                     <button type="submit" name="action" value="valider" class="btn-valider" style="background-color: #28a745; color: white;">Valider</button>
