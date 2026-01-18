@@ -65,10 +65,17 @@
                         <span class="statue-devis <?= $classeStatut ?>">
                             <?= htmlspecialchars($affichage) ?>
                         </span>
+                        <a href="ModifierDevis?modifier=<?= $devi['idDevis']?>"class="commande-détails">Modifier le devi</a>
                         <?php if (!empty($devi['imageDevis'])): ?>
                             <a href="uploads/<?= htmlspecialchars($devi['imageDevis']) ?>" target="_blank" class="commande-détails">Voir le fichier</a>
                         <?php endif; ?>
                         <a href="javascript:void(0);" onclick="toggleDetails(<?= $devi['idDevis'] ?>)" class="commande-détails">Voir détails</a>
+                        <form method="POST" action="SupprimerDevis" style="display: inline; margin: 0; padding: 0; border: none; background: none;" onsubmit="return confirmerSuppressionCommande('<?= htmlspecialchars($devi['idDevis']) ?>')">
+                            <input type="hidden" name="idDevis" value="<?= $devi['idDevis'] ?>">    
+                            <button type="submit" name="supprimer_devis" class="bouton-supprimer">
+                                Supprimer
+                            </button>
+                        </form>
                     </div>
                     <div id="details-<?= $devi['idDevis'] ?>" style="display: none; width: 100%; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; color: #555;">
                         <strong>Détails :</strong><br>
@@ -80,6 +87,9 @@
 
     <script src="script.js"></script>
     <script>
+        function confirmerSuppressionCommande(idDevis) {
+            return confirm("Êtes-vous sûr de vouloir supprimer le devi '" + idDevis + "' ?\n\nCette action est irréversible.");
+        }
         function filtrerCommandes() {
             var input = document.getElementById("searchBar");
             var filter = input.value.toUpperCase();

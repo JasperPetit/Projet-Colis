@@ -52,6 +52,11 @@ class DevisService {
     public function RecupererIdDevis(){
         return $this->devisModel->getDevisId();
     }
+
+    public function SupprimerDevis($idDevis){
+        $this->devisModel->SupprimerCommandé($idDevis);
+        return $this->devisModel->SupprimerDevis($idDevis);
+    }
 }
 
 ?>

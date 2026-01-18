@@ -38,7 +38,13 @@ class Devis {
 
 
     public function getAllDevis(){
-        $sql = "SELECT D.*, F.nomEntreprise FROM devis D LEFT JOIN Commandé_a_ USING (idDevis) LEFT JOIN Fournisseur F USING (idFournisseur) ORDER BY D.Date_ DESC";
+        $sql = "SELECT D.*, F.nomEntreprise , U.*, Dep.nomDepartement FROM devis D 
+            LEFT JOIN Commandé_a_ USING (idDevis) 
+            LEFT JOIN Fournisseur F USING (idFournisseur) 
+            LEFT JOIN utilisateur U ON D.identifiantCAS = U.identifiantCAS 
+            LEFT JOIN Appartient_a USING (identifiantCAS) 
+            LEFT JOIN Departement Dep ON Dep.idDepartement = Appartient_a.idDepartement
+            ORDER BY D.Date_ DESC";
         $query = $this->pdo->query($sql);
 
         return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -52,7 +58,15 @@ class Devis {
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function SupprimerDevis($idDevis){
+        $query = $this->pdo->prepare("DELETE FROM devis WHERE idDevis = ?");
+        return $query->execute([$idDevis]);
+    }
 
+    public function SupprimerCommandé($idDevis){
+        $query = $this->pdo->prepare("DELETE FROM Commandé_a_ WHERE idDevis = ?");
+        return $query->execute([$idDevis]);
+    }
 }
 
 ?>

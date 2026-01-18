@@ -61,7 +61,7 @@ class CommandeController{
                         $stmtLink = $this->pdo->prepare("INSERT INTO Commandé_a_ (idDevis, idFournisseur) VALUES (?, ?)");
                         $stmtLink->execute([$idDevis, $idFournisseur]);
                         */
-                        header("Location: afficherCommande?sucess=1");
+                        header("Location: pageMesCommandes?sucess=1");
                         exit();
                     }
                 } catch (Exception $e) {

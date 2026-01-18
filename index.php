@@ -1,13 +1,11 @@
 <?php 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 require_once 'autoload.php';
 
 $pdo = require_once __DIR__ . '/config/DBconnect.php';
 $routes = [
-    'accueil' => ['AccueilController','AfficherAcceuil'],
+    'accueil' => ['AccueilController','AfficherAccueil'],
+    'ajouter_devis' => ['DevisController','AjouterDevis'],
     //action sur les commandes
     'afficherCommande' => ['CommandeController','afficherCommande'],
     'SupprimerCommande' => ['CommandeController','SupprimerCommande'],
@@ -18,6 +16,7 @@ $routes = [
     'ajouter_devis' => ['DevisController','AjouterDevis'],
     'formulaireDevis' => ['DevisController','AfficherFormulaire'],
     'pageInfosDevis' => ['DevisController','AfficherDevis'],
+    'SupprimerDevis' => ['DevisController','SupprimerDevis'],
 
     //colis
     'afficherColis' => ['ColisController', 'afficherColis'],

@@ -12,13 +12,7 @@ class ColisController{
         $this->pdo = $db;
         $this->ColisModel = new ColisModel($db);
     }
-    function resListeColis(){
-        return $this->ColisModel->getListeColisComplete();
-    }
 
-    public function fournisseursFiltre(){
-        return $this->ColisModel->getFournisseursAyantColis();
-    }
 
     public function afficherColis(){
         $resListeColis = $this->ColisModel->getListeColisComplete();

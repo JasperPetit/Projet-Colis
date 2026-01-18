@@ -5,6 +5,7 @@ use App\Models\DevisService as ModelsDevisService;
 use App\Models\FournisseurModel;
 use PDO;
 use PDOException;
+use Exception;
 
 class DevisController{
 
@@ -40,11 +41,25 @@ class DevisController{
             }
     }
     
+    public function SupprimerDevis(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['supprimer_devis'])){
+            $idDevis = $_POST['idDevis'];
+            if (!empty($idDevis)) {
+                try {
+                    $this->service->SupprimerDevis($idDevis);
+                    header("Location: pageInfosDevis");
+                    exit();
+                } catch (Exception $e) {
+                    header("Location: pageInfosDevis");
+                }
+        }
+    }
+    }
 
     public function AfficherDevis(){
         $listeDevis = $this->service->getAllDevis();
 
-        require_once 'views/pageInfosDevis.php';
+        require_once 'views/pageInfosDevisAdmin.php';
     }
 
 

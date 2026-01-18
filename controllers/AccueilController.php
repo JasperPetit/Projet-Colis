@@ -6,7 +6,7 @@ class AccueilController{
     public function __construct($db){
         $this->commande = new CommandeModel($db);
     }
-    public function AfficherAcceuil(){
+    public function AfficherAccueil(){
         $colisEnAttente = $this->commande->getCommandesByStatut('en_cours');
         $commandesEnCours = $this->commande->getCommandesNonConfirmees();
         $commandesEnRetard = $this->commande->getCommandesByStatut( 'retard');
