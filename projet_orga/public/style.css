@@ -1,0 +1,543 @@
+/* --- VARIABLES ET RESET --- */
+:root {
+    --primary-blue: #002D5D;    /* Bleu Sorbonne */
+    --accent-orange: #E6A23C;   /* Orange boutons */
+    --bg-light: #F8FAFC;        /* Fond de page */
+    --text-dark: #1E293B;
+    --text-muted: #64748B;
+    --border-color: #E2E8F0;
+    --success: #67C23A;
+    --info: #409EFF;
+    --warning: #E6A23C;
+    --danger: #F56C6C;
+}
+
+body {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Inter', -apple-system, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+
+/* --- BARRE DE NAVIGATION (ASIDE) --- */
+.barre-navigation {
+    width: 260px;
+    background-color: var(--primary-blue);
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+}
+
+#sorbonne-paris-nord {
+    width: 180px;
+    padding: 30px;
+    margin: 0 auto;
+}
+
+.barre-navigation ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.barre-navigation li {
+    padding: 5px 20px;
+}
+
+.barre-navigation a {
+    color: #CBD5E1;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.barre-navigation a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* --- MAIN CONTENT AREA --- */
+main {
+    flex-grow: 1;
+    padding: 40px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    color: var(--primary-blue);
+    font-weight: 700;
+}
+
+#titre-accueil {
+    color: var(--text-dark);
+}
+
+.titre {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.titre + p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+}
+
+/* --- INPUTS ET RECHERCHE --- */
+#searchBar {
+    width: 100%;
+    max-width: 600px;
+    padding: 12px 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    margin: 20px 0;
+    font-size: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* --- GRILLES ET CARTES (ACCUEIL & ADMIN) --- */
+.conteneur-cartes-accueil {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.colis-en-attente, .commande-en-cours, .commande-en-retard, .dernier-colis-livré {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.colis-en-attente h3, .commande-en-cours h3, .commande-en-retard h3, .dernier-colis-livré h3 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin: 0 0 20px 0;
+}
+
+.colis-en-attente p, .commande-en-cours p, .commande-en-retard p {
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--primary-blue);
+    margin: 0;
+}
+
+.dernier-colis-livré {
+    grid-column: 1 / -1;
+}
+
+.dernier-colis-livré p:first-of-type {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0 0 5px 0;
+    font-weight: 400;
+}
+
+.dernier-colis-livré p:nth-of-type(2) {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin: 0 0 8px 0;
+}
+
+.dernier-colis-livré p:last-of-type {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* Icônes en haut à droite */
+.colis-en-attente::after {
+    content: '\f466';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 48px;
+    height: 48px;
+    background: var(--bg-light);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+}
+
+.commande-en-cours::after {
+    content: '\f07a';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 48px;
+    height: 48px;
+    background: var(--bg-light);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+}
+
+.commande-en-retard::after {
+    content: '\f071';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 48px;
+    height: 48px;
+    background: var(--bg-light);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+}
+
+.dernier-colis-livré::after {
+    content: '\f058';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 48px;
+    height: 48px;
+    background: var(--bg-light);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+}
+
+/* --- CARTES DE COMMANDES (MES COMMANDES & COLIS) --- */
+.commande-card, .colis-section {
+    background: white;
+    padding: 25px 30px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.commande-card:hover, .colis-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.commande-info, .colis-info {
+    flex: 1;
+}
+
+.commande-info h3, .colis-info h3 {
+    margin: 0 0 12px 0;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.commande-info p, .colis-info p {
+    margin: 6px 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.commande-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Aligne tous les éléments à droite de la colonne */
+    gap: 12px;
+    text-align: right;
+    min-width: 200px; /* Garantit un espace suffisant pour les dates */
+}
+
+/* On s'assure que le formulaire ne crée pas de décalage */
+.commande-actions form {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    border: none;
+    width: auto;
+    max-width: none;
+}
+
+.commande-actions p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.4; /* Ajoute un peu de confort de lecture */
+}
+
+/* --- BADGES DE STATUT --- */
+.statue-colis {
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    display: inline-block;
+    background: #E2E8F0;
+    color: #475569;
+}
+
+/* Livré - Vert */
+.statue-colis.statut-livre {
+    background: #DCFCE7 !important;
+    color: #166534 !important;
+}
+
+/* En cours - Bleu */
+.statue-colis.statut-en-cours {
+    background: #DBEAFE !important;
+    color: #1E40AF !important;
+}
+
+/* Retard - Rouge */
+.statue-colis.statut-retard {
+    background: #FEE2E2 !important;
+    color: #991B1B !important;
+}
+
+/* En attente - Jaune */
+.statue-colis.statut-attente {
+    background: #FEF3C7 !important;
+    color: #92400E !important;
+}
+
+/* En livraison - Indigo */
+.statue-colis.statut-livraison {
+    background: #E0E7FF !important;
+    color: #3730A3 !important;
+}
+
+/* Transit - Orange */
+.statue-colis.statut-transit {
+    background: #FFEDD5 !important;
+    color: #9A3412 !important;
+}
+
+/* --- GRID FOURNISSEURS --- */
+.fournisseurs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 25px;
+    width: 100%;
+}
+
+.section-fournisseur {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.bouton-contacter, .btn-nouvelle-commande, .commande-détails, button, .bouton-modifier {
+    background-color: var(--accent-orange);
+    color: var(--primary-blue);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+button:hover, .btn-nouvelle-commande:hover, .commande-détails:hover {
+    background-color: #D4941F;
+    transform: translateY(-1px);
+}
+
+.commande-détails {
+    background-color: transparent;
+    color: var(--primary-blue);
+    border: 1px solid var(--primary-blue);
+    padding: 8px 16px;
+}
+
+.commande-détails:hover {
+    background-color: var(--primary-blue);
+    color: white;
+    transform: translateY(-1px);
+}
+
+/* --- FORMULAIRES --- */
+form {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    width: 100%;
+    max-width: 500px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+form input, form select, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+/* --- MODALES (ADMIN) --- */
+.fenetre-modale {
+    background-color: rgba(15, 23, 42, 0.5) !important; /* Overlay plus moderne */
+    backdrop-filter: blur(4px);
+}
+
+.contenu-modale {
+    border: none !important;
+    border-radius: 16px !important;
+    padding: 40px !important;
+}
+
+/* --- CONTENEUR DE FILTRES --- */
+.filtres-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.filtres-container #searchBar {
+    flex: 1;
+    min-width: 250px;
+    margin: 0;
+}
+
+.filtre-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.filtre-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.filtre-group select {
+    padding: 10px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    cursor: pointer;
+    min-width: 150px;
+    color: var(--text-dark);
+    font-family: 'Inter', -apple-system, sans-serif;
+    transition: all 0.2s;
+}
+
+.filtre-group select:hover {
+    border-color: var(--primary-blue);
+}
+
+.filtre-group select:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 45, 93, 0.1);
+}
+
+.btn-reinitialiser {
+    padding: 10px 18px;
+    background: var(--text-muted);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-reinitialiser:hover {
+    background: var(--text-dark);
+    transform: translateY(-1px);
+}
+
+.compteur-resultats {
+    display: block;
+    margin: 10px 0 20px 0;
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.bouton-supprimer {
+    background-color: var(--danger); /* Utilise ta variable #F56C6C */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bouton-supprimer:hover {
+    background-color: #d9534f; /* Un rouge un peu plus sombre au survol */
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(245, 108, 108, 0.4);
+}
+
