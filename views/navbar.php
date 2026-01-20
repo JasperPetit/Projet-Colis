@@ -7,7 +7,9 @@
                 "Colis" => "afficherColis", 
                 "Fournisseurs" => "afficherFournisseur", 
                 "Mes Devis" => "pageInfosDevis",
-                "Administration" => "pageAdmin"];
+                "Administration" => "pageAdmin",
+
+                ];
 
             foreach ($pages as $page => $lien) {
                 echo "<li>";

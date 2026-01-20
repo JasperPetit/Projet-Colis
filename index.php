@@ -30,7 +30,9 @@ $routes = [
     //admin
     'pageAdmin' => ['UtilisateurController','AfficherAdmin'],
     'pageVoirUtilisateurs' => ['UtilisateurController','AfficherListe'],
-    'pageAjouterUtilisateur' => ['UtilisateurController','AjouterUtilisateur']
+    'pageAjouterUtilisateur' => ['UtilisateurController','AjouterUtilisateur'],
+
+
 
 
 ];
