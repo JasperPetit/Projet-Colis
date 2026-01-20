@@ -54,7 +54,7 @@
 
             <label>Fichier du bon de commande (pdf,jpg,jpeg):</label>
             <input type="file" name="ImageCommande" accept=".pdf, .jpg, .jpeg" 
-                    value="<?=   $commande['imageBonDeCommande'] ?>"required>
+                    value="<?=   $commande['imageBonDeCommande'] ?>">
             <br>
 
             <label for="adresseDepart">Adresse de départ :</label>

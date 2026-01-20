@@ -5,7 +5,7 @@ require_once 'autoload.php';
 $pdo = require_once __DIR__ . '/config/DBconnect.php';
 $routes = [
     'accueil' => ['AccueilController','AfficherAccueil'],
-    'ajouter_devis' => ['DevisController','AjouterDevis'],
+
     //action sur les commandes
     'afficherCommande' => ['CommandeController','afficherCommande'],
     'SupprimerCommande' => ['CommandeController','SupprimerCommande'],
@@ -31,8 +31,7 @@ $routes = [
     'pageAdmin' => ['UtilisateurController','AfficherAdmin'],
     'pageVoirUtilisateurs' => ['UtilisateurController','AfficherListe'],
     'pageAjouterUtilisateur' => ['UtilisateurController','AjouterUtilisateur'],
-
-
+    'SupprimerUtilisateur' => ['UtilisateurController', 'SupprimerUtilisateur'],
 
 
 ];

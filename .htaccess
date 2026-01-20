@@ -2,7 +2,7 @@ Options +FollowSymLinks -MultiViews
 RewriteEngine On
 
 # ⚠️ Vérifie bien que ce dossier correspond exactement à ton dossier WAMP
-RewriteBase /projet_orga/
+RewriteBase /projet_orga/Projet-Colis/
 
 # Si ce n'est pas un fichier existant
 RewriteCond %{REQUEST_FILENAME} !-f
