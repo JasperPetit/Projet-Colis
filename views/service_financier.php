@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Validation des Devis</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="public/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Boutons spécifiques validation */
@@ -21,7 +21,7 @@
     <main>
         <div class="titre">
             <h1>Service Financier : Validation</h1>
-            <a href="index.php?action=finance" class="btn-nouvelle-commande" style="background-color: #6c757d;">
+            <a href="accueil" class="btn-nouvelle-commande" style="background-color: #6c757d;">
                 <i class="fas fa-arrow-left"></i> Retour Dashboard
             </a>
         </div>

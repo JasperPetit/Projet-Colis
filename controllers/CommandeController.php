@@ -61,7 +61,7 @@ class CommandeController{
                         $stmtLink = $this->pdo->prepare("INSERT INTO Commandé_a_ (idDevis, idFournisseur) VALUES (?, ?)");
                         $stmtLink->execute([$idDevis, $idFournisseur]);
                         */
-                        header("Location: pageMesCommandes?sucess=1");
+                        header("Location: afficherCommande?sucess=1");
                         exit();
                     }
                 } catch (Exception $e) {
@@ -105,7 +105,7 @@ class CommandeController{
                 try {
                     $this->CommandeModel->deleteCommande($NumeroBonDeCommande);
                     echo "<script>alert('La commande a été supprimé avec succès.'); window.location.href='pageMesCommandes.php';</script>";
-                    header("Location: index.php?action=afficherCommande");
+                    header("Location:afficherCommande");
                     exit();
                 } catch (Exception $e) {
                     echo "<script>alert('Erreur : Impossible de supprimer cette commande car il est lié à des jsp.');</script>";

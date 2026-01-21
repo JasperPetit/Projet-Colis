@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -21,9 +20,15 @@
             <h3>Utilisateurs enregistrés</h3>
             <p>Voici la liste complète des utilisateurs du système</p>
 
-            <?php if ($message_succes): ?>
+            <?php if (isset($_GET['success'])): ?>
                 <div style="color: green; padding: 10px; margin: 10px 0; border: 1px solid green; border-radius: 5px; background-color: #d4edda;">
-                    <?= htmlspecialchars($message_succes) ?>
+                    L'utilisateur a été supprimé avec succès.
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($_GET['error'])): ?>
+                <div style="color: red; padding: 10px; margin: 10px 0; border: 1px solid red; border-radius: 5px; background-color: #f8d7da;">
+                    <?= htmlspecialchars($_GET['error']) ?>
                 </div>
             <?php endif; ?>
             
@@ -44,7 +49,7 @@
                             <td><?= strtoupper(htmlspecialchars($utilisateur['nom'])) ?></td>
                             <td><?= htmlspecialchars($utilisateur['Role']) ?></td>
                             <td>
-                                <form method="POST" style="display: inline; margin: 0; padding: 0; border: none; background: none;" onsubmit="return confirmerSuppression('<?= htmlspecialchars($utilisateur['nom']) ?>')">
+                                <form action="index.php?action=SupprimerUtilisateur" method="POST" style="display: inline; margin: 0; padding: 0; border: none; background: none;" onsubmit="return confirmerSuppression('<?= htmlspecialchars($utilisateur['nom']) ?>')">
                                     <input type="hidden" name="id_utilisateur" value="<?= $utilisateur['identifiantCAS'] ?>">
                                     <button type="submit" name="supprimer" class="bouton-supprimer">
                                         Supprimer
@@ -54,7 +59,6 @@
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
-                
             </table>
 
             <br>

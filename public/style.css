@@ -1,15 +1,26 @@
-/* --- VARIABLES ET RESET --- */
+/* =========================================
+   1. VARIABLES & RESET (Style harmonisé)
+   ========================================= */
 :root {
-    --primary-blue: #002D5D;    /* Bleu Sorbonne */
-    --accent-orange: #E6A23C;   /* Orange boutons */
-    --bg-light: #F8FAFC;        /* Fond de page */
-    --text-dark: #1E293B;
+    /* Couleurs tirées de ton fichier style.css pour le look "joli" */
+    --primary-blue: #1e3a5f;    /* Bleu foncé moderne */
+    --secondary-blue: #2c4c70;  /* Bleu secondaire */
+    --accent-orange: #f59e0b;   /* Orange vif */
+    --bg-light: #f8fafc;        /* Fond gris très clair */
+    --text-dark: #334155;       /* Gris foncé doux */
     --text-muted: #64748B;
-    --border-color: #E2E8F0;
-    --success: #67C23A;
-    --info: #409EFF;
-    --warning: #E6A23C;
-    --danger: #F56C6C;
+    --border-color: #e2e8f0;
+    
+    /* Couleurs de statut */
+    --success: #10b981;
+    --info: #3b82f6;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+}
+
+/* Reset indispensable pour le responsive */
+* {
+    box-sizing: border-box;
 }
 
 body {
@@ -17,12 +28,16 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    font-family: 'Inter', -apple-system, sans-serif;
+    font-family: 'Segoe UI', 'Inter', -apple-system, sans-serif; /* Police plus propre */
     background-color: var(--bg-light);
     color: var(--text-dark);
+    /* Transition douce lors du redimensionnement */
+    transition: all 0.3s ease;
 }
 
-/* --- BARRE DE NAVIGATION (ASIDE) --- */
+/* =========================================
+   2. BARRE DE NAVIGATION (SIDEBAR)
+   ========================================= */
 .barre-navigation {
     width: 260px;
     background-color: var(--primary-blue);
@@ -32,27 +47,34 @@ body {
     color: white;
     display: flex;
     flex-direction: column;
-    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    box-shadow: 4px 0 15px rgba(0,0,0,0.05);
+    z-index: 1000;
+    flex-shrink: 0; /* Empêche la barre de s'écraser */
 }
 
 #sorbonne-paris-nord {
-    width: 180px;
-    padding: 30px;
+    width: 160px;
+    padding: 25px;
     margin: 0 auto;
+    filter: brightness(0) invert(1); /* Rend le logo blanc si nécessaire */
+    display: block;
 }
 
 .barre-navigation ul {
     list-style: none;
     padding: 0;
-    margin: 20px 0;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .barre-navigation li {
-    padding: 5px 20px;
+    padding: 0 15px;
 }
 
 .barre-navigation a {
-    color: #CBD5E1;
+    color: #cbd5e1;
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -60,19 +82,25 @@ body {
     border-radius: 8px;
     transition: all 0.3s;
     font-weight: 500;
+    font-size: 0.95rem;
 }
 
 .barre-navigation a:hover {
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
+    transform: translateX(5px); /* Petit effet de glissement */
 }
 
-/* --- MAIN CONTENT AREA --- */
+/* =========================================
+   3. CONTENU PRINCIPAL (MAIN)
+   ========================================= */
 main {
     flex-grow: 1;
-    padding: 40px 60px;
-    max-width: 1200px;
+    padding: 40px;
+    width: 100%; /* S'assure de prendre la place restante */
+    max-width: 1600px;
     margin: 0 auto;
+    overflow-x: hidden; /* Évite le scroll horizontal indésirable */
 }
 
 h1 {
@@ -82,15 +110,13 @@ h1 {
     font-weight: 700;
 }
 
-#titre-accueil {
-    color: var(--text-dark);
-}
-
 .titre {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    flex-wrap: wrap; /* Permet aux boutons de passer à la ligne sur mobile */
+    gap: 15px;
 }
 
 .titre + p {
@@ -99,376 +125,190 @@ h1 {
     margin-bottom: 30px;
 }
 
-/* --- INPUTS ET RECHERCHE --- */
-#searchBar {
-    width: 100%;
-    max-width: 600px;
-    padding: 12px 20px;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    margin: 20px 0;
-    font-size: 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-/* --- GRILLES ET CARTES (ACCUEIL & ADMIN) --- */
+/* =========================================
+   4. DASHBOARD & CARTES
+   ========================================= */
 .conteneur-cartes-accueil {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 20px;
+    /* Responsive automatique : 3 colonnes sur PC, 2 ou 1 selon la place */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-bottom: 30px;
 }
 
 .colis-en-attente, .commande-en-cours, .commande-en-retard, .dernier-colis-livré {
     background: white;
-    padding: 30px;
-    border-radius: 16px;
+    padding: 25px;
+    border-radius: 12px;
     border: 1px solid var(--border-color);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     position: relative;
+    transition: transform 0.2s;
 }
 
-.colis-en-attente h3, .commande-en-cours h3, .commande-en-retard h3, .dernier-colis-livré h3 {
+.colis-en-attente:hover, .commande-en-cours:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+}
+
+.dernier-colis-livré {
+    grid-column: 1 / -1; /* Prend toute la largeur */
+}
+
+/* Typographie Cartes */
+.colis-en-attente h3, .commande-en-cours h3, .commande-en-retard h3 {
     font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text-dark);
-    margin: 0 0 20px 0;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin: 0 0 15px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .colis-en-attente p, .commande-en-cours p, .commande-en-retard p {
-    font-size: 3rem;
-    font-weight: 600;
+    font-size: 2.5rem;
+    font-weight: 700;
     color: var(--primary-blue);
     margin: 0;
 }
 
-.dernier-colis-livré {
-    grid-column: 1 / -1;
-}
-
-.dernier-colis-livré p:first-of-type {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin: 0 0 5px 0;
-    font-weight: 400;
-}
-
-.dernier-colis-livré p:nth-of-type(2) {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    margin: 0 0 8px 0;
-}
-
-.dernier-colis-livré p:last-of-type {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    margin: 0;
-}
-
-/* Icônes en haut à droite */
-.colis-en-attente::after {
-    content: '\f466';
+/* Icônes Décoratives (FontAwesome) */
+.colis-en-attente::after, .commande-en-cours::after, .commande-en-retard::after, .dernier-colis-livré::after {
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     position: absolute;
-    top: 30px;
-    right: 30px;
-    width: 48px;
-    height: 48px;
+    top: 25px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
     background: var(--bg-light);
-    border-radius: 12px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
-    color: var(--text-dark);
+    font-size: 1.4rem;
+    color: var(--primary-blue);
+    opacity: 0.8;
 }
 
-.commande-en-cours::after {
-    content: '\f07a';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    width: 48px;
-    height: 48px;
-    background: var(--bg-light);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    color: var(--text-dark);
-}
+.colis-en-attente::after { content: '\f466'; color: var(--accent-orange); background: #fff7ed; }
+.commande-en-cours::after { content: '\f07a'; color: var(--info); background: #eff6ff; }
+.commande-en-retard::after { content: '\f071'; color: var(--danger); background: #fef2f2; }
+.dernier-colis-livré::after { content: '\f058'; color: var(--success); background: #f0fdf4; }
 
-.commande-en-retard::after {
-    content: '\f071';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    width: 48px;
-    height: 48px;
-    background: var(--bg-light);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    color: var(--text-dark);
-}
-
-.dernier-colis-livré::after {
-    content: '\f058';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    width: 48px;
-    height: 48px;
-    background: var(--bg-light);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    color: var(--text-dark);
-}
-
-/* --- CARTES DE COMMANDES (MES COMMANDES & COLIS) --- */
+/* =========================================
+   5. LISTES (COMMANDES & COLIS)
+   ========================================= */
 .commande-card, .colis-section {
     background: white;
-    padding: 25px 30px;
-    border-radius: 16px;
+    padding: 20px 25px;
+    border-radius: 12px;
     border: 1px solid var(--border-color);
     margin-bottom: 15px;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center; /* Centré verticalement */
     transition: all 0.2s;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    flex-wrap: wrap; /* Permet le responsive */
+    gap: 20px;
 }
 
-.commande-card:hover, .colis-section:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+.commande-card:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 4px 12px rgba(30, 58, 95, 0.08);
 }
 
-.commande-info, .colis-info {
-    flex: 1;
-}
-
-.commande-info h3, .colis-info h3 {
-    margin: 0 0 12px 0;
-    color: var(--text-dark);
+.commande-info h3 {
+    margin: 0 0 5px 0;
+    color: var(--primary-blue);
     font-size: 1.1rem;
-    font-weight: 600;
 }
 
-.commande-info p, .colis-info p {
-    margin: 6px 0;
+.commande-info p {
     color: var(--text-muted);
     font-size: 0.9rem;
-    line-height: 1.5;
+    margin: 2px 0;
 }
 
 .commande-actions {
     display: flex;
     flex-direction: column;
-    align-items: flex-end; /* Aligne tous les éléments à droite de la colonne */
-    gap: 12px;
-    text-align: right;
-    min-width: 200px; /* Garantit un espace suffisant pour les dates */
+    align-items: flex-end;
+    gap: 10px;
+    min-width: 150px;
 }
 
-/* On s'assure que le formulaire ne crée pas de décalage */
-.commande-actions form {
-    background: transparent;
-    padding: 0;
-    margin: 0;
-    border: none;
-    width: auto;
-    max-width: none;
-}
-
-.commande-actions p {
-    margin: 0;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    line-height: 1.4; /* Ajoute un peu de confort de lecture */
-}
-
-/* --- BADGES DE STATUT --- */
-.statue-colis {
-    padding: 8px 18px;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: capitalize;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
+/* =========================================
+   6. BADGES & BOUTONS
+   ========================================= */
+.statue-colis, .statue-devis {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
     display: inline-block;
-    background: #E2E8F0;
-    color: #475569;
 }
 
-/* Livré - Vert */
-.statue-colis.statut-livre {
-    background: #DCFCE7 !important;
-    color: #166534 !important;
-}
+/* Couleurs des statuts */
+.statut-livre, .statut-accepte { background: #dcfce7; color: #166534; }
+.statut-en-cours { background: #dbeafe; color: #1e40af; }
+.statut-retard, .statut-refuse { background: #fee2e2; color: #991b1b; }
+.statut-attente, .statut-non-signe { background: #fef3c7; color: #92400e; }
 
-/* En cours - Bleu */
-.statue-colis.statut-en-cours {
-    background: #DBEAFE !important;
-    color: #1E40AF !important;
-}
-
-/* Retard - Rouge */
-.statue-colis.statut-retard {
-    background: #FEE2E2 !important;
-    color: #991B1B !important;
-}
-
-/* En attente - Jaune */
-.statue-colis.statut-attente {
-    background: #FEF3C7 !important;
-    color: #92400E !important;
-}
-
-/* En livraison - Indigo */
-.statue-colis.statut-livraison {
-    background: #E0E7FF !important;
-    color: #3730A3 !important;
-}
-
-/* Transit - Orange */
-.statue-colis.statut-transit {
-    background: #FFEDD5 !important;
-    color: #9A3412 !important;
-}
-
-.statue-devis {
-    padding: 8px 18px;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    text-transform: capitalize;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
-    display: inline-block;
-    background: #E2E8F0; /* Gris par défaut */
-    color: #475569;
-}
-
-
-.statue-devis.statut-refuse {
-    background: #FEE2E2 !important;
-    color: #991B1B !important;
-}
-
-
-.statue-devis.statut-accepte {
-    background: #DCFCE7 !important;
-    color: #166534 !important;
-}
-
-.statue-devis.statut-non-signe {
-    background: #FEF3C7 !important; /* Fond jaune clair */
-    color: #92400E !important;      /* Texte orange foncé */
-}
-
-/* --- GRID FOURNISSEURS --- */
-.fournisseurs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 25px;
-    width: 100%;
-}
-
-.section-fournisseur {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-}
-
-.bouton-contacter, .btn-nouvelle-commande, .commande-détails, button, .bouton-modifier {
+/* Boutons */
+.bouton-contacter, .btn-nouvelle-commande, .bouton-modifier, button {
     background-color: var(--accent-orange);
-    color: var(--primary-blue);
+    color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
     font-weight: 600;
     text-decoration: none;
-    transition: all 0.3s;
+    transition: all 0.2s;
     font-size: 0.9rem;
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    box-shadow: 0 2px 5px rgba(245, 158, 11, 0.2);
 }
 
-button:hover, .btn-nouvelle-commande:hover, .commande-détails:hover {
-    background-color: #D4941F;
+.bouton-contacter:hover, .btn-nouvelle-commande:hover {
+    background-color: #d97706;
     transform: translateY(-1px);
 }
 
 .commande-détails {
-    background-color: transparent;
+    background: white;
     color: var(--primary-blue);
     border: 1px solid var(--primary-blue);
     padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.2s;
 }
 
 .commande-détails:hover {
-    background-color: var(--primary-blue);
+    background: var(--primary-blue);
     color: white;
-    transform: translateY(-1px);
 }
 
-/* --- FORMULAIRES --- */
-form {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    width: 100%;
-    max-width: 500px;
-}
-
-form label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-}
-
-form input, form select, form textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid var(--border-color);
+.bouton-supprimer {
+    background-color: var(--danger);
+    color: white;
+    border: none;
     border-radius: 6px;
-    box-sizing: border-box;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 600;
 }
 
-/* --- MODALES (ADMIN) --- */
-.fenetre-modale {
-    background-color: rgba(15, 23, 42, 0.5) !important; /* Overlay plus moderne */
-    backdrop-filter: blur(4px);
-}
-
-.contenu-modale {
-    border: none !important;
-    border-radius: 16px !important;
-    padding: 40px !important;
-}
-
-/* --- CONTENEUR DE FILTRES --- */
+/* =========================================
+   7. FORMULAIRES & FILTRES
+   ========================================= */
 .filtres-container {
     background: white;
     padding: 20px;
@@ -476,98 +316,140 @@ form input, form select, form textarea {
     margin: 20px 0;
     display: flex;
     gap: 15px;
-    flex-wrap: wrap;
     align-items: flex-end;
     border: 1px solid var(--border-color);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-.filtres-container #searchBar {
-    flex: 1;
-    min-width: 250px;
-    margin: 0;
+    flex-wrap: wrap; /* CRUCIAL pour le responsive */
 }
 
 .filtre-group {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    flex: 1 1 200px; /* Flexibilité : min 200px */
 }
 
-.filtre-group label {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-dark);
-}
-
-.filtre-group select {
-    padding: 10px 14px;
+input, select, textarea {
+    width: 100%;
+    padding: 10px 15px;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 14px;
-    background: white;
-    cursor: pointer;
-    min-width: 150px;
-    color: var(--text-dark);
-    font-family: 'Inter', -apple-system, sans-serif;
-    transition: all 0.2s;
+    border-radius: 6px;
+    font-family: inherit;
+    background: #fff;
 }
 
-.filtre-group select:hover {
-    border-color: var(--primary-blue);
-}
-
-.filtre-group select:focus {
+input:focus, select:focus {
     outline: none;
     border-color: var(--primary-blue);
-    box-shadow: 0 0 0 3px rgba(0, 45, 93, 0.1);
+    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
 }
 
-.btn-reinitialiser {
-    padding: 10px 18px;
-    background: var(--text-muted);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    transition: all 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+/* =========================================
+   8. RESPONSIVE (MEDIA QUERIES)
+   ========================================= */
+
+/* --- TABLETTES (Max 1024px) --- */
+@media screen and (max-width: 1024px) {
+    .conteneur-cartes-accueil {
+        grid-template-columns: 1fr 1fr; /* 2 colonnes */
+    }
+    main {
+        padding: 30px;
+    }
 }
 
-.btn-reinitialiser:hover {
-    background: var(--text-dark);
-    transform: translateY(-1px);
-}
+/* --- MOBILES (Max 768px) --- */
+@media screen and (max-width: 768px) {
+    /* Layout global : Colonne au lieu de ligne */
+    body {
+        flex-direction: column;
+    }
 
-.compteur-resultats {
-    display: block;
-    margin: 10px 0 20px 0;
-    font-size: 14px;
-    color: var(--text-muted);
-    font-weight: 600;
-}
+    /* La barre de navigation passe en haut */
+    .barre-navigation {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row; /* Logo à gauche, menu dessous/à droite */
+        align-items: center;
+        padding: 10px;
+        flex-wrap: wrap;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
 
-.bouton-supprimer {
-    background-color: var(--danger); /* Utilise ta variable #F56C6C */
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
+    #sorbonne-paris-nord {
+        width: 120px;
+        padding: 5px;
+        margin: 0;
+    }
 
-.bouton-supprimer:hover {
-    background-color: #d9534f; /* Un rouge un peu plus sombre au survol */
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(245, 108, 108, 0.4);
-}
+    /* Le menu devient une liste horizontale défilable */
+    .barre-navigation ul {
+        flex-direction: row;
+        width: 100%;
+        overflow-x: auto; /* Scroll horizontal si ça dépasse */
+        padding-bottom: 5px;
+        margin-top: 15px;
+        gap: 10px;
+    }
 
+    .barre-navigation li {
+        padding: 0;
+        flex-shrink: 0;
+    }
+
+    .barre-navigation a {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+        background: rgba(255,255,255,0.1);
+        white-space: nowrap; /* Empêche le texte de se couper */
+    }
+
+    /* Contenu principal */
+    main {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    /* Dashboard : 1 seule colonne */
+    .conteneur-cartes-accueil {
+        grid-template-columns: 1fr;
+    }
+
+    .dernier-colis-livré {
+        grid-column: auto;
+    }
+
+    /* Cartes de commandes/colis */
+    .commande-card, .colis-section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .commande-actions {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        border-top: 1px solid var(--border-color);
+        padding-top: 15px;
+    }
+
+    /* Formulaires et Filtres */
+    .filtres-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filtre-group {
+        width: 100%;
+    }
+
+    /* Grille fournisseurs */
+    .fournisseurs-grid {
+        grid-template-columns: 1fr;
+    }
+}

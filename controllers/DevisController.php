@@ -25,14 +25,14 @@ class DevisController{
         
 
             try{
-            $this->service->AjouterDevis($_POST,$_FILES);
+            $this->service->AjouterDevis($_POST,$_FILES,$_SESSION);
 
             header('Location: pageInfosDevis?success=1');
             exit();
             }
             catch (PDOException $e){
                 if($e->getCode() == '23000'){
-                    header('Location: index.php?action=formulaire&error=doublon');            
+                    header('Location: formulaireDevis?error=doublon');            
                 }
                 else{
                     die("Erreur SQL inattendue : " . $e->getMessage());
@@ -42,19 +42,39 @@ class DevisController{
     }
     
     public function SupprimerDevis(){
+        // 1. Vérification sécurisée
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['supprimer_devis'])){
-            $idDevis = $_POST['idDevis'];
+            
+            // On utilise l'opérateur de coalescence (??) pour éviter les erreurs "Undefined index"
+            $idDevis = $_POST['idDevis'] ?? null;
+
             if (!empty($idDevis)) {
                 try {
                     $this->service->SupprimerDevis($idDevis);
-                    header("Location: pageInfosDevis");
+                    header("Location: pageInfosDevis?success=suppression");
                     exit();
                 } catch (Exception $e) {
-                    header("Location: pageInfosDevis");
+                    // Erreur technique (ex: contrainte SQL)
+                    header("Location: pageInfosDevis?error=technique");
+                    exit();
                 }
+            } else {
+                // L'ID est vide -> On redirige avec une erreur explicite
+                header("Location: pageInfosDevis?error=id_manquant");
+                exit();
+            }
         }
+        
+        // Si on arrive ici (pas POST ou pas le bon bouton), on redirige vers la liste
+        header("Location: pageInfosDevis");
+        exit();
+    
     }
-    }
+
+
+//    public function ModifierDevis(){
+
+//    }
 
     public function AfficherDevis(){
         $listeDevis = $this->service->getAllDevis();

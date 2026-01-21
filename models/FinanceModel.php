@@ -1,5 +1,7 @@
 <?php
 // models/FinanceModel.php
+namespace App\Models;
+use PDO;
 
 class FinanceModel {
     private $db;

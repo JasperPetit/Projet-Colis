@@ -3,22 +3,24 @@
 
 namespace App\Controllers;
 require_once __DIR__ . '/../models/FinanceModel.php';
-use FinanceModel;
+use App\Models\FinanceModel;
+use App\Models\Devis;
 
 class FinanceController {
     private $financeModel;
-
+    private $devisModel;
     public function __construct($db) {
         $this->financeModel = new FinanceModel($db);
+        $this->devisModel = new Devis($db);
     }
 
     // Afficher la liste des devis pour le financier
     public function afficherListeFinance() {
         // On appelle la fonction du modèle qu'on vient de mettre à jour
-        $listeDevis = $this->financeModel->getAllDevisComplets();
+        $listeDevis = $this->devisModel->getAllDevis();
         
         // On charge la NOUVELLE vue (celle qui ressemble à pageInfosDevis)
-        require_once __DIR__ . '/../views/page_finance_devis.php';
+        require_once __DIR__ . '/../views/service_financier.php';
     }
 
     // Action : Valider un devis
@@ -28,7 +30,7 @@ class FinanceController {
             $this->financeModel->updateStatutDevis($idDevis, 1); // 1 = Accepté
         }
         // Redirection vers la liste
-        header('Location: index.php?action=finance');
+        header('Location: pageServiceFinancierDevis');
         exit();
     }
 
@@ -39,7 +41,7 @@ class FinanceController {
             $this->financeModel->updateStatutDevis($idDevis, 0); // 0 = Refusé
         }
         // Redirection vers la liste
-        header('Location: index.php?action=finance');
+        header('Location: pageServiceFinancierDevis');
         exit();
     }
 }
