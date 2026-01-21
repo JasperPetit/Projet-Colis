@@ -1,10 +1,33 @@
 <?php 
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once 'autoload.php';
 
 $pdo = require_once __DIR__ . '/config/DBconnect.php';
+
+
+
+$action = $_GET['action'] ?? 'accueil';
+
+require_once 'auth.php';
+
 $routes = [
     'accueil' => ['AccueilController','AfficherAccueil'],
+
+    'login'            => ['AuthController', 'afficherLogin'], 
+    'connexion'        => ['AuthController', 'connecter'],
+    'pageTableauDeBord' => ['ExpeditionController', 'afficherTableauDeBord'],
+    
+    'suivi'            => ['ExpeditionController', 'afficherSuiviColis'],
+    'nouveau'          => ['ExpeditionController', 'afficherNouvelEnvoi'],
+    'recherche_rapide' => ['ExpeditionController', 'rechercherRapide'],
+    'imprimer' => ['ExpeditionController', 'imprimerEtiquette'],
+    'deconnexion'      => ['ExpeditionController', 'deconnecter'],
+
+
 
     //action sur les commandes
     'afficherCommande' => ['CommandeController','afficherCommande'],
@@ -35,7 +58,7 @@ $routes = [
 
 
 ];
-$action = $_GET['action'] ?? 'accueil';
+
 
 if (array_key_exists($action, $routes)) {
     

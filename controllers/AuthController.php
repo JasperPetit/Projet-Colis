@@ -25,19 +25,36 @@ class AuthController {
             
             if ($identifiant !== '' && $mot_de_passe !== '') {
                 try {
-                    $sql = "SELECT * FROM Utilisateur WHERE identifiantCAS = :id";
-                    $stmt = $this->pdo->prepare($sql);
-                    $stmt->execute([':id' => $identifiant]);
-                    $utilisateur = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $sql = "SELECT U.*, R.nomRole 
+                            FROM Utilisateur U
+                            JOIN Role R ON U.idRole = R.idRole
+                            WHERE U.identifiantCAS = :id";
+                            
+                    $preparer = $this->pdo->prepare($sql);
+                    $preparer->execute([':id' => $identifiant]);
+                    $utilisateur = $preparer->fetch(PDO::FETCH_ASSOC);
 
-                    if ($utilisateur && $utilisateur['mdpCAS'] == $mot_de_passe) {
+                    if ($utilisateur && password_verify($mot_de_passe, $utilisateur['mdpCAS'])) {
+                        
                         $_SESSION['utilisateur_id'] = $utilisateur['identifiantCAS'];
                         $_SESSION['nom_complet'] = $utilisateur['Prenom'] . ' ' . $utilisateur['nom'];
-                        $_SESSION['role'] = $utilisateur['Role'];
-                        
-                        header('Location: index.php?action=accueil');
+                        $_SESSION['role'] = $utilisateur['nomRole']; 
+
+                        if ($utilisateur['nomRole'] === 'ADMIN') {
+                            header('Location: index.php?action=pageAdmin');
+                        } 
+                        elseif ($utilisateur['nomRole'] === 'Service_Postal') {
+                            header('Location: index?action=pageTableauDeBord');
+                        }
+                        elseif ($utilisateur['nomRole'] === 'Service_Financier') {
+                            header('Location: index?action=accueil'); // METTRE LA VRAI PAGE D'ACCUEUIL DU PROFIL JAI PAS TROUVÉ
+                        }
+                        elseif ($utilisateur['nomRole'] === 'Demandeur'){
+                            header('Location: index?action=accueil'); // METTRE LA VRAI PAGE D'ACCUEUIL DU PROFIL JAI PAS TROUVÉ
+                        }
                         exit();
-                    } else {
+                        }     
+            else {
                         $erreur = 'Identifiant ou mot de passe incorrect';
                     }
                 } catch (Exception $e) {
