@@ -15,7 +15,7 @@ class AccueilController{
         $nbAttente = count($colisEnAttente);
         $nbEnCours = count($commandesEnCours);
         $nbRetard = count($commandesEnRetard);
-        require_once __DIR__ . '/../views/pageAccueil.php';
+        require_once __DIR__ . '/../views/pageAccueil.php';dd
     }
 
 
