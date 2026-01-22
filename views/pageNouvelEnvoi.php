@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Réimpression Étiquette - Service Postal</title>
+    <link rel="stylesheet" href="public/riyad.css">
     <link rel="stylesheet" href="public/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -11,18 +12,6 @@
     <?php include __DIR__ . '/navbar.php'; ?>
 
     <main class="contenu-principal">
-        <header class="barre-haute">
-            <?php include 'rechercheColis.php'; ?>
-            
-            <div class="profil-utilisateur">
-                <button class="bouton-profil">
-                    <i class="fa-solid fa-user-tie icone"></i> <?php echo $nom_complet; ?>
-                </button>
-                <a href="index.php?action=deconnexion" class="bouton-logout">
-                    <i class="fa fa-sign-out-alt"></i> Déconnexion
-                </a>     
-            </div>
-        </header>
 
         <section style="padding: 30px 30px 0 30px;">
             <h1 style="margin:0; color: var(--bleu-fonce);">Réimpression d'étiquette</h1>

@@ -76,7 +76,7 @@
                 <button type="submit" class="btn-nouvelle-commande">
                     <i class="fas fa-save"></i> Enregistrer les modifications
                 </button>
-                <a href="afficherCommande" class="btn-reinitialiser" style="text-decoration: none;">
+                <a href="javascript:history.back()" class="btn-reinitialiser" style="text-decoration: none;">
                     Annuler
                 </a>
             </div>

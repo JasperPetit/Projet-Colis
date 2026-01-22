@@ -20,11 +20,63 @@
             </a>
         </div>
 
-         <input type="text" id="searchBar" onkeyup="filtrerCommandes()" placeholder="Rechercher une commande"> 
+        <div class="filtres-container">
+            <input type="text" id="searchBar" onkeyup="filtrerDevis()" placeholder="Rechercher (Nom, N°, Fournisseur)...">
+
+            <div class="filtre-group">
+                <label for="filtreDate">Trier par date</label>
+                <select id="filtreDate" onchange="filtrerDevis()">
+                    <option value="recente" selected>Plus récente</option>
+                    <option value="ancienne">Plus ancienne</option>
+                </select>
+            </div>
+
+            <div class="filtre-group">
+                <label for="filtreStatut">Statut</label>
+                <select id="filtreStatut" onchange="filtrerDevis()">
+                    <option value="">Tous les statuts</option>
+                    <option value="attente">En attente</option>
+                    <option value="accepte">Accepté</option>
+                    <option value="refuse">Rejeté</option>
+                </select>
+            </div>
+
+            <button class="btn-reinitialiser" onclick="reinitialiserFiltres()">
+                <i class="fas fa-redo"></i> Réinitialiser
+            </button>
+        </div>
+
+        <span class="compteur-resultats" id="compteurResultats"></span>
 
         <div id="listeDevis"> 
-            <?php foreach ($listeDevis as $devi) { ?>
-                <div class="commande-card" style="flex-wrap: wrap;">
+            <?php foreach ($listeDevis as $devi) { 
+                // --- PRÉPARATION DES DONNÉES POUR LE JS (Invisible) ---
+                
+                // Calcul du statut pour le tri
+                $statutJS = 'attente';
+                if ($devi['SignatureOuiOuNon'] === 1 || $devi['SignatureOuiOuNon'] === '1') {
+                    $statutJS = 'accepte';
+                } elseif ($devi['SignatureOuiOuNon'] === 0 || $devi['SignatureOuiOuNon'] === '0') {
+                    $statutJS = 'refuse';
+                }
+
+                // Date pour le tri
+                $dateJS = $devi['Date_'] ?? '';
+
+                // Texte complet pour la recherche (concaténation de tout ce qu'on voit)
+                $texteRecherche = strtolower(
+                    ($devi['name'] ?? '') . ' ' . 
+                    ($devi['idDevis'] ?? '') . ' ' . 
+                    ($devi['nomEntreprise'] ?? '') . ' ' . 
+                    ($devi['nom'] ?? '') . ' ' . 
+                    ($devi['Prenom'] ?? '')
+                );
+            ?>
+                <div class="commande-card" 
+                     style="flex-wrap: wrap;"
+                     data-search="<?= htmlspecialchars($texteRecherche) ?>"
+                     data-date="<?= htmlspecialchars($dateJS) ?>"
+                     data-statut="<?= htmlspecialchars($statutJS) ?>">
                     
                     <div class="commande-info">
                         <h3><?= htmlspecialchars($devi['name'] ?? 'Devi n°'.$devi['idDevis'])?></h3>
@@ -44,6 +96,7 @@
                     
                     <div class="commande-actions">
                         <?php
+                            // Gestion visuelle du statut (inchangé par rapport à ton code)
                             $statut = $devi["SignatureOuiOuNon"];
                             $affichage = '';
                             $classeStatut = '';
@@ -65,38 +118,104 @@
                         <span class="statue-devis <?= $classeStatut ?>">
                             <?= htmlspecialchars($affichage) ?>
                         </span>
+                        
+                        <a href="ModifierDevis?modifier=<?= $devi['idDevis']?>" class="commande-détails">Modifier le devis</a>
+                        
                         <?php if (!empty($devi['imageDevis'])): ?>
                             <a href="uploads/<?= htmlspecialchars($devi['imageDevis']) ?>" target="_blank" class="commande-détails">Voir le fichier</a>
                         <?php endif; ?>
+                        
                         <a href="javascript:void(0);" onclick="toggleDetails(<?= $devi['idDevis'] ?>)" class="commande-détails">Voir détails</a>
+                        
+                        <form method="POST" action="SupprimerDevis" style="display: inline; margin: 0; padding: 0; border: none; background: none;" onsubmit="return confirmerSuppressionCommande('<?= htmlspecialchars($devi['idDevis']) ?>')">
+                            <input type="hidden" name="idDevis" value="<?= $devi['idDevis'] ?>">    
+                            <button type="submit" name="supprimer_devis" class="bouton-supprimer">
+                                Supprimer
+                            </button>
+                        </form>
                     </div>
+
                     <div id="details-<?= $devi['idDevis'] ?>" style="display: none; width: 100%; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; color: #555;">
                         <strong>Détails :</strong><br>
                         <?= nl2br(htmlspecialchars($devi['details'] ?? 'Aucun détail.')) ?>
                     </div>
                 </div>
             <?php } ?>
-        </div> </main>
+        </div> 
+    </main>
 
     <script src="script.js"></script>
     <script>
-        function filtrerCommandes() {
-            var input = document.getElementById("searchBar");
-            var filter = input.value.toUpperCase();
-            var container = document.getElementById("listeDevis");
-            var cards = container.getElementsByClassName("commande-card");
-
-            for (var i = 0; i < cards.length; i++) {
-                var h3 = cards[i].getElementsByTagName("h3")[0];
-                var txtValue = h3.textContent || h3.innerText;
-                cards[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
-            }
+        function confirmerSuppressionCommande(idDevis) {
+            return confirm("Êtes-vous sûr de vouloir supprimer le devis '" + idDevis + "' ?\n\nCette action est irréversible.");
         }
 
         function toggleDetails(id) {
             var div = document.getElementById('details-' + id);
             div.style.display = (div.style.display === "none") ? "block" : "none";
         }
+
+        // --- NOUVELLE FONCTION DE FILTRAGE ---
+        function filtrerDevis() {
+            // 1. Récupération des inputs
+            const inputRecherche = document.getElementById("searchBar");
+            const filtreRecherche = inputRecherche.value.toLowerCase();
+            
+            const filtreDate = document.getElementById("filtreDate").value;
+            const filtreStatut = document.getElementById("filtreStatut").value;
+            
+            // 2. Sélection des cartes
+            const container = document.getElementById("listeDevis");
+            const cards = Array.from(container.getElementsByClassName("commande-card"));
+            
+            // 3. Filtrage
+            const cardsVisibles = cards.filter(function(card) {
+                // Recherche
+                const searchData = card.getAttribute("data-search");
+                const matchRecherche = searchData.includes(filtreRecherche);
+                
+                // Statut
+                const statutData = card.getAttribute("data-statut");
+                const matchStatut = !filtreStatut || statutData === filtreStatut;
+                
+                return matchRecherche && matchStatut;
+            });
+            
+            // 4. Tri par date
+            cardsVisibles.sort(function(a, b) {
+                const dateA = new Date(a.getAttribute("data-date"));
+                const dateB = new Date(b.getAttribute("data-date"));
+                
+                if (filtreDate === "recente") {
+                    return dateB - dateA;
+                } else {
+                    return dateA - dateB;
+                }
+            });
+            
+            // 5. Affichage
+            cards.forEach(card => card.style.display = "none");
+            cardsVisibles.forEach(card => {
+                card.style.display = "";
+                container.appendChild(card);
+            });
+            
+            // 6. Compteur
+            const compteur = document.getElementById("compteurResultats");
+            if(compteur) {
+                compteur.textContent = cardsVisibles.length + " devis trouvé(s)";
+            }
+        }
+        
+        function reinitialiserFiltres() {
+            document.getElementById("searchBar").value = "";
+            document.getElementById("filtreDate").value = "recente";
+            document.getElementById("filtreStatut").value = "";
+            filtrerDevis();
+        }
+        
+        // Lancer au chargement
+        window.onload = filtrerDevis;
     </script>
 </body>
 </html>

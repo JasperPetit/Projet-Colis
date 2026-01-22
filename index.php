@@ -9,8 +9,6 @@ require_once 'autoload.php';
 
 $pdo = require_once __DIR__ . '/config/DBconnect.php';
 
-
-
 $action = $_GET['action'] ?? 'accueil';
 
 require_once 'auth.php';
@@ -25,48 +23,47 @@ $routes = [
     'suivi'            => ['ExpeditionController', 'afficherSuiviColis'],
     'nouveau'          => ['ExpeditionController', 'afficherNouvelEnvoi'],
     'recherche_rapide' => ['ExpeditionController', 'rechercherRapide'],
-    'imprimer' => ['ExpeditionController', 'imprimerEtiquette'],
+    'imprimer'         => ['ExpeditionController', 'imprimerEtiquette'],
     'deconnexion'      => ['ExpeditionController', 'deconnecter'],
 
 
     //Service Financier
     'pageServiceFinancierDevis' => ['FinanceController','afficherListeFinance'],
-    'validerDevis'=> ['FinanceController','validerDevis'],
-    'refuserDevis' => ['FinanceController','refuserDevis'],
+    'validerDevis'              => ['FinanceController','validerDevis'],
+    'refuserDevis'              => ['FinanceController','refuserDevis'],
 
-    //action sur les commandes
-    'afficherCommande' => ['CommandeController','afficherCommande'],
-    'pageMesCommandesAdmin' => ['CommandeController','afficherCommandeAdmin'],
+    //actions sur les commandes
+    'afficherCommande'        => ['CommandeController','afficherCommande'],
+    'pageMesCommandesAdmin'   => ['CommandeController','afficherCommandeAdmin'],
+    'afficherCommandeAdmin'   => ['CommandeController','afficherCommandeAdmin'],
     'pageMesCommandesPostale' => ['CommandeController','afficherCommandePostale'],
-    'SupprimerCommande' => ['CommandeController','SupprimerCommande'],
-    'AjouterCommande' => ['CommandeController','ajouterCommande'],
-    'ModifierCommande' => ['CommandeController','ModifierCommande'],
+    'SupprimerCommande'       => ['CommandeController','SupprimerCommande'],
+    'AjouterCommande'         => ['CommandeController','ajouterCommande'],
+    'ModifierCommande'        => ['CommandeController','ModifierCommande'],
 
     //devis
-    'ajouter_devis' => ['DevisController','AjouterDevis'],
-    'formulaireDevis' => ['DevisController','AfficherFormulaire'],
-    'pageInfosDevis' => ['DevisController','AfficherDevis'],
-    'SupprimerDevis' => ['DevisController','SupprimerDevis'],
-    'ModifierDevis' => ['DevisController','ModifierDevis'],
+    'ajouter_devis'           => ['DevisController','AjouterDevis'],
+    'formulaireDevis'         => ['DevisController','AfficherFormulaire'],
+    'pageInfosDevis'          => ['DevisController','AfficherDevis'],
+    'SupprimerDevis'          => ['DevisController','SupprimerDevis'],
+    'ModifierDevis'           => ['DevisController','ModifierDevis'],
     'PageInfosDevisDemandeur' => ['DevisController','AfficherDevisDepartement'],
 
     //colis
     'afficherColis' => ['ColisController', 'afficherColis'],
 
     //fournisseur
-    'afficherFournisseur' => ['FournisseurController','AfficherFournisseur'],
+    'afficherFournisseur'  => ['FournisseurController','AfficherFournisseur'],
     'pageFournisseurAdmin' => ['FournisseurController','AfficherFournisseurAdmin'],
-    'ajouterFournisseur' => ['FournisseurController','ajouterFournisseur'],
-    'ModifierFournisseur' => ['FournisseurController','ModifierFournisseur'],
+    'ajouterFournisseur'   => ['FournisseurController','ajouterFournisseur'],
+    'ModifierFournisseur'  => ['FournisseurController','ModifierFournisseur'],
     'SupprimerFournisseur' => ['FournisseurController','SupprimerFournisseur'],
 
     //admin
-    'pageAdmin' => ['UtilisateurController','AfficherAdmin'],
-    'pageVoirUtilisateurs' => ['UtilisateurController','AfficherListe'],
+    'pageAdmin'              => ['UtilisateurController','AfficherAdmin'],
+    'pageVoirUtilisateurs'   => ['UtilisateurController','AfficherListe'],
     'pageAjouterUtilisateur' => ['UtilisateurController','AjouterUtilisateur'],
-    'SupprimerUtilisateur' => ['UtilisateurController', 'SupprimerUtilisateur'],
-
-
+    'SupprimerUtilisateur'   => ['UtilisateurController', 'SupprimerUtilisateur'],
 ];
 
 
@@ -97,10 +94,7 @@ if (array_key_exists($action, $routes)) {
 
 } else {
     // Gestion 404 simple
-    echo $_GET['action'];
+    echo "Action demandée : " . htmlspecialchars($action) . "<br>";
     echo "<h1>Page introuvable</h1>";
 }
-
-
-
 ?>

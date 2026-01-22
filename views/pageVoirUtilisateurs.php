@@ -35,10 +35,10 @@
             <table>
                 <thead>
                     <tr>
+                        <th>identifiant</th>
                         <th>Prénom</th>
                         <th>Nom</th>
                         <th>Rôle</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
 
