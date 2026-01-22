@@ -32,5 +32,13 @@ class ColisModel{
                 ORDER BY F.nomEntreprise";
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    
+    public function marquerCommeLivre($idCommande) {
+        $sql = "UPDATE Colis SET LivréOuiOuNon = '1' WHERE NumeroBonDeCommande = :id";
+
+        $prepare = $this->pdo->prepare($sql);
+        $prepare->execute([':id' => $idCommande]);
+}
 }
 ?>

@@ -80,25 +80,6 @@ class ExpeditionModel {
         return $resultat_historique->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function chercherCommande($numero) {
-
-        if (empty($numero)) {
-            return null;
-        }
-
-        $requete_sql = "SELECT c.*, dep.nomDepartement, c.AdresseArivee, c.statut
-                        FROM Commande c 
-                        LEFT JOIN devis USING (idDevis)
-                        LEFT JOIN Appartient_a USING (identifiantCAS) 
-                        LEFT JOIN Departement dep USING (idDepartement)
-                        WHERE c.NumeroBonDeCommande = :id";
-                
-        $resultat_unique = $this->pdo->prepare($requete_sql);
-        $resultat_unique->execute([':id' => $numero]);
-
-        return $resultat_unique->fetch(PDO::FETCH_ASSOC);
-    }
-
 
     public function recupererNumeroBonParIdentifiantCas($identifiant_cas) {
         $requete_sql = "SELECT Commande.NumeroBonDeCommande 

@@ -71,15 +71,6 @@ class ExpeditionController {
     }
     
   
-    public function rechercherRapide() {
-        $texte = $_GET['champ_recherche'] ?? null;
-        $commande_trouvee = null;
-
-        if ($texte) {
-            $commande_trouvee = $this->modele->chercherCommande($texte);
-        }
-        return $commande_trouvee;
-    }
 
 
     public function imprimerEtiquette() {
