@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Tableau de bord - Service Postal</title>
+    <title>Tableau de bord</title>
     <link rel="stylesheet" href="public/riyad.css">
     <link rel="stylesheet" href="public/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,7 +13,7 @@
     
     <main class="contenu-principal">
         <section style="padding: 30px 30px 0 30px;">
-            <h1 style="margin:0;">Tableau de bord postal</h1>
+            <h1 style="margin:0;">Tableau de bord</h1>
             <p style="color: #64748b;">Vue d'ensemble des opérations du jour <?php echo $date; ?></p>
         </section>
 

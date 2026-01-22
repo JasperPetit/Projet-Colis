@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -30,17 +28,25 @@
             
             <label for="idDevis">Sélectionner le devis :</label>
             <select name="idDevis" id="idDevis" required>
-
                 <option value="">Choisir un devis</option>
                 <?php foreach ($listeDevis as $devis): ?>
                     <option value="<?= $devis['idDevis'] ?>">
                         Devis n°<?= htmlspecialchars($devis['idDevis']) ?>
                     </option>
                 <?php endforeach; ?>
-
             </select>
             <br>
 
+            <label for="idFournisseur">Sélectionner le fournisseur :</label>
+            <select name="idFournisseur" id="idFournisseur" required>
+                <option value="">Choisir un fournisseur</option>
+                <?php foreach ($resNomEntreprise as $fournisseur): ?>
+                    <option value="<?= $fournisseur['idFournisseur'] ?>">
+                        <?= htmlspecialchars($fournisseur['nomEntreprise']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            <br>
             <label for="date">Date de commande :</label>
             <input type="date" id="date" name="DateArrivee" required>
             <br>

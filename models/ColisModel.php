@@ -1,6 +1,7 @@
 <?php
 namespace App\Models;
 use \PDO;
+
 class ColisModel{
 
     private $pdo;
@@ -31,6 +32,21 @@ class ColisModel{
                 WHERE F.nomEntreprise IS NOT NULL
                 ORDER BY F.nomEntreprise";
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function creerColis($numeroBonDeCommande, $dateArrivee) {
+        // On cherche le plus grand ID actuel dans la table
+        $stmtMax = $this->pdo->query("SELECT MAX(idColis) FROM Colis");
+        $maxId = $stmtMax->fetchColumn();
+
+        // On ajoute 1 pour avoir le nouvel ID (ou 1 si la table est vide)
+        $newId = $maxId ? ((int)$maxId + 1) : 1;
+
+        // On insère le colis avec cet ID explicite
+        $sql = "INSERT INTO Colis (idColis, NumeroBonDeCommande, DateAriveePrevu) VALUES (?, ?, ?)";
+        $stmt = $this->pdo->prepare($sql);
+        
+        return $stmt->execute([$newId, $numeroBonDeCommande, $dateArrivee]);
     }
 }
 ?>
