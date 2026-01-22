@@ -25,7 +25,7 @@ class AuthController {
             
             if ($identifiant !== '' && $mot_de_passe !== '') {
                 try {
-                    $sql = "SELECT U.*, R.nomRole 
+                    $sql = "SELECT U.*, R.nomRole
                             FROM Utilisateur U
                             JOIN Role R ON U.idRole = R.idRole
                             WHERE U.identifiantCAS = :id";
@@ -39,6 +39,7 @@ class AuthController {
                         $_SESSION['utilisateur_id'] = $utilisateur['identifiantCAS'];
                         $_SESSION['nom_complet'] = $utilisateur['Prenom'] . ' ' . $utilisateur['nom'];
                         $_SESSION['role'] = $utilisateur['nomRole']; 
+                        
 
                         if ($utilisateur['nomRole'] === 'ADMIN') {
                             header('Location: index.php?action=pageAdmin');
@@ -50,6 +51,16 @@ class AuthController {
                             header('Location: index?action=accueil'); // METTRE LA VRAI PAGE D'ACCUEUIL DU PROFIL JAI PAS TROUVÉ
                         }
                         elseif ($utilisateur['nomRole'] === 'Demandeur'){
+                            $sql2 = "SELECT A.*
+                            FROM Appartient_a A
+                            JOIN Utilisateur U ON U.identifiantCAS = A.identifiantCAS
+                            WHERE U.identifiantCAS = :id";
+                            
+                            $preparer2 = $this->pdo->prepare($sql2);
+                            $preparer2->execute([':id' => $identifiant]);
+                            $dpt = $preparer2->fetch(PDO::FETCH_ASSOC);
+
+                            $_SESSION['departement'] = $dpt['idDepartement'];
                             header('Location: index?action=accueil'); // METTRE LA VRAI PAGE D'ACCUEUIL DU PROFIL JAI PAS TROUVÉ
                         }
                         exit();

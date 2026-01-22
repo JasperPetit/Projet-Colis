@@ -67,6 +67,57 @@ class Devis {
         $query = $this->pdo->prepare("DELETE FROM Commandé_a_ WHERE idDevis = ?");
         return $query->execute([$idDevis]);
     }
+
+    public function ModifierDevis($tab){
+        $sql = "UPDATE devis SET
+        name = ?,
+        prix = ?,
+        details = ?,
+        imageDevis = ?
+        WHERE idDevis = ?";
+
+       $query = $this->pdo->prepare($sql);
+       return $query->execute([
+        $tab['name'],
+        $tab['prix'],
+        $tab['details'],
+        $tab['nomFichier'],
+        $tab['idDevi']
+       ]);
+
+    }
+
+    public function ModifierCommander($tab){
+        $sql = "UPDATE commandé_a_ SET
+        idFournisseur = ?
+        WHERE idDevis = ?";
+
+        $query = $this->pdo->prepare($sql);
+        return $query->execute([
+            $tab['idFournisseur'],
+            $tab['idDevi']
+        ]);
+
+    }
+
+    public function getDevisDepartement($dep){
+        $sql = "SELECT D.*, F.nomEntreprise , U.*, Dep.nomDepartement FROM devis D 
+            LEFT JOIN Commandé_a_ USING (idDevis) 
+            LEFT JOIN Fournisseur F USING (idFournisseur) 
+            LEFT JOIN utilisateur U ON D.identifiantCAS = U.identifiantCAS 
+            LEFT JOIN Appartient_a USING (identifiantCAS) 
+            LEFT JOIN Departement Dep ON Dep.idDepartement = Appartient_a.idDepartement
+            WHERE Dep.idDepartement = ?
+            ORDER BY D.Date_ DESC";
+
+
+        $query = $this->pdo->prepare($sql);
+        $query->execute([$dep]);
+
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
 }
 
 ?>

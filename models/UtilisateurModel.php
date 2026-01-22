@@ -25,14 +25,18 @@ class UtilisateurModel {
         return $query->execute([$id]);
     }
 
-
+    public function getAllDepartements(){
+        $sql = "SELECT * FROM Departement";
+        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     // Pour la page AjouterUilisateur
-    function ajouterUtilisateur($prenom, $nom, $role, $mdp, $departement = null) {
+    function ajouterUtilisateur($prenom, $nom, $role, $mdp, $departement) {
         $nomsRoles = [
             'Administrateur' => 'ADMIN', 
             'Service Financier' => 'Service_Financier', 
-            'Service Postal' => 'Service_Postal'
+            'Service Postal' => 'Service_Postal',
+            
         ];
         $roleDB = $nomsRoles[$role] ?? $role;
 
@@ -43,10 +47,10 @@ class UtilisateurModel {
 
         // Si c'est un demandeur avec un département, on l'ajoute dans la table de liaison
         if ($departement) {
-            $idUser = $this->pdo->lastInsertId(); // On récupère l'ID du mec qu'on vient de créer
+            $idUser = $this->pdo->lastInsertId(); // On récupère l'ID de la personne qu'on vient de créer
             
             $sqlDep = "INSERT INTO Appartient_a (identifiantCAS, idDepartement) 
-                    VALUES (?, (SELECT idDepartement FROM Departement WHERE nomDepartement = ?))";
+                    VALUES (?, (SELECT idDepartement FROM Departement WHERE idDepartement = ?))";
             $this->pdo->prepare($sqlDep)->execute([$idUser, $departement]);
         }
     }

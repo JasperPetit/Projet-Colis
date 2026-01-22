@@ -26,9 +26,7 @@
     <main>
         <div class="titre">
             <h1>Mes Commandes</h1>
-            <a href="AjouterCommande" class="btn-nouvelle-commande">
-                <i class="fas fa-plus"></i> Nouvelle commande
-            </a>
+
         </div>
 
         <div class="filtres-container">

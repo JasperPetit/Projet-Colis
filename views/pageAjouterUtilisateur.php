@@ -46,10 +46,11 @@
                     <label for="departement">Département :</label>
                     <select id="departement" name="departement">
                         <option value="">-- Sélectionner un département --</option>
-                        <option value="Informatique">Informatique</option>
-                        <option value="Génie Electrique">Génie Electrique</option>
-                        <option value="Réseaux & Télécommunications">Réseaux & Télécommunications</option>
-                        <option value="Ressources Humaines">Ressources Humaines</option>
+                        <?php foreach($ListeDepartement as $Departement): ?>
+                            <option value="<?=  $Departement['idDepartement']?>">
+                                <?= $Departement['nomDepartement'] ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select><br>
                 </div>
 

@@ -45,9 +45,10 @@
                 <tbody>
                     <?php foreach ($resListeUtilisateurs as $utilisateur): ?>
                         <tr>
-                            <td><?= htmlspecialchars($utilisateur['Prenom']) ?></td>
-                            <td><?= strtoupper(htmlspecialchars($utilisateur['nom'])) ?></td>
-                            <td><?= htmlspecialchars($utilisateur['Role']) ?></td>
+                            <td><?= !empty($utilisateur['identifiantCAS']) ? htmlspecialchars($utilisateur['identifiantCAS']) : 'IdentifiantCAS inconnu' ?></td>
+                            <td><?= !empty($utilisateur['Prenom']) ? htmlspecialchars($utilisateur['Prenom']) : 'Prenom inconnu' ?></td>
+                            <td><?= !empty($utilisateur['nom']) ? strtoupper(htmlspecialchars($utilisateur['nom'])) : 'Nom inconnu' ?></td>
+                            <td><?= !empty($utilisateur['Role']) ? htmlspecialchars($utilisateur['Role']): 'Role inconnu' ?></td>
                             <td>
                                 <form action="index.php?action=SupprimerUtilisateur" method="POST" style="display: inline; margin: 0; padding: 0; border: none; background: none;" onsubmit="return confirmerSuppression('<?= htmlspecialchars($utilisateur['nom']) ?>')">
                                     <input type="hidden" name="id_utilisateur" value="<?= $utilisateur['identifiantCAS'] ?>">

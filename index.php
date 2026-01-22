@@ -36,6 +36,8 @@ $routes = [
 
     //action sur les commandes
     'afficherCommande' => ['CommandeController','afficherCommande'],
+    'pageMesCommandesAdmin' => ['CommandeController','afficherCommandeAdmin'],
+    'pageMesCommandesPostale' => ['CommandeController','afficherCommandePostale'],
     'SupprimerCommande' => ['CommandeController','SupprimerCommande'],
     'AjouterCommande' => ['CommandeController','ajouterCommande'],
     'ModifierCommande' => ['CommandeController','ModifierCommande'],
@@ -45,12 +47,15 @@ $routes = [
     'formulaireDevis' => ['DevisController','AfficherFormulaire'],
     'pageInfosDevis' => ['DevisController','AfficherDevis'],
     'SupprimerDevis' => ['DevisController','SupprimerDevis'],
+    'ModifierDevis' => ['DevisController','ModifierDevis'],
+    'PageInfosDevisDemandeur' => ['DevisController','AfficherDevisDepartement'],
 
     //colis
     'afficherColis' => ['ColisController', 'afficherColis'],
 
     //fournisseur
     'afficherFournisseur' => ['FournisseurController','AfficherFournisseur'],
+    'pageFournisseurAdmin' => ['FournisseurController','AfficherFournisseurAdmin'],
     'ajouterFournisseur' => ['FournisseurController','ajouterFournisseur'],
     'ModifierFournisseur' => ['FournisseurController','ModifierFournisseur'],
     'SupprimerFournisseur' => ['FournisseurController','SupprimerFournisseur'],

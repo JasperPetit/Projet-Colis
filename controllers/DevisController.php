@@ -26,8 +26,12 @@ class DevisController{
 
             try{
             $this->DevisService->AjouterDevis($_POST,$_FILES,$_SESSION);
-
-            header('Location: pageInfosDevis?success=1');
+            if ($_SESSION['role']=='ADMIN'){
+                header('Location: pageInfosDevis?success=1');
+            }
+            elseif ($_SESSION['role']=='Demandeur'){
+                header('Location: PageInfosDevisDemandeur');
+            }
             exit();
             }
             catch (PDOException $e){
@@ -73,6 +77,59 @@ class DevisController{
 
 
    public function ModifierDevis(){
+            $erreur = null;
+            $devi = null;
+        if (isset($_GET['modifier'])) {
+            $num = $_GET['modifier'];
+            $query = $this->pdo->prepare("SELECT * FROM Devis LEFT JOIN Commandé_a_ USING (idDevis) WHERE idDevis = ?");
+            $query->execute([$num]);
+            $devi = $query->fetch(PDO::FETCH_ASSOC);
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $nomFichier = $devi['ImageDevis'];
+            if (!empty($_FILES['ImageDevis']['name'])) {
+                $nomFichier = $_FILES['ImageDevis']['name'];
+            
+                // On le déplace directement dans le dossier "uploads"
+             // ATTENTION : Le dossier "uploads" doit exister physiquement !
+                move_uploaded_file($_FILES['ImageDevis']['tmp_name'], "uploads/" . $nomFichier);
+                }
+            $tab = [
+            'name' => $_POST['name'],
+            'prix' => $_POST['prix'],
+            'idFournisseur' => $_POST['idFournisseur'],
+            'details' => $_POST['details'],
+            'nomFichier' => $nomFichier,
+
+            'signatureParDefaut' => $devi['SignatureOuiOuNon'],
+            'idDevi' => $devi['idDevis']
+            ];
+        
+            if (!empty($_POST['idDevis'])) {
+                try {
+                    $success = $this->DevisService->ModifierDevis($tab);
+                
+                    if ($success) {
+                        
+                        header("Location: pageInfosDevis");
+                        
+
+                        exit();
+                    } else {
+                        $erreur = "La mise à jour a échoué.";
+                    }
+                
+                } catch (PDOException $e) {
+                    $erreur = "Erreur SQL : " . $e->getMessage();
+                }
+            } else {
+                $erreur = "Veuillez remplir les champs obligatoires.";
+            }
+            }
+        $resFournisseurs = $this->FournisseurModel->getAllFournisseurs();
+        
+        require_once __DIR__ . '/../views/pageModifierDevis.php';
 
    }
 
@@ -82,6 +139,11 @@ class DevisController{
         require_once 'views/pageInfosDevisAdmin.php';
     }
 
+    public function AfficherDevisDepartement(){
+        $listeDevis = $this->DevisService->getDevisDepartement();
+
+        require_once 'views/pageInfosDevis.php';
+    }
 
     public function AfficherFormulaire(){
         $resFournisseurs = $this->FournisseurModel->getAllFournisseurs();

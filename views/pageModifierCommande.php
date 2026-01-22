@@ -42,6 +42,11 @@
             </select>
             <br>
 
+
+            <input type="hidden" name="ancienDevis" value="<?= $commande['imageBonDeCommande'] ?>">
+
+            <br>
+
             <label for="date">Date d'arrivée prévue :</label>
             <input type="date" id="date" name="DateArrivee" 
                    value="<?= htmlspecialchars($commande['Date_'] ?? '') ?>" required>

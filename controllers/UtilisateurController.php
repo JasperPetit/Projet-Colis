@@ -49,11 +49,12 @@ class UtilisateurController{
             $prenom = $_POST['prenom'] ?? '';
             $nom = $_POST['nom'] ?? '';
             $role = $_POST['Role'] ?? '';
-            $mdp = $_POST['mdpCAS'] ?? '';
+            $mdp = password_hash($_POST['mdpCAS'],PASSWORD_DEFAULT) ?? '';
+            $departement = $_POST['departement'] ?? null;
 
             if (!empty($prenom) && !empty($nom) && !empty($role) && !empty($mdp)) {
                 try {
-                    $this->UtilisateurModel->ajouterUtilisateur($prenom, $nom, $role, $mdp);
+                    $this->UtilisateurModel->ajouterUtilisateur($prenom, $nom, $role, $mdp, $departement);
                     header("Location: index.php?action=pageVoirUtilisateurs");
                     exit();
                 } catch (Exception $e) {
@@ -63,7 +64,7 @@ class UtilisateurController{
                 $erreur = "Veuillez remplir tous les champs !";
             }
         }
-        
+        $ListeDepartement = $this->UtilisateurModel->getAllDepartements();
         require_once __DIR__ . '/../views/pageAjouterUtilisateur.php';
     }
 

@@ -50,7 +50,7 @@
             <br>
 
             <label>Lien du devis (pdf,jpg,jpeg):</label>
-            <input type="file" name="ImageDevis" accept=".pdf, .jpg, .jpeg" required>
+            <input type="file" name="ImageDevis" accept=".pdf, .jpg, .jpeg" >
             <br>
 
 

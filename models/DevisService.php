@@ -43,7 +43,7 @@ class DevisService {
             ];
 
     
-
+        
         $this->devisModel->AjouterDevis($tab);
         $this->devisModel->AjouterFournisseurDevis($tab);
         }
@@ -53,9 +53,18 @@ class DevisService {
         return $this->devisModel->getDevisId();
     }
 
+    public function ModifierDevis($tab){
+        $this->devisModel->ModifierDevis($tab);
+        return $this->devisModel->ModifierCommander($tab);
+    }
     public function SupprimerDevis($idDevis){
         $this->devisModel->SupprimerCommandé($idDevis);
         return $this->devisModel->SupprimerDevis($idDevis);
+    }
+
+    public function getDevisDepartement(){
+        $departement = $_SESSION['departement'];
+        return $this->devisModel->getDevisDepartement($departement);
     }
 }
 

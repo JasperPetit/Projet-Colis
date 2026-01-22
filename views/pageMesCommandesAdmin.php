@@ -95,8 +95,17 @@
                             <?= htmlspecialchars($commande['statut']) ?>
                         </span>
                         <p>Arrivée prévu : <?= !empty($commande['Date_']) ? htmlspecialchars(date("d/m/Y", strtotime($commande['Date_']))) : '--/--/----' ?></p>
-      
 
+                        <a href="ModifierCommande?modifier=<?= $commande['NumeroBonDeCommande']?>" class="commande-détails">
+                                Modifier
+                        </a>      
+
+                        <form method="POST" action="SupprimerCommande" style="display: inline; margin: 0; padding: 0; border: none; background: none;" onsubmit="return confirmerSuppressionCommande('<?= htmlspecialchars($commande['NumeroBonDeCommande']) ?>')">
+                            <input type="hidden" name="NumeroBonDeCommande" value="<?= $commande['NumeroBonDeCommande'] ?>">    
+                            <button type="submit" name="supprimer_commande" class="bouton-supprimer">
+                                Supprimer
+                            </button>
+                        </form>
 
                     </div>
                 </div>

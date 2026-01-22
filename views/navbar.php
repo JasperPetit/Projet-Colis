@@ -11,32 +11,30 @@
             // --- DÉFINITION DES MENUS (Identique à avant) ---
             $pagesAdmin = [
                 "Accueil"        => "accueil", 
-                "Mes commandes"  => "afficherCommande", 
+                "Mes commandes"  => "pageMesCommandesAdmin", 
                 "Colis"          => "afficherColis", 
-                "Fournisseurs"   => "afficherFournisseur", 
+                "Fournisseurs"   => "pageFournisseurAdmin", 
                 "Mes Devis"      => "pageInfosDevis",
                 "Administration" => "pageAdmin"
             ];
 
             $pagesPostal = [
-                "Accueil"         => "accueil",
                 "Tableau de bord" => "pageTableauDeBord",
                 "Nouvel envoi"    => "nouveau",
                 "Suivi des colis" => "suivi",
-                "Mes commandes"   => "afficherCommande",
+                "Mes commandes"   => "pageMesCommandesPostale",
                 "Colis"           => "afficherColis"
             ];
 
             $pagesFinancier = [
                 "Accueil" => "accueil",
-                "Service" => "service_financier"
+                "Service" => "pageServiceFinancierDevis"
             ];
 
             $pagesDepartement = [
                 "Accueil"         => "accueil",
                 "Mes commandes"   => "afficherCommande",
-                "Colis"           => "afficherColis",
-                "Mes Devis"       => "pageInfosDevis",
+                "Mes Devis"       => "PageInfosDevisDemandeur",
                 "Fournisseurs"    => "afficherFournisseur",
                 "Tableau de bord" => "pageTableauDeBord"
             ];

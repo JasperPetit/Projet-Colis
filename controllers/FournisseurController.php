@@ -105,5 +105,11 @@ class FournisseurController{
         $resFournisseurs = $this->FournisseurModel->getAllFournisseurs();
         require 'views/pageFournisseurs.php';
     }
+
+    public function AfficherFournisseurAdmin(){
+        $resFournisseurs = $this->FournisseurModel->getAllFournisseurs();
+        require 'views/pageFournisseursAdmin.php';
+
+    }
 }
 ?>

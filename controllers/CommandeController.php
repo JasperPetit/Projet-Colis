@@ -61,7 +61,12 @@ class CommandeController{
                         $stmtLink = $this->pdo->prepare("INSERT INTO Commandé_a_ (idDevis, idFournisseur) VALUES (?, ?)");
                         $stmtLink->execute([$idDevis, $idFournisseur]);
                         */
+                        if($_SESSION['role']=='ADMIN'){
+                        header("Location: afficherCommandeAdmin?sucess=1");
+                        }
+                        else{
                         header("Location: afficherCommande?sucess=1");
+                        }
                         exit();
                     }
                 } catch (Exception $e) {
@@ -93,6 +98,22 @@ class CommandeController{
         $resNomEntreprise = $this->FournisseurModel->getAllFournisseurs($this->pdo);
         require_once 'views/pageMesCommandes.php';
     }
+
+    public function afficherCommandeAdmin(){
+        $resListeCommandes = $this->CommandeModel->getListeCommandesCompletes();
+        $idDevis = $this->DevisService->RecupererIdDevis();
+        $resNomEntreprise = $this->FournisseurModel->getAllFournisseurs($this->pdo);
+        require_once 'views/pageMesCommandesAdmin.php';
+
+    }
+
+    public function afficherCommandePostale(){
+        $resListeCommandes = $this->CommandeModel->getListeCommandesCompletes();
+        $idDevis = $this->DevisService->RecupererIdDevis();
+        $resNomEntreprise = $this->FournisseurModel->getAllFournisseurs($this->pdo);
+        require_once 'views/pageMesCommandesPostale.php';
+    }
+
 
     public function SupprimerCommande(){
         $resListeCommandes = $this->CommandeModel->getListeCommandesCompletes();
