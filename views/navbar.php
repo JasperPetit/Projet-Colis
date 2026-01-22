@@ -1,6 +1,6 @@
 <aside class="barre-navigation" style="display: flex; flex-direction: column; height: 100vh;">
     <a href="index.php?action=accueil">
-        <img src="public/logo.jpeg" id="sorbonne-paris-nord" alt="Logo">
+        <img src="public/logo.png" id="sorbonne-paris-nord" alt="Logo">
     </a>
     
     <ul style="flex-grow: 1;">
@@ -22,8 +22,6 @@
                 "Tableau de bord" => "pageTableauDeBord",
                 "Nouvel envoi"    => "nouveau",
                 "Suivi des colis" => "suivi",
-                "Mes commandes"   => "pageMesCommandesPostale",
-                "Colis"           => "afficherColis"
             ];
 
             $pagesFinancier = [

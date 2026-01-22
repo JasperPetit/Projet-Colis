@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fournisseurs</title>
-    <link rel="stylesheet" href="public/style.css">
+    <link rel="stylesheet" href="public/fournisseurStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -36,7 +36,16 @@
                         <p><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($fournisseur['adresse'] ?? 'Adresse non renseignée') ?></p>
                         <p><i class="fa-solid fa-box"></i> <?= $fournisseur['nb_commandes'] ?> commandes passées</p>
                         
-     
+                        <form method="POST" action="SupprimerFournisseur" style="display: inline; margin: 0; padding: 0; border: none; background: none;" onsubmit="return confirmerSuppressionFournisseur('<?= htmlspecialchars($fournisseur['nomEntreprise']) ?>')">
+                            <input type="hidden" name="id_fournisseur" value="<?= $fournisseur['idFournisseur'] ?>">    
+                            <button type="submit" name="supprimer_fournisseur" class="bouton-supprimer">
+                                Supprimer
+                            </button>
+                        </form>
+
+                        <a href="ModifierFournisseur?modifier=<?= $fournisseur['idFournisseur'] ?>" class="commande-détails">
+                                Modifier
+                        </a>      
     
                     </div>
                     <br>

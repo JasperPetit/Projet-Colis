@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Connexion - Site de suivi de colis USPN</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="public/style.css">
+    <link rel="stylesheet" href="public/riyad.css">
     <link rel="stylesheet" href="public/login.css">
 </head>
 <body class="page-login">

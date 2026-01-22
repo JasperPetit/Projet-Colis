@@ -1,0 +1,636 @@
+/* Couleurs principales */
+:root {
+    --bleu-fonce: #1e3a5f;
+    --bleu-secondaire: #2c4c70;
+    --orange-principal: #f59e0b;
+    --gris-fond: #f8fafc;
+    --blanc: #ffffff;
+}
+
+body {
+    background-color: var(--gris-fond);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    height: 100vh;
+}
+
+
+ .bouton-profil {
+background-color: var(--orange-principal);
+color: white;
+border: none;
+padding: 8px 16px;
+border-radius: 6px;
+cursor: pointer;
+font-weight: 600;
+background: #1e3a5f;
+text-decoration: none;
+}
+
+
+.profil-utilisateur span{
+margin-right: 15px;
+color: #64748b;
+} 
+
+
+.barre-laterale {
+    width: 260px;
+    background-color: var(--bleu-fonce);
+    color: #cbd5e1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.logo-conteneur {
+    padding: 20px;
+    text-align: center; 
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.logo-universite {
+    max-width: 80%;    /* Empêche le logo de déborder */
+    height: auto;     
+    display: block;    
+    margin: 0 auto 10px auto; /* Centre horizontalement et ajoute de l'espace en bas */
+    filter: brightness(0) invert(1); /* Optionnel : rend le logo blanc si votre logo original est noir */
+}
+
+.sous-titre {
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+
+
+
+.navigation {
+    padding: 20px 15px;
+    flex-grow: 1;
+}
+
+
+.icone {
+    margin-right: 10px; /* Augmente l'espace entre l'icône et le texte */
+    width: 20px;        /* Fixe la largeur pour que les textes soient bien alignés verticalement */
+    text-align: center; /* Centre l'icône dans son petit espace */
+    font-size: 1.1rem;  /* Optionnel : ajuste légèrement la taille de l'icône */
+}
+
+/* Assurez-vous aussi que le lien-navigation utilise Flexbox pour l'alignement */
+.lien-navigation {
+    display: flex;
+    align-items: center; /* Aligne verticalement l'icône et le texte au milieu */
+    padding: 12px 15px;
+    color: #cbd5e1;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    transition: 0.3s;
+}
+
+.lien-nav {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    transition: 0.3s;
+}
+
+.lien-nav:hover {
+    background-color: #334155;
+}
+
+.lien-actif {
+    background-color: var(--orange-principal);
+    color: white;
+}
+
+/* Contenu Principal */
+.contenu-principal {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.barre-haute {
+    background-color: var(--blanc);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.zone-recherche input {
+    background-color: #f1f5f9;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    width: 300px;
+}
+
+.bouton-agent {
+    background-color: var(--orange-principal);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Grille de statistiques */
+.section-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 30px;
+}
+
+.carte-stat {
+    background: var(--blanc);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+}
+
+.chiffre {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Boutons d'action */
+.zone-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 0 30px 30px 30px;
+}
+
+.bouton-action-bleu {
+    background-color: var(--bleu-secondaire);
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    border: none;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.bouton-action-orange {
+    background-color: var(--orange-principal);
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    border: none;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.section-tableau {
+
+    max-height: 70vh; 
+    
+
+    overflow-y: auto; 
+    
+
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background: white;
+}
+
+
+.tableau-suivi {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableau-activite {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableau-activite td {
+    padding: 15px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.badge-encours { background-color: #dbeafe; color: #1e40af; }
+.badge-livre { background-color: #dcfce7; color: #166534; }
+.badge-retard { background-color: #fef3c7; color: #dc2626; }
+
+
+
+
+
+
+/* CSS POUR LA PAGE SUIVI DE COLIS */
+
+.section-filtres {
+    padding: 20px 30px;
+}
+
+.barre-filtres {
+    background: var(--blanc);
+    display: flex;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    gap: 10px;
+}
+
+.filtre-item {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #64748b;
+    font-weight: 600;
+    transition: 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.filtre-item:hover {
+    background-color: #f1f5f9;
+}
+
+.filtre-item.actif {
+    background-color: var(--bleu-fonce);
+    color: white;
+}
+
+.badge-count {
+    background: rgba(100, 116, 139, 0.2);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+}
+
+.filtre-item.actif .badge-count {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Tableau de suivi */
+.tableau-suivi {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableau-suivi th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    padding: 15px;
+    text-align: left;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.tableau-suivi td {
+    padding: 15px;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.95rem;
+    color: #334155;
+}
+
+.icone-table {
+    color: #94a3b8;
+    margin-right: 8px;
+}
+
+.fa-location-dot {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-right: 5px;
+}
+
+.lien-details {
+    color: var(--bleu-secondaire);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.lien-details:hover {
+    text-decoration: underline;
+}
+
+
+
+/* --- STYLE POUR LA RECHERCHE FLOTTANTE --- */
+
+/* Le conteneur du résultat (la carte flottante) */
+.resultat-flottant {
+    position: absolute;
+    top: 80px;
+    right: 30px;
+    width: 350px;
+    background: var(--blanc);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    padding: 20px;
+    z-index: 1000;
+    border: 1px solid #e2e8f0;
+}
+
+/* L'entête avec le titre et la croix */
+.entete-resultat {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 10px;
+}
+
+.entete-resultat h4 {
+    margin: 0;
+    color: var(--bleu-fonce);
+    font-size: 1.1rem;
+}
+
+/* La petite croix pour fermer */
+.lien-fermer {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+
+.lien-fermer:hover {
+    color: var(--orange-principal);
+}
+
+/* Le tableau des détails */
+.tableau-details {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tableau-details td {
+    padding: 10px 0;
+    font-size: 0.95rem;
+}
+
+.label-detail {
+    color: #64748b;
+}
+
+.valeur-detail {
+    text-align: right;
+    font-weight: bold;
+    color: var(--bleu-secondaire);
+}
+
+/* Message d'erreur */
+.message-erreur {
+    color: #ef4444;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    background-color: #fef2f2;
+    border-radius: 8px;
+}
+
+/* Utile pour cacher le bouton submit */
+.bouton-cache {
+    display: none;
+}
+
+
+
+/* CSS NOUVEL ENVOI */
+
+/* 1. Mise en page du formulaire de recherche (Flexbox) */
+.form-recherche-flex {
+    display: flex;
+    align-items: flex-end; /* Aligne le bouton sur la ligne du bas du champ */
+    gap: 15px; /* Espace entre le champ et le bouton */
+}
+
+/* Le champ de saisie prend toute la place disponible */
+.form-recherche-flex .groupe-input {
+    flex: 1;
+    margin-bottom: 0; /* On annule la marge du bas définie ailleurs */
+}
+
+
+.table-resultats {
+    width: 100%;
+    border-collapse: separate; /* Permet les bordures arrondies */
+    border-spacing: 0;
+    margin-top: 10px;
+}
+
+.table-resultats th {
+    text-align: left;
+    padding: 15px;
+    background-color: #f8fafc;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.table-resultats td {
+    padding: 15px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+}
+
+.table-resultats tr:last-child td {
+    border-bottom: none;
+}
+
+/* 3. Badges et Icônes */
+.badge-poids {
+    background-color: #e0f2fe; /* Bleu très clair */
+    color: #0284c7; /* Bleu vif */
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.info-taille {
+    color: #94a3b8;
+    font-size: 0.90rem;
+    margin-left: 8px;
+}
+
+/* 4. Bouton Imprimer (Lien stylisé) */
+.btn-imprimer {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--bleu-fonce); /* Utilise ta variable, sinon #1e3a5f */
+    color: white !important; /* Force le blanc */
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+/* 5. Message d'erreur */
+.message-erreur {
+    background-color: #fef2f2;
+    color: #ef4444;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #fee2e2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 1. Met le champ et le bouton sur la même ligne */
+.form-recherche-flex {
+    display: flex;           /* Active le mode flexible */
+    align-items: flex-end;   /* Aligne le bouton sur le bas du champ texte */
+    gap: 15px;               /* Espace entre le champ et le bouton */
+    width: 100%;             /* Prend toute la largeur */
+}
+
+
+
+
+
+
+
+
+
+/* --- STYLE DE LA BARRE DE RECHERCHE CORRIGÉ --- */
+
+/* 1. Le conteneur global (Flexbox) */
+.form-recherche-wrapper {
+    display: flex;
+    align-items: flex-end; /* Aligne le bas du bouton avec le bas du champ */
+    gap: 15px;             /* Espace entre le champ et le bouton */
+    width: 100%;
+    position: relative;    /* Sécurité pour l'affichage */
+}
+
+/* 2. Le bloc qui contient l'input (Doit pouvoir rétrécir) */
+.form-recherche-wrapper .input-container {
+    flex: 1;               /* Prend toute la place disponible */
+    min-width: 0;          /* TRES IMPORTANT : Empêche le champ de déborder */
+    margin-bottom: 0;      
+}
+
+/* 3. Le champ de saisie (L'input lui-même) */
+.form-recherche-wrapper input {
+    width: 99.9%;           /* Remplit son conteneur */
+    box-sizing: border-box; /* CRUCIAL : Le padding est inclus dans la largeur */
+    height: 42px;          /* Hauteur fixe pour matcher le bouton */
+    padding: 0 15px;
+    
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    color: #334155;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+/* Effet au clic dans le champ */
+.form-recherche-wrapper input:focus {
+    background-color: white;
+    border-color: var(--bleu-fonce, #1e3a5f);
+    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+}
+
+/* 4. Le bouton Orange */
+.btn-recherche-orange {
+    flex-shrink: 0;        /* CRUCIAL : Interdit au bouton de se faire écraser ou passer dessus */
+    width: auto;           
+    height: 42px;          
+    margin-bottom: 0;      
+    padding: 0 25px;       
+    
+    background-color: #f59e0b; 
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;   /* Empêche le texte "Rechercher" de passer à la ligne */
+}
+
+.btn-recherche-orange:hover {
+    background-color: #d97706;
+}
+
+
+
+
+
+/* --- BOUTON DE DÉCONNEXION EN HAUT À DROITE --- */
+
+.profil-utilisateur {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.bouton-logout {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.bouton-logout:hover {
+    background-color: #dc2626;
+    transform: translateY(-1px);
+}
+
+.bouton-logout:active {
+    transform: translateY(0);
+}
+
+.bouton-logout i {
+    font-size: 0.9rem;
+}
