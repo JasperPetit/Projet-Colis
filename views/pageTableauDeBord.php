@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Tableau de bord - Service Postal</title>
-    <link rel="stylesheet" href="fichierCSS/style.css">
+    <link rel="stylesheet" href="public/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <?php include __DIR__ . '/sidebar.php'; ?>
+    <?php include __DIR__ . '/navbar.php'; ?>
     
     <main class="contenu-principal">
         <header class="barre-haute">

@@ -10,13 +10,13 @@ use Exception;
 class DevisController{
 
     private $pdo;
-    private $service;
+    private $DevisService;
     private $FournisseurModel;
 
     public function __construct($db)
     {
         $this->pdo = $db;
-        $this->service = new ModelsDevisService($db);
+        $this->DevisService = new ModelsDevisService($db);
         $this->FournisseurModel = new FournisseurModel($db);
     }
 
@@ -25,7 +25,7 @@ class DevisController{
         
 
             try{
-            $this->service->AjouterDevis($_POST,$_FILES,$_SESSION);
+            $this->DevisService->AjouterDevis($_POST,$_FILES,$_SESSION);
 
             header('Location: pageInfosDevis?success=1');
             exit();
@@ -50,7 +50,7 @@ class DevisController{
 
             if (!empty($idDevis)) {
                 try {
-                    $this->service->SupprimerDevis($idDevis);
+                    $this->DevisService->SupprimerDevis($idDevis);
                     header("Location: pageInfosDevis?success=suppression");
                     exit();
                 } catch (Exception $e) {
@@ -72,12 +72,12 @@ class DevisController{
     }
 
 
-//    public function ModifierDevis(){
+   public function ModifierDevis(){
 
-//    }
+   }
 
     public function AfficherDevis(){
-        $listeDevis = $this->service->getAllDevis();
+        $listeDevis = $this->DevisService->getAllDevis();
 
         require_once 'views/pageInfosDevisAdmin.php';
     }

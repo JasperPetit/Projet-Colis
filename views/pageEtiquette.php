@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Bordereau</title>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="fichierCSS/etiquette.css">
+    <link rel="stylesheet" href="public/etiquette.css">
 </head>
 <body>
 

@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <title>Connexion - Site de suivi de colis USPN</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="fichierCSS/style.css">
-    <link rel="stylesheet" href="fichierCSS/login.css">
+    <link rel="stylesheet" href="public/style.css">
+    <link rel="stylesheet" href="public/login.css">
 </head>
 <body class="page-login">
     <div class="conteneur-connexion">
         <div class="entete-connexion">
-            <img src="data/logo.png" alt="Logo">
+            <img src="public/logo.png" alt="Logo">
             <h1>Ouvrir une session</h1>
             <p>Université Sorbonne Paris Nord</p>
         </div>
