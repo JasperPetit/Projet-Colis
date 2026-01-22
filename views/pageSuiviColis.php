@@ -33,10 +33,11 @@
                         <th>Client</th>
                         <th>Destination</th>
                         <th>Département</th>
-                        <th>Date</th>
+                        <th style="text-align: center;">Date</th>
                         <th>Poids</th>
                         <th>Colis</th>
                         <th>Statut</th>
+                        <th style="text-align: center;">Action</th>
                     </tr>
                 </thead>
                   
@@ -83,6 +84,21 @@
                                     <?php echo $statut_texte; ?>
                                 </span>
                             </td>
+
+                            <td style="text-align: center;">
+                                <?php if ($statut !== 'livré'): ?>
+                                    <form action="index.php?action=valider_livraison" method="POST">
+                                        <input type="hidden" name="id" value="<?php echo $colis['NumeroBonDeCommande']; ?>">
+                                        
+                                        <button type="submit" class="btn-action-livrer" >
+                                            <i class="fa-solid fa-check"></i> Valider
+                                        </button>
+                                    </form>
+                                <?php else: ?>
+                                    <span style="color: #cbd5e1;"><i class="fa-solid fa-check-double"></i> Terminé</span>
+                                <?php endif; ?>
+                            </td>
+
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
