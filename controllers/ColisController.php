@@ -19,7 +19,6 @@ class ColisController{
         $fournisseursFiltre = $this->ColisModel->getFournisseursAyantColis();
         require_once 'views/pageColis.php';
     }
-
     public function validerLivraison() {
     $id = $_POST['id'];
     if ($id) {

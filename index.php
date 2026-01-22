@@ -24,7 +24,6 @@ $routes = [
     'nouveau'          => ['ExpeditionController', 'afficherNouvelEnvoi'],
     'recherche_rapide' => ['ExpeditionController', 'rechercherRapide'],
     'imprimer'         => ['ExpeditionController', 'imprimerEtiquette'],
-    'valider_livraison' => ['ColisController', 'validerLivraison'],
     'deconnexion'      => ['ExpeditionController', 'deconnecter'],
 
 

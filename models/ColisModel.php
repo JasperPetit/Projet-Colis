@@ -33,7 +33,6 @@ class ColisModel{
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    
     public function marquerCommeLivre($idCommande) {
         $sql = "UPDATE Colis SET LivréOuiOuNon = '1' WHERE NumeroBonDeCommande = :id";
 

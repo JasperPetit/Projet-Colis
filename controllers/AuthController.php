@@ -76,16 +76,6 @@ class AuthController {
             }
         }
         require_once  'views/pageLogin.php';
-        }
-
-
-
-
-
-
-
-
-
     }
-
+}
 ?>
