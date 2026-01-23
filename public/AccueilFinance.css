@@ -1,0 +1,751 @@
+/* =========================================
+   1. VARIABLES & RESET (Style harmonisé)
+   ========================================= */
+:root {
+    /* Couleurs tirées de ton fichier style.css pour le look "joli" */
+    --primary-blue: #232d53;    /* Bleu foncé moderne */
+    --secondary-blue: #2c4c70;  /* Bleu secondaire */
+    --accent-orange: #f59e0b;   /* Orange vif */
+    --bg-light: #f8fafc;        /* Fond gris très clair */
+    --text-dark: #334155;       /* Gris foncé doux */
+    --text-muted: #64748B;
+    --border-color: #e2e8f0;
+    
+    /* Couleurs de statut */
+    --success: #10b981;
+    --info: #3b82f6;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+}
+
+/* Reset indispensable pour le responsive */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: 'Segoe UI', 'Inter', -apple-system, sans-serif; /* Police plus propre */
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    /* Transition douce lors du redimensionnement */
+    transition: all 0.3s ease;
+}
+
+/* =========================================
+   2. BARRE DE NAVIGATION (SIDEBAR)
+   ========================================= */
+.barre-navigation {
+    width: 260px;
+    background-color: var(--primary-blue);
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.05);
+    z-index: 1000;
+    flex-shrink: 0; /* Empêche la barre de s'écraser */
+}
+
+#sorbonne-paris-nord {
+    width: 160px;
+    padding: 25px;
+    margin: 0 auto;
+    display: block;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.barre-navigation ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.barre-navigation li {
+    padding: 0 15px;
+}
+
+.barre-navigation a {
+    color: #cbd5e1;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.barre-navigation a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    transform: translateX(5px); /* Petit effet de glissement */
+}
+
+/* =========================================
+   3. CONTENU PRINCIPAL (MAIN)
+   ========================================= */
+main {
+    flex-grow: 1;
+    padding: 40px;
+    width: 100%; /* S'assure de prendre la place restante */
+    max-width: 1600px;
+    margin: 0 auto;
+    overflow-x: hidden; /* Évite le scroll horizontal indésirable */
+}
+
+h1 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    color: var(--primary-blue);
+    font-weight: 700;
+}
+
+.titre {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap; /* Permet aux boutons de passer à la ligne sur mobile */
+    gap: 15px;
+}
+
+.titre + p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+}
+
+/* =========================================
+   4. DASHBOARD & CARTES
+   ========================================= */
+.conteneur-cartes-accueil {
+    display: grid;
+    /* Responsive automatique : 3 colonnes sur PC, 2 ou 1 selon la place */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.colis-en-attente, .commande-en-cours, .commande-en-retard, .dernier-colis-livré {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.colis-en-attente:hover, .commande-en-cours:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+}
+
+.dernier-colis-livré {
+    grid-column: 1 / -1; /* Prend toute la largeur */
+}
+
+/* Typographie Cartes */
+.colis-en-attente h3, .commande-en-cours h3, .commande-en-retard h3 {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin: 0 0 15px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.colis-en-attente p, .commande-en-cours p, .commande-en-retard p {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-blue);
+    margin: 0;
+}
+
+/* Icônes Décoratives (FontAwesome) */
+.colis-en-attente::after, .commande-en-cours::after, .commande-en-retard::after, .dernier-colis-livré::after {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
+    background: var(--bg-light);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: var(--primary-blue);
+    opacity: 0.8;
+}
+
+.colis-en-attente::after { content: '\f466'; color: var(--accent-orange); background: #fff7ed; }
+.commande-en-cours::after { content: '\f07a'; color: var(--info); background: #eff6ff; }
+.commande-en-retard::after { content: '\f071'; color: var(--danger); background: #fef2f2; }
+.dernier-colis-livré::after { content: '\f058'; color: var(--success); background: #f0fdf4; }
+
+/* =========================================
+   5. LISTES (COMMANDES & COLIS)
+   ========================================= */
+.commande-card, .colis-section {
+    background: white;
+    padding: 20px 25px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Centré verticalement */
+    transition: all 0.2s;
+    flex-wrap: wrap; /* Permet le responsive */
+    gap: 20px;
+}
+
+.commande-card:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 4px 12px rgba(30, 58, 95, 0.08);
+}
+
+.commande-info h3 {
+    margin: 0 0 5px 0;
+    color: var(--primary-blue);
+    font-size: 1.1rem;
+}
+
+.commande-info p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 2px 0;
+}
+
+.commande-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    min-width: 150px;
+}
+
+/* =========================================
+   6. BADGES & BOUTONS
+   ========================================= */
+.statue-colis, .statue-devis {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+/* Couleurs des statuts */
+.statut-livre, .statut-accepte { background: #dcfce7; color: #166534; }
+.statut-en-cours { background: #dbeafe; color: #1e40af; }
+.statut-retard, .statut-refuse { background: #fee2e2; color: #991b1b; }
+.statut-attente, .statut-non-signe { background: #fef3c7; color: #92400e; }
+
+/* Boutons */
+.bouton-contacter, .btn-nouvelle-commande, .bouton-modifier, button {
+    background-color: var(--accent-orange);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(245, 158, 11, 0.2);
+}
+
+.bouton-contacter:hover, .btn-nouvelle-commande:hover {
+    background-color: #d97706;
+    transform: translateY(-1px);
+}
+
+.commande-détails {
+    background: white;
+    color: var(--primary-blue);
+    border: 1px solid var(--primary-blue);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.commande-détails:hover {
+    background: var(--primary-blue);
+    color: white;
+}
+
+.bouton-supprimer {
+    background-color: var(--danger);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* =========================================
+   7. FORMULAIRES & FILTRES
+   ========================================= */
+.filtres-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+    border: 1px solid var(--border-color);
+    flex-wrap: wrap; /* CRUCIAL pour le responsive */
+}
+
+.filtre-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1 1 200px; /* Flexibilité : min 200px */
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-family: inherit;
+    background: #fff;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+}
+
+/* =========================================
+   8. RESPONSIVE (MEDIA QUERIES)
+   ========================================= */
+
+/* --- TABLETTES (Max 1024px) --- */
+@media screen and (max-width: 1024px) {
+    .conteneur-cartes-accueil {
+        grid-template-columns: 1fr 1fr; /* 2 colonnes */
+    }
+    main {
+        padding: 30px;
+    }
+}
+
+/* --- MOBILES (Max 768px) --- */
+@media screen and (max-width: 768px) {
+    /* Layout global : Colonne au lieu de ligne */
+    body {
+        flex-direction: column;
+    }
+
+    /* La barre de navigation passe en haut */
+    .barre-navigation {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-direction: row; /* Logo à gauche, menu dessous/à droite */
+        align-items: center;
+        padding: 10px;
+        flex-wrap: wrap;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    #sorbonne-paris-nord {
+        width: 120px;
+        padding: 5px;
+        margin: 0;
+    }
+
+    /* Le menu devient une liste horizontale défilable */
+    .barre-navigation ul {
+        flex-direction: row;
+        width: 100%;
+        overflow-x: auto; /* Scroll horizontal si ça dépasse */
+        padding-bottom: 5px;
+        margin-top: 15px;
+        gap: 10px;
+    }
+
+    .barre-navigation li {
+        padding: 0;
+        flex-shrink: 0;
+    }
+
+    .barre-navigation a {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+        background: rgba(255,255,255,0.1);
+        white-space: nowrap; /* Empêche le texte de se couper */
+    }
+
+    /* Contenu principal */
+    main {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    /* Dashboard : 1 seule colonne */
+    .conteneur-cartes-accueil {
+        grid-template-columns: 1fr;
+    }
+
+    .dernier-colis-livré {
+        grid-column: auto;
+    }
+
+    /* Cartes de commandes/colis */
+    .commande-card, .colis-section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .commande-actions {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        border-top: 1px solid var(--border-color);
+        padding-top: 15px;
+    }
+
+    /* Formulaires et Filtres */
+    .filtres-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filtre-group {
+        width: 100%;
+    }
+
+    /* Grille fournisseurs */
+    .fournisseurs-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================
+   9. PAGE D'ACCUEIL - STYLES SPÉCIFIQUES
+   ========================================= */
+:root {
+    --sidebar-width: 240px;
+}
+
+.main-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Header (partie haute) */
+.top-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: var(--sidebar-width);
+    height: 70px;
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 30px;
+    z-index: 100;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+}
+
+.header-image {
+    max-height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-email {
+    color: #334155;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+/* Contenu principal */
+.content-area {
+    margin-left: 0;
+    margin-top: 70px;
+    padding: 25px;
+    width: 100%;
+    flex: 1;
+}
+
+.header-image-section {
+    margin-bottom: 25px;
+}
+
+.content-header-image {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0 0 5px 0;
+}
+
+.page-subtitle {
+    font-size: 1rem;
+    color: #64748b;
+    margin: 0 0 35px 0;
+}
+
+/* Stats */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    transition: all 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #1e293b;
+}
+
+.stat-icon-wrapper {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    border: 2px solid;
+}
+
+.stat-icon-wrapper.blue { 
+    background: #E0F2FE; 
+    color: #3B82F6; 
+    border-color: #3B82F6; 
+}
+
+.stat-icon-wrapper.purple { 
+    background: #EDE9FE; 
+    color: #7C3AED; 
+    border-color: #7C3AED; 
+}
+
+.stat-icon-wrapper.green { 
+    background: #DCFCE7; 
+    color: #16a34a; 
+    border-color: #16a34a; 
+}
+
+.stat-icon-wrapper.gold { 
+    background: #FEF3C7; 
+    color: #D97706; 
+    border-color: #D97706; 
+}
+
+/* Section basse */
+.bottom-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
+.card-box {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    border: 1px solid #e2e8f0;
+}
+
+/* Carte Actions rapides - s'adapte au contenu sans espace vide */
+.actions-card {
+    align-self: start;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+/* Activité récente */
+.activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+}
+
+.dot.attente {
+    background-color: #f59e0b;
+}
+
+.dot.transit {
+    background-color: #3b82f6;
+}
+
+.dot.livre {
+    background-color: #10b981;
+}
+
+.activity-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.status-text {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 0.95rem;
+}
+
+.info-text {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.time-text {
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+/* Bouton créer commande */
+.btn-creer-commande {
+    width: 100%;
+    background-color: #eab308;
+    color: white;
+    border: none;
+    padding: 18px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+}
+
+.btn-creer-commande:hover {
+    background-color: #ca8a04;
+    transform: translateY(-2px);
+}
+
+/* Responsive pour page d'accueil */
+@media screen and (max-width: 768px) {
+    .content-area {
+        margin-left: 0;
+        margin-top: 70px;
+        padding: 25px;
+        width: 100%;
+        flex: 1;
+    }
+
+    .top-header {
+        left: 0;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bottom-section {
+        grid-template-columns: 1fr;
+    }
+}

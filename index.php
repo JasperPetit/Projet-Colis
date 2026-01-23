@@ -51,6 +51,9 @@ $routes = [
 
     //colis
     'afficherColis' => ['ColisController', 'afficherColis'],
+    'ModifierColis' => ['ColisController', 'ModifierColis'],
+    'valider_livraison' => ['ColisController', 'validerLivraison'],
+    'afficherColisPostale' => ['ColisController','afficherColisPostale'],
 
     //fournisseur
     'afficherFournisseur'  => ['FournisseurController','AfficherFournisseur'],
