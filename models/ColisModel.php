@@ -33,11 +33,19 @@ class ColisModel{
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function marquerCommeLivre($idCommande) {
-        $sql = "UPDATE Colis SET LivréOuiOuNon = '1' WHERE NumeroBonDeCommande = :id";
+    public function marquerCommeLivre($idColis) {
+        $sql = "UPDATE Colis SET LivréOuiOuNon = '1' WHERE idColis = :id";
 
         $prepare = $this->pdo->prepare($sql);
-        $prepare->execute([':id' => $idCommande]);
+        $prepare->execute([':id' => $idColis]);
+        $sql = "SELECT NumeroBonDeCommande FROM Colis WHERE idColis = :id";
+        $TousColis = $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        $etat = 'livré';
+        foreach($TousColis as $coli){
+            if($coli['LivréOuiOuNon']==0){
+                $etat = 
+            }
+        }
 }
 }
 ?>
