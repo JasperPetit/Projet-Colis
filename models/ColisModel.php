@@ -11,11 +11,10 @@ class ColisModel{
         $this->pdo = $db;
     }
 
-    // Fonctions pour la page Colis
+    // --- CORRECTION : On ne garde que cette version (la plus complète avec Taille et Poids) ---
     public function getListeColisComplete() {
-        // J'ajoute co.LivréOuiOuNon pour savoir si CE colis précis est livré
-        $sql = "SELECT co.idColis, co.NumeroBonDeCommande, co.DateAriveePrevu, co.LivréOuiOuNon, 
-                F.nomEntreprise, C.statut as statutCommande, C.Date_ as DateCommande
+        $sql = "SELECT co.idColis, co.NumeroBonDeCommande, co.DateAriveePrevu, co.Taille, co.Poids,
+                F.nomEntreprise, C.statut, C.Date_ as DateCommande
                 FROM Colis co
                 JOIN Commande C ON co.NumeroBonDeCommande = C.NumeroBonDeCommande
                 LEFT JOIN Commandé_a_ CA ON C.idDevis = CA.idDevis 
@@ -33,6 +32,21 @@ class ColisModel{
                 WHERE F.nomEntreprise IS NOT NULL
                 ORDER BY F.nomEntreprise";
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function creerColis($numeroBonDeCommande, $dateArrivee) {
+        // On cherche le plus grand ID actuel dans la table
+        $stmtMax = $this->pdo->query("SELECT MAX(idColis) FROM Colis");
+        $maxId = $stmtMax->fetchColumn();
+
+        // On ajoute 1 pour avoir le nouvel ID (ou 1 si la table est vide)
+        $newId = $maxId ? ((int)$maxId + 1) : 1;
+
+        // On insère le colis avec cet ID explicite
+        $sql = "INSERT INTO Colis (idColis, NumeroBonDeCommande, DateAriveePrevu) VALUES (?, ?, ?)";
+        $stmt = $this->pdo->prepare($sql);
+        
+        return $stmt->execute([$newId, $numeroBonDeCommande, $dateArrivee]);
     }
 
     public function marquerCommeLivre($idColis, $idCommande) {
@@ -70,20 +84,18 @@ class ColisModel{
             ':idCommande' => $idCommande
         ]);
     }
-    
-    public function creerColis($numeroBonDeCommande, $dateArrivee) {
-        // On cherche le plus grand ID actuel dans la table
-        $stmtMax = $this->pdo->query("SELECT MAX(idColis) FROM Colis");
-        $maxId = $stmtMax->fetchColumn();
 
-        // On ajoute 1 pour avoir le nouvel ID (ou 1 si la table est vide)
-        $newId = $maxId ? ((int)$maxId + 1) : 1;
-
-        // On insère le colis avec cet ID explicite
-        $sql = "INSERT INTO Colis (idColis, NumeroBonDeCommande, DateAriveePrevu) VALUES (?, ?, ?)";
+    public function getColisById($idColis) {
+        $sql = "SELECT * FROM Colis WHERE idColis = ?";
         $stmt = $this->pdo->prepare($sql);
-        
-        return $stmt->execute([$newId, $numeroBonDeCommande, $dateArrivee]);
+        $stmt->execute([$idColis]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateColis($idColis, $taille, $poids) {
+        $sql = "UPDATE Colis SET Taille = ?, Poids = ? WHERE idColis = ?";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([$taille, $poids, $idColis]);
     }
 }
 ?>

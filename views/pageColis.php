@@ -72,11 +72,20 @@
                      data-date="<?= htmlspecialchars($colis['DateCommande'] ?? '') ?>" 
                      data-statut="<?= htmlspecialchars($colis['statut'] ?? '') ?>"
                      data-fournisseur="<?= htmlspecialchars($colis['nomEntreprise'] ?? '') ?>"
-                     data-commande="<?= htmlspecialchars($colis['NumeroBonDeCommande'] ?? '') ?>"> <div class="colis-info">
+                     data-commande="<?= htmlspecialchars($colis['NumeroBonDeCommande'] ?? '') ?>"> 
+                     
+                    <div class="colis-info">
                         <h3>Colis n°<?= htmlspecialchars($colis['idColis'] ?? '?') ?></h3>
                         
                         <p style="color: #1e3a5f; font-weight: bold;">
                             <i class="fas fa-file-invoice"></i> Commande : <?= htmlspecialchars($colis['NumeroBonDeCommande'] ?? 'Inconnue') ?>
+                        </p>
+
+                        <p>
+                            📏 Taille : <strong><?= htmlspecialchars($colis['Taille'] ?? '--') ?> cm</strong>
+                        </p>
+                        <p>
+                            ⚖️ Poids : <strong><?= htmlspecialchars($colis['Poids'] ?? '--') ?> kg</strong>
                         </p>
                         <p>📅 Date commande : <?= htmlspecialchars($colis['DateCommande'] ?? 'Non définie') ?></p>
                         <p>👤 Fournisseur : <?= htmlspecialchars($colis['nomEntreprise'] ?? 'Fournisseur inconnu') ?></p>
@@ -87,6 +96,7 @@
                             <?= htmlspecialchars($colis['statut'] ?? 'Inconnu') ?>
                         </span>
                         <p>📅 Arrivée prévue : <?= htmlspecialchars($colis['DateAriveePrevu'] ?? '') ?></p>
+
                         <?php if (($colis['statut'] ?? '') !== 'livré' && ($colis['LivréOuiOuNon'] ?? 0) == 0): ?>
                             
                             <form action="index.php?action=valider_livraison" method="POST" style="display:inline;">
@@ -103,9 +113,11 @@
                                 <i class="fas fa-check"></i> Déjà validé
                             </span>
                         <?php endif; ?>
-                        <a href="index.php?action=ModifierCommande&modifier=<?= $colis['NumeroBonDeCommande'] ?>" class="commande-détails">
+
+
+                        <a href="index.php?action=ModifierColis&idColis=<?= $colis['idColis'] ?>" class="commande-détails">
                             Modifier
-                        </a>      
+                        </a>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -127,10 +139,8 @@
                 const h3 = card.getElementsByTagName("h3")[0];
                 const txtValue = h3.textContent || h3.innerText;
                 
-                // On récupère aussi le numéro de commande pour la recherche
                 const numCommande = card.getAttribute("data-commande").toUpperCase();
 
-                // La recherche regarde maintenant le Titre (Colis n°) OU le Numéro de commande
                 const matchRecherche = (txtValue.toUpperCase().indexOf(filtreRecherche) > -1) || 
                                        (numCommande.indexOf(filtreRecherche) > -1);
 

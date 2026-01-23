@@ -31,7 +31,7 @@ class CommandeController{
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $NumeroBonDeCommande = $_POST['NumeroBonDeCommande'] ?? '';
             $idDevis = $_POST['idDevis'] ?? '';
-            $idFournisseur = $_POST['idFournisseur'] ?? ''; // <-- AJOUTÉ
+            $idFournisseur = $_POST['idFournisseur'] ?? '';
             $AdresseDepart = $_POST['AdresseDepart'] ?? '';
             $nbColis = (int) ($_POST['nbColis'] ?? 1); 
             $AdresseArivee = $_POST['AdresseArivee'] ?? '';
@@ -49,15 +49,14 @@ class CommandeController{
                     $dateDepart = date('Y-m-d');
 
                     if ($dateDepart) {
-                        // 1. Création de la commande
+                        // Création de la commande
                         $this->CommandeModel->ajouterCommande($NumeroBonDeCommande, $AdresseDepart, $AdresseArivee, $dateDepart, $nbColis, $idDevis, $dateArrivee);
                         
-                        // 2. Création automatique des colis
+                        // Création automatique des colis
                         for ($i = 0; $i < $nbColis; $i++) {
                             $this->ColisModel->creerColis($NumeroBonDeCommande, $dateArrivee);
                         }
 
-                        // 3. --- AJOUT : LIAISON FOURNISSEUR ---
                         // On supprime l'ancienne liaison pour ce devis s'il y en avait une (nettoyage)
                         $stmtDel = $this->pdo->prepare("DELETE FROM Commandé_a_ WHERE idDevis = ?");
                         $stmtDel->execute([$idDevis]);
