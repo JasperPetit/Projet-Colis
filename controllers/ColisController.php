@@ -25,13 +25,22 @@ class ColisController{
         require_once 'views/pageColis.php';
     }
     public function validerLivraison() {
-    $id = $_POST['id'];
-    if ($id) {
-        $this->ColisModel->marquerCommeLivre($id);
-    }
+            // On vérifie que la requête est bien en POST
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                
+                // On récupère les données proprement
+                $id = $_POST['id'] ?? null;
+                $idCommande = $_POST['idCommande'] ?? null;
 
-    header('Location: index.php?action=afficherColisPostale');
-    exit();
-}
+                if ($id && $idCommande) {
+                    // On appelle le modèle
+                    $this->ColisModel->marquerCommeLivre($id, $idCommande);
+                }
+            }
+
+            // Redirection
+            header('Location: index.php?action=afficherColisPostale');
+            exit();
+        }
 }
 ?>

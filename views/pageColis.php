@@ -7,7 +7,6 @@
             default: return '';
         }
     }
-
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -28,7 +27,7 @@
         </div>
 
         <div class="filtres-container">
-            <input type="text" id="searchBar" onkeyup="filtrerColis()" placeholder="Rechercher un colis">
+            <input type="text" id="searchBar" onkeyup="filtrerColis()" placeholder="Rechercher un colis (ou une commande)...">
 
             <div class="filtre-group">
                 <label for="filtreDate">Trier par date</label>
@@ -70,23 +69,41 @@
         <div id="listeCommandes">
             <?php foreach ($resListeColis as $colis): ?>
                 <div class="colis-section" 
-                     data-date="<?= htmlspecialchars($colis['DateCommande']) ?>" 
-                     data-statut="<?= htmlspecialchars($colis['statut']) ?>"
-                     data-fournisseur="<?= htmlspecialchars($colis['nomEntreprise'] ?? '') ?>">
-                    
-                    <div class="colis-info">
-                        <h3>Colis n°<?= htmlspecialchars($colis['idColis']) ?></h3>
-                        <p>📅 de livraison : <?= htmlspecialchars($colis['DateCommande']) ?></p>
+                     data-date="<?= htmlspecialchars($colis['DateCommande'] ?? '') ?>" 
+                     data-statut="<?= htmlspecialchars($colis['statut'] ?? '') ?>"
+                     data-fournisseur="<?= htmlspecialchars($colis['nomEntreprise'] ?? '') ?>"
+                     data-commande="<?= htmlspecialchars($colis['NumeroBonDeCommande'] ?? '') ?>"> <div class="colis-info">
+                        <h3>Colis n°<?= htmlspecialchars($colis['idColis'] ?? '?') ?></h3>
+                        
+                        <p style="color: #1e3a5f; font-weight: bold;">
+                            <i class="fas fa-file-invoice"></i> Commande : <?= htmlspecialchars($colis['NumeroBonDeCommande'] ?? 'Inconnue') ?>
+                        </p>
+                        <p>📅 Date commande : <?= htmlspecialchars($colis['DateCommande'] ?? 'Non définie') ?></p>
                         <p>👤 Fournisseur : <?= htmlspecialchars($colis['nomEntreprise'] ?? 'Fournisseur inconnu') ?></p>
                     </div>
                     
                     <div class="commande-actions">
-                        <span class="statue-colis <?= getClasseStatutColis($colis['statut']) ?>">
-                            <?= htmlspecialchars($colis['statut']) ?>
+                        <span class="statue-colis <?= getClasseStatutColis($colis['statut'] ?? '') ?>">
+                            <?= htmlspecialchars($colis['statut'] ?? 'Inconnu') ?>
                         </span>
-                        <p>📅 Arrivée prévue : <?= htmlspecialchars($colis['DateAriveePrevu']) ?></p>
+                        <p>📅 Arrivée prévue : <?= htmlspecialchars($colis['DateAriveePrevu'] ?? '') ?></p>
+                        <?php if (($colis['statut'] ?? '') !== 'livré' && ($colis['LivréOuiOuNon'] ?? 0) == 0): ?>
+                            
+                            <form action="index.php?action=valider_livraison" method="POST" style="display:inline;">
+                                <input type="hidden" name="id" value="<?= $colis['idColis'] ?>">
+                                <input type="hidden" name="idCommande" value="<?= $colis['NumeroBonDeCommande'] ?>">
+                                
+                                <button type="submit" class="commande-détails" style="cursor:pointer; border:none;">
+                                    Valider
+                                </button>
+                            </form>
 
-                        <a href="pageModifierCommande.php?modifier=<?= $colis['NumeroBonDeCommande'] ?>" class="commande-détails">
+                        <?php else: ?>
+                            <span class="commande-détails" style="background-color: #d1e7dd; color: #0f5132; cursor: default;">
+                                <i class="fas fa-check"></i> Déjà validé
+                            </span>
+                        <?php endif; ?>
+                        <a href="index.php?action=ModifierCommande&modifier=<?= $colis['NumeroBonDeCommande'] ?>" class="commande-détails">
                             Modifier
                         </a>      
                     </div>
@@ -107,8 +124,16 @@
             const cards = Array.from(container.getElementsByClassName("colis-section"));
             
             const cardsVisibles = cards.filter(card => {
-                const txtValue = card.getElementsByTagName("h3")[0].textContent || card.getElementsByTagName("h3")[0].innerText;
-                const matchRecherche = txtValue.toUpperCase().indexOf(filtreRecherche) > -1;
+                const h3 = card.getElementsByTagName("h3")[0];
+                const txtValue = h3.textContent || h3.innerText;
+                
+                // On récupère aussi le numéro de commande pour la recherche
+                const numCommande = card.getAttribute("data-commande").toUpperCase();
+
+                // La recherche regarde maintenant le Titre (Colis n°) OU le Numéro de commande
+                const matchRecherche = (txtValue.toUpperCase().indexOf(filtreRecherche) > -1) || 
+                                       (numCommande.indexOf(filtreRecherche) > -1);
+
                 const matchStatut = !filtreStatut || card.getAttribute("data-statut") === filtreStatut;
                 const matchFournisseur = !filtreFournisseur || card.getAttribute("data-fournisseur") === filtreFournisseur;
                 

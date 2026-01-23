@@ -21,7 +21,7 @@
             $pagesPostal = [
                 "Tableau de bord" => "pageTableauDeBord",
                 "Nouvel envoi"    => "nouveau",
-                "Suivi des colis" => "suivi",
+                "Suivi des colis" => "afficherColis",
             ];
 
             $pagesFinancier = [

@@ -49,7 +49,7 @@ $routes = [
     'ModifierDevis'           => ['DevisController','ModifierDevis'],
     'PageInfosDevisDemandeur' => ['DevisController','AfficherDevisDepartement'],
 
-    //colis
+    //colis 
     'afficherColis' => ['ColisController', 'afficherColis'],
     'valider_livraison' => ['ColisController', 'validerLivraison'],
     'afficherColisPostale' => ['ColisController','afficherColisPostale'],

@@ -13,7 +13,7 @@
     
     <main class="contenu-principal">
         <section style="padding: 30px 30px 0 30px;">
-            <h1 style="margin:0;">Tableau de bord postal</h1>
+            <h1 style="margin:0;">Tableau de bord</h1>
             <p style="color: #64748b;">Vue d'ensemble des opérations du jour <?php echo $date; ?></p>
         </section>
 

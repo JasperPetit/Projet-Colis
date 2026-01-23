@@ -633,6 +633,7 @@ color: #64748b;
 
 .bouton-logout i {
     font-size: 0.9rem;
+<<<<<<< HEAD
 }
 
 
@@ -653,4 +654,6 @@ color: #64748b;
     background-color: #10b981;
     color: white;
     cursor: pointer;
+=======
+>>>>>>> 69b92cd7419cac7b09605ed238ae660aea1248cd
 }
